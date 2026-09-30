@@ -231,7 +231,7 @@
       "channels": [
         "TRAJ_DEV"
       ],
-      "description": "The guidance follows a wrong direction reference (a drifting gyro, or a wrong heading as on Ariane 5 VA241) and the vehicle flies it faithfully. It leaves its planned trajectory while engines and steering look normal; a sudden offset shows a short steering kick. Beyond the flight-safety corridor it is a destruct decision.",
+      "description": "The guidance follows a wrong direction reference (a drifting gyro, or a wrong heading setting) and the vehicle flies it faithfully. It leaves its planned trajectory while engines and steering look normal; a sudden offset shows a short steering kick. Beyond the flight-safety corridor it is a destruct decision.",
       "positive_count": 188,
       "prevalence": 0.0626667,
       "median_severity": 0.31678,

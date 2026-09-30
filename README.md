@@ -153,7 +153,7 @@ flight-safety corridors are set per mission and are not public.
 The corridor is 1 km plus 2.5 × the normal spread; 400 simulated normal flights stay inside
 the band and never come near the corridor. The failure **trajectory deviation** (CRITICAL) is
 a guidance error the vehicle follows faithfully: a slowly drifting direction reference, or a
-wrong one (as on Ariane 5 flight VA241 in 2018), from H0 + 12 s to H0 + 80 s. Engines and
+wrong one, from H0 + 12 s to H0 + 80 s. Engines and
 steering look normal; only the trajectory shows it. On the 31 held-out launches with it, the
 agent alerted on all 31, as the drift left the normal scatter; the fixed corridor limit
 tripped on 19, always later (median 38 s, at least 27 s).

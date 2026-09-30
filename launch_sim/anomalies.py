@@ -85,7 +85,7 @@ FAILURE_MODES: Tuple[FailureMode, ...] = (
         "TRAJECTORY_DEVIATION", "Trajectory deviation", "guidance", "flight",
         "CRITICAL", "critical", "guidance", ("TRAJ_DEV",),
         "The guidance follows a wrong direction reference (a drifting gyro, or a wrong heading "
-        "as on Ariane 5 VA241) and the vehicle flies it faithfully. It leaves its planned "
+        "setting) and the vehicle flies it faithfully. It leaves its planned "
         "trajectory while engines and steering look normal; a sudden offset shows a short "
         "steering kick. Beyond the flight-safety corridor it is a destruct decision."),
 )
