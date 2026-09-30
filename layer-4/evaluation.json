@@ -1,0 +1,724 @@
+{
+  "meta": {
+    "domain": "launch-vehicle",
+    "version": "0.1.0",
+    "created_by": "run_factory.py",
+    "created_at": "2026-09-30T08:08:16+00:00",
+    "sklearn": "1.9.1"
+  },
+  "model": {
+    "type": "ammonix-style one-vs-rest HistGradientBoosting",
+    "params": {
+      "max_iter": 250,
+      "learning_rate": 0.08,
+      "max_leaf_nodes": 31,
+      "l2_regularization": 1.0,
+      "random_state": 0
+    },
+    "n_features": 137,
+    "training_rows": 52122,
+    "training_times": {
+      "fixed": [
+        -1.0,
+        6.5,
+        150.0
+      ],
+      "random_per_launch": 18,
+      "random_from": -50.0
+    },
+    "stream_tick_s": 0.5,
+    "debounce_ticks": 2
+  },
+  "split": {
+    "n_launches": 3000,
+    "n_work": 2500,
+    "n_holdout": 500,
+    "n_folds": 5,
+    "iterstrat": true,
+    "seed": 2026
+  },
+  "thresholds": {
+    "LOX_TANK_UNDERPRESSURE": 0.935446,
+    "LH2_PRESS_OSCILLATION": 0.882439,
+    "BUS_VOLTAGE_SAG": 0.963014,
+    "SLOW_ENGINE_START": 0.995,
+    "LOX_PUMP_CAVITATION": 0.840004,
+    "COMBUSTION_INSTABILITY": 0.377112,
+    "TURBINE_OVERTEMP": 0.752899,
+    "TEMP_SENSOR_FAULT": 0.05,
+    "SRB_THRUST_ASYMMETRY": 0.966593,
+    "TVC_ACTUATOR_DEGRADATION": 0.766985,
+    "POGO_ONSET": 0.493235,
+    "TRAJECTORY_DEVIATION": 0.256468
+  },
+  "threshold_calibration": {
+    "false_alarm_budget": 0.0015,
+    "per_class": {
+      "LOX_TANK_UNDERPRESSURE": {
+        "oof_false_alarm_rate": 0.00128921,
+        "oof_detection_rate": 0.930636,
+        "n_negative": 2327,
+        "n_positive": 173
+      },
+      "LH2_PRESS_OSCILLATION": {
+        "oof_false_alarm_rate": 0.00127823,
+        "oof_detection_rate": 0.816993,
+        "n_negative": 2347,
+        "n_positive": 153
+      },
+      "BUS_VOLTAGE_SAG": {
+        "oof_false_alarm_rate": 0.00128205,
+        "oof_detection_rate": 0.81875,
+        "n_negative": 2340,
+        "n_positive": 160
+      },
+      "SLOW_ENGINE_START": {
+        "oof_false_alarm_rate": 0.00254561,
+        "oof_detection_rate": 0.741259,
+        "n_negative": 2357,
+        "n_positive": 143
+      },
+      "LOX_PUMP_CAVITATION": {
+        "oof_false_alarm_rate": 0.00126156,
+        "oof_detection_rate": 0.803279,
+        "n_negative": 2378,
+        "n_positive": 122
+      },
+      "COMBUSTION_INSTABILITY": {
+        "oof_false_alarm_rate": 0.00128645,
+        "oof_detection_rate": 0.994048,
+        "n_negative": 2332,
+        "n_positive": 168
+      },
+      "TURBINE_OVERTEMP": {
+        "oof_false_alarm_rate": 0.00128096,
+        "oof_detection_rate": 0.810127,
+        "n_negative": 2342,
+        "n_positive": 158
+      },
+      "TEMP_SENSOR_FAULT": {
+        "oof_false_alarm_rate": 0.000423908,
+        "oof_detection_rate": 0.992908,
+        "n_negative": 2359,
+        "n_positive": 141
+      },
+      "SRB_THRUST_ASYMMETRY": {
+        "oof_false_alarm_rate": 0.00127443,
+        "oof_detection_rate": 0.815068,
+        "n_negative": 2354,
+        "n_positive": 146
+      },
+      "TVC_ACTUATOR_DEGRADATION": {
+        "oof_false_alarm_rate": 0.001287,
+        "oof_detection_rate": 0.56213,
+        "n_negative": 2331,
+        "n_positive": 169
+      },
+      "POGO_ONSET": {
+        "oof_false_alarm_rate": 0.00127823,
+        "oof_detection_rate": 0.875817,
+        "n_negative": 2347,
+        "n_positive": 153
+      },
+      "TRAJECTORY_DEVIATION": {
+        "oof_false_alarm_rate": 0.00128041,
+        "oof_detection_rate": 1.0,
+        "n_negative": 2343,
+        "n_positive": 157
+      }
+    }
+  },
+  "holdout_end_of_window": {
+    "per_class": {
+      "LOX_TANK_UNDERPRESSURE": {
+        "tp": 31,
+        "fp": 0,
+        "fn": 4,
+        "tn": 465,
+        "sensitivity": 0.885714,
+        "specificity": 1.0,
+        "ppv": 1.0,
+        "npv": 0.991471,
+        "f1": 0.939394,
+        "balanced_acc": 0.942857,
+        "mcc": 0.937102,
+        "support": 35,
+        "auroc": 0.947465,
+        "auprc": 0.946288,
+        "partial_auroc": 0.969601
+      },
+      "LH2_PRESS_OSCILLATION": {
+        "tp": 22,
+        "fp": 0,
+        "fn": 8,
+        "tn": 470,
+        "sensitivity": 0.733333,
+        "specificity": 1.0,
+        "ppv": 1.0,
+        "npv": 0.983264,
+        "f1": 0.846154,
+        "balanced_acc": 0.866667,
+        "mcc": 0.849153,
+        "support": 30,
+        "auroc": 0.987801,
+        "auprc": 0.910476,
+        "partial_auroc": 0.940649
+      },
+      "BUS_VOLTAGE_SAG": {
+        "tp": 26,
+        "fp": 0,
+        "fn": 6,
+        "tn": 468,
+        "sensitivity": 0.8125,
+        "specificity": 1.0,
+        "ppv": 1.0,
+        "npv": 0.987342,
+        "f1": 0.896552,
+        "balanced_acc": 0.90625,
+        "mcc": 0.895665,
+        "support": 32,
+        "auroc": 0.998932,
+        "auprc": 0.988215,
+        "partial_auroc": 0.994377
+      },
+      "SLOW_ENGINE_START": {
+        "tp": 20,
+        "fp": 0,
+        "fn": 9,
+        "tn": 471,
+        "sensitivity": 0.689655,
+        "specificity": 1.0,
+        "ppv": 1.0,
+        "npv": 0.98125,
+        "f1": 0.816327,
+        "balanced_acc": 0.844828,
+        "mcc": 0.822632,
+        "support": 29,
+        "auroc": 0.978256,
+        "auprc": 0.876916,
+        "partial_auroc": 0.913572
+      },
+      "LOX_PUMP_CAVITATION": {
+        "tp": 21,
+        "fp": 0,
+        "fn": 3,
+        "tn": 476,
+        "sensitivity": 0.875,
+        "specificity": 1.0,
+        "ppv": 1.0,
+        "npv": 0.993737,
+        "f1": 0.933333,
+        "balanced_acc": 0.9375,
+        "mcc": 0.93248,
+        "support": 24,
+        "auroc": 0.999825,
+        "auprc": 0.996597,
+        "partial_auroc": 0.999079
+      },
+      "COMBUSTION_INSTABILITY": {
+        "tp": 33,
+        "fp": 0,
+        "fn": 0,
+        "tn": 467,
+        "sensitivity": 1.0,
+        "specificity": 1.0,
+        "ppv": 1.0,
+        "npv": 1.0,
+        "f1": 1.0,
+        "balanced_acc": 1.0,
+        "mcc": 1.0,
+        "support": 33,
+        "auroc": 1.0,
+        "auprc": 1.0,
+        "partial_auroc": 1.0
+      },
+      "TURBINE_OVERTEMP": {
+        "tp": 26,
+        "fp": 0,
+        "fn": 6,
+        "tn": 468,
+        "sensitivity": 0.8125,
+        "specificity": 1.0,
+        "ppv": 1.0,
+        "npv": 0.987342,
+        "f1": 0.896552,
+        "balanced_acc": 0.90625,
+        "mcc": 0.895665,
+        "support": 32,
+        "auroc": 0.992788,
+        "auprc": 0.938213,
+        "partial_auroc": 0.962045
+      },
+      "TEMP_SENSOR_FAULT": {
+        "tp": 28,
+        "fp": 1,
+        "fn": 0,
+        "tn": 471,
+        "sensitivity": 1.0,
+        "specificity": 0.997881,
+        "ppv": 0.965517,
+        "npv": 1.0,
+        "f1": 0.982456,
+        "balanced_acc": 0.998941,
+        "mcc": 0.981566,
+        "support": 28,
+        "auroc": 1.0,
+        "auprc": 1.0,
+        "partial_auroc": 1.0
+      },
+      "SRB_THRUST_ASYMMETRY": {
+        "tp": 24,
+        "fp": 0,
+        "fn": 5,
+        "tn": 471,
+        "sensitivity": 0.827586,
+        "specificity": 1.0,
+        "ppv": 1.0,
+        "npv": 0.989496,
+        "f1": 0.90566,
+        "balanced_acc": 0.913793,
+        "mcc": 0.904927,
+        "support": 29,
+        "auroc": 0.999707,
+        "auprc": 0.995355,
+        "partial_auroc": 0.998459
+      },
+      "TVC_ACTUATOR_DEGRADATION": {
+        "tp": 17,
+        "fp": 0,
+        "fn": 17,
+        "tn": 466,
+        "sensitivity": 0.5,
+        "specificity": 1.0,
+        "ppv": 1.0,
+        "npv": 0.964803,
+        "f1": 0.666667,
+        "balanced_acc": 0.75,
+        "mcc": 0.694551,
+        "support": 34,
+        "auroc": 0.861083,
+        "auprc": 0.722689,
+        "partial_auroc": 0.819291
+      },
+      "POGO_ONSET": {
+        "tp": 29,
+        "fp": 0,
+        "fn": 2,
+        "tn": 469,
+        "sensitivity": 0.935484,
+        "specificity": 1.0,
+        "ppv": 1.0,
+        "npv": 0.995754,
+        "f1": 0.966667,
+        "balanced_acc": 0.967742,
+        "mcc": 0.965148,
+        "support": 31,
+        "auroc": 0.99663,
+        "auprc": 0.975338,
+        "partial_auroc": 0.982262
+      },
+      "TRAJECTORY_DEVIATION": {
+        "tp": 31,
+        "fp": 0,
+        "fn": 0,
+        "tn": 469,
+        "sensitivity": 1.0,
+        "specificity": 1.0,
+        "ppv": 1.0,
+        "npv": 1.0,
+        "f1": 1.0,
+        "balanced_acc": 1.0,
+        "mcc": 1.0,
+        "support": 31,
+        "auroc": 1.0,
+        "auprc": 1.0,
+        "partial_auroc": 1.0
+      }
+    },
+    "macro": {
+      "how": "macro",
+      "n_classes": 12,
+      "n_classes_scored_auroc": 12,
+      "support_total": 368,
+      "sensitivity": 0.839314,
+      "specificity": 0.999823,
+      "ppv": 0.997126,
+      "npv": 0.989538,
+      "f1": 0.904147,
+      "balanced_acc": 0.919569,
+      "mcc": 0.906574,
+      "auroc": 0.980207,
+      "auprc": 0.945841
+    },
+    "micro": {
+      "how": "micro",
+      "n_classes": 12,
+      "n_classes_scored_auroc": 12,
+      "support_total": 368,
+      "sensitivity": 0.836957,
+      "specificity": 0.999822,
+      "ppv": 0.996764,
+      "npv": 0.989457,
+      "f1": 0.909897,
+      "balanced_acc": 0.918389,
+      "mcc": 0.908432,
+      "auroc": 0.983561,
+      "auprc": 0.951769
+    }
+  },
+  "holdout_gates": {
+    "ignition_gate_t-1": {
+      "per_class": {
+        "LOX_TANK_UNDERPRESSURE": {
+          "tp": 31,
+          "fp": 0,
+          "fn": 4,
+          "tn": 465,
+          "sensitivity": 0.885714,
+          "specificity": 1.0,
+          "ppv": 1.0,
+          "npv": 0.991471,
+          "f1": 0.939394,
+          "balanced_acc": 0.942857,
+          "mcc": 0.937102,
+          "support": 35,
+          "auroc": 0.961782,
+          "auprc": 0.947732,
+          "partial_auroc": 0.969601
+        },
+        "LH2_PRESS_OSCILLATION": {
+          "tp": 22,
+          "fp": 0,
+          "fn": 8,
+          "tn": 470,
+          "sensitivity": 0.733333,
+          "specificity": 1.0,
+          "ppv": 1.0,
+          "npv": 0.983264,
+          "f1": 0.846154,
+          "balanced_acc": 0.866667,
+          "mcc": 0.849153,
+          "support": 30,
+          "auroc": 0.986738,
+          "auprc": 0.89994,
+          "partial_auroc": 0.932811
+        },
+        "BUS_VOLTAGE_SAG": {
+          "tp": 26,
+          "fp": 0,
+          "fn": 6,
+          "tn": 468,
+          "sensitivity": 0.8125,
+          "specificity": 1.0,
+          "ppv": 1.0,
+          "npv": 0.987342,
+          "f1": 0.896552,
+          "balanced_acc": 0.90625,
+          "mcc": 0.895665,
+          "support": 32,
+          "auroc": 0.998865,
+          "auprc": 0.986143,
+          "partial_auroc": 0.994026
+        }
+      },
+      "macro": {
+        "how": "macro",
+        "n_classes": 3,
+        "n_classes_scored_auroc": 3,
+        "support_total": 97,
+        "sensitivity": 0.810516,
+        "specificity": 1.0,
+        "ppv": 1.0,
+        "npv": 0.987359,
+        "f1": 0.894033,
+        "balanced_acc": 0.905258,
+        "mcc": 0.893973,
+        "auroc": 0.982461,
+        "auprc": 0.944605
+      },
+      "micro": {
+        "how": "micro",
+        "n_classes": 3,
+        "n_classes_scored_auroc": 3,
+        "support_total": 97,
+        "sensitivity": 0.814433,
+        "specificity": 1.0,
+        "ppv": 1.0,
+        "npv": 0.987333,
+        "f1": 0.897727,
+        "balanced_acc": 0.907216,
+        "mcc": 0.896725,
+        "auroc": 0.979007,
+        "auprc": 0.954999
+      }
+    },
+    "booster_commit_gate_t6.5": {
+      "per_class": {
+        "SLOW_ENGINE_START": {
+          "tp": 21,
+          "fp": 0,
+          "fn": 8,
+          "tn": 471,
+          "sensitivity": 0.724138,
+          "specificity": 1.0,
+          "ppv": 1.0,
+          "npv": 0.983299,
+          "f1": 0.84,
+          "balanced_acc": 0.862069,
+          "mcc": 0.843827,
+          "support": 29,
+          "auroc": 0.974669,
+          "auprc": 0.871062,
+          "partial_auroc": 0.910104
+        },
+        "LOX_PUMP_CAVITATION": {
+          "tp": 20,
+          "fp": 0,
+          "fn": 4,
+          "tn": 476,
+          "sensitivity": 0.833333,
+          "specificity": 1.0,
+          "ppv": 1.0,
+          "npv": 0.991667,
+          "f1": 0.909091,
+          "balanced_acc": 0.916667,
+          "mcc": 0.909059,
+          "support": 24,
+          "auroc": 0.999825,
+          "auprc": 0.996795,
+          "partial_auroc": 0.999079
+        },
+        "COMBUSTION_INSTABILITY": {
+          "tp": 19,
+          "fp": 0,
+          "fn": 2,
+          "tn": 479,
+          "sensitivity": 0.904762,
+          "specificity": 1.0,
+          "ppv": 1.0,
+          "npv": 0.995842,
+          "f1": 0.95,
+          "balanced_acc": 0.952381,
+          "mcc": 0.94921,
+          "support": 21,
+          "auroc": 1.0,
+          "auprc": 1.0,
+          "partial_auroc": 1.0
+        }
+      },
+      "macro": {
+        "how": "macro",
+        "n_classes": 3,
+        "n_classes_scored_auroc": 3,
+        "support_total": 74,
+        "sensitivity": 0.820744,
+        "specificity": 1.0,
+        "ppv": 1.0,
+        "npv": 0.990269,
+        "f1": 0.899697,
+        "balanced_acc": 0.910372,
+        "mcc": 0.900699,
+        "auroc": 0.991498,
+        "auprc": 0.955952
+      },
+      "micro": {
+        "how": "micro",
+        "n_classes": 3,
+        "n_classes_scored_auroc": 3,
+        "support_total": 74,
+        "sensitivity": 0.810811,
+        "specificity": 1.0,
+        "ppv": 1.0,
+        "npv": 0.990278,
+        "f1": 0.895522,
+        "balanced_acc": 0.905405,
+        "mcc": 0.896062,
+        "auroc": 0.97773,
+        "auprc": 0.938785
+      }
+    }
+  },
+  "holdout_over_time": [
+    {
+      "t": -45.0,
+      "classes_scored": 1,
+      "macro_f1": 0.927536,
+      "micro_f1": 0.927536
+    },
+    {
+      "t": -30.0,
+      "classes_scored": 3,
+      "macro_f1": 0.613131,
+      "micro_f1": 0.677966
+    },
+    {
+      "t": -15.0,
+      "classes_scored": 3,
+      "macro_f1": 0.878649,
+      "micro_f1": 0.887574
+    },
+    {
+      "t": -1.0,
+      "classes_scored": 3,
+      "macro_f1": 0.894033,
+      "micro_f1": 0.897727
+    },
+    {
+      "t": 2.0,
+      "classes_scored": 5,
+      "macro_f1": 0.584905,
+      "micro_f1": 0.764977
+    },
+    {
+      "t": 4.0,
+      "classes_scored": 6,
+      "macro_f1": 0.876898,
+      "micro_f1": 0.876712
+    },
+    {
+      "t": 6.5,
+      "classes_scored": 6,
+      "macro_f1": 0.896865,
+      "micro_f1": 0.896774
+    },
+    {
+      "t": 15.0,
+      "classes_scored": 6,
+      "macro_f1": 0.905293,
+      "micro_f1": 0.904459
+    },
+    {
+      "t": 30.0,
+      "classes_scored": 9,
+      "macro_f1": 0.904539,
+      "micro_f1": 0.905444
+    },
+    {
+      "t": 60.0,
+      "classes_scored": 11,
+      "macro_f1": 0.856006,
+      "micro_f1": 0.890411
+    },
+    {
+      "t": 90.0,
+      "classes_scored": 11,
+      "macro_f1": 0.856323,
+      "micro_f1": 0.879406
+    },
+    {
+      "t": 120.0,
+      "classes_scored": 12,
+      "macro_f1": 0.895295,
+      "micro_f1": 0.900763
+    },
+    {
+      "t": 150.0,
+      "classes_scored": 12,
+      "macro_f1": 0.904147,
+      "micro_f1": 0.909897
+    }
+  ],
+  "holdout_streaming": {
+    "LOX_TANK_UNDERPRESSURE": {
+      "n_launches": 35,
+      "detection_rate": 0.942857,
+      "in_time_rate": 0.914286,
+      "gate": -1.0,
+      "median_latency_s": -3.5,
+      "false_alerts_per_1000": 4.30108
+    },
+    "LH2_PRESS_OSCILLATION": {
+      "n_launches": 30,
+      "detection_rate": 0.733333,
+      "in_time_rate": 0.733333,
+      "gate": -1.0,
+      "median_latency_s": 4.00406,
+      "false_alerts_per_1000": 0.0
+    },
+    "BUS_VOLTAGE_SAG": {
+      "n_launches": 32,
+      "detection_rate": 0.8125,
+      "in_time_rate": 0.8125,
+      "gate": -1.0,
+      "median_latency_s": 1.0,
+      "false_alerts_per_1000": 0.0
+    },
+    "SLOW_ENGINE_START": {
+      "n_launches": 29,
+      "detection_rate": 0.724138,
+      "in_time_rate": 0.724138,
+      "gate": 6.5,
+      "median_latency_s": 1.5,
+      "false_alerts_per_1000": 0.0
+    },
+    "LOX_PUMP_CAVITATION": {
+      "n_launches": 24,
+      "detection_rate": 0.875,
+      "in_time_rate": 0.875,
+      "gate": 6.5,
+      "median_latency_s": 1.95814,
+      "false_alerts_per_1000": 0.0
+    },
+    "COMBUSTION_INSTABILITY": {
+      "n_launches": 33,
+      "detection_rate": 1.0,
+      "in_time_rate": 0.939394,
+      "gate": null,
+      "median_latency_s": 0.983327,
+      "false_alerts_per_1000": 0.0
+    },
+    "TURBINE_OVERTEMP": {
+      "n_launches": 32,
+      "detection_rate": 0.8125,
+      "in_time_rate": 0.8125,
+      "gate": null,
+      "median_latency_s": 2.78663,
+      "false_alerts_per_1000": 2.13675
+    },
+    "TEMP_SENSOR_FAULT": {
+      "n_launches": 28,
+      "detection_rate": 1.0,
+      "in_time_rate": 1.0,
+      "gate": null,
+      "median_latency_s": 0.707548,
+      "false_alerts_per_1000": 2.11864
+    },
+    "SRB_THRUST_ASYMMETRY": {
+      "n_launches": 29,
+      "detection_rate": 0.862069,
+      "in_time_rate": 0.862069,
+      "gate": null,
+      "median_latency_s": 4.26062,
+      "false_alerts_per_1000": 0.0
+    },
+    "TVC_ACTUATOR_DEGRADATION": {
+      "n_launches": 34,
+      "detection_rate": 0.5,
+      "in_time_rate": 0.5,
+      "gate": null,
+      "median_latency_s": 16.8055,
+      "false_alerts_per_1000": 2.14592
+    },
+    "POGO_ONSET": {
+      "n_launches": 31,
+      "detection_rate": 0.935484,
+      "in_time_rate": 0.935484,
+      "gate": null,
+      "median_latency_s": -0.544281,
+      "false_alerts_per_1000": 0.0
+    },
+    "TRAJECTORY_DEVIATION": {
+      "n_launches": 31,
+      "detection_rate": 1.0,
+      "in_time_rate": 1.0,
+      "gate": null,
+      "median_latency_s": -0.12,
+      "false_alerts_per_1000": 2.1322
+    }
+  },
+  "acceptance": {
+    "overall_f1_target": 0.8,
+    "holdout_macro_f1": 0.904147,
+    "pass": true
+  }
+}

@@ -1,0 +1,318 @@
+{
+  "meta": {
+    "domain": "launch-vehicle",
+    "version": "0.1.0",
+    "generated_by": "run_factory.py",
+    "created_at": "2026-09-30T08:05:36+00:00",
+    "canonical_count": 13,
+    "launch_count": 3000,
+    "multi_failure_launches": 505,
+    "min_positive": 50,
+    "acceptance_pass": true,
+    "note": "Synthetic campaign from a notional heavy-launcher model. Failures are oversampled (6 % base rate each)."
+  },
+  "diagnoses": [
+    {
+      "canonical": "LOX_TANK_UNDERPRESSURE",
+      "display": "LOX tank under-pressure",
+      "category": "pressurization",
+      "phase": "countdown",
+      "call": "HOLD",
+      "severity": "high",
+      "subsystem": "tanks",
+      "channels": [
+        "P_LOX_TANK"
+      ],
+      "description": "LOX tank pressure rises too slowly and settles below the flight setpoint. Low tank pressure lowers the pump inlet pressure and raises the cavitation risk at engine start.",
+      "positive_count": 208,
+      "prevalence": 0.0693333,
+      "median_severity": 0.357091,
+      "is_default": false,
+      "meets_min_positive": true
+    },
+    {
+      "canonical": "LH2_PRESS_OSCILLATION",
+      "display": "LH2 pressure regulator oscillation",
+      "category": "pressurization",
+      "phase": "countdown",
+      "call": "HOLD",
+      "severity": "medium",
+      "subsystem": "tanks",
+      "channels": [
+        "P_LH2_TANK"
+      ],
+      "description": "The LH2 tank pressure regulator hunts: a slow 0.2-0.4 Hz pressure oscillation around the setpoint.",
+      "positive_count": 183,
+      "prevalence": 0.061,
+      "median_severity": 0.300145,
+      "is_default": false,
+      "meets_min_positive": true
+    },
+    {
+      "canonical": "BUS_VOLTAGE_SAG",
+      "display": "Bus voltage sag at power transfer",
+      "category": "electrical",
+      "phase": "countdown",
+      "call": "HOLD",
+      "severity": "medium",
+      "subsystem": "avionics_power",
+      "channels": [
+        "BUS_28V"
+      ],
+      "description": "At the switch to onboard batteries the 28 V bus dips deeply, recovers slowly and stays low: a weak battery or a high-resistance connection.",
+      "positive_count": 192,
+      "prevalence": 0.064,
+      "median_severity": 0.325616,
+      "is_default": false,
+      "meets_min_positive": true
+    },
+    {
+      "canonical": "SLOW_ENGINE_START",
+      "display": "Slow core engine start",
+      "category": "core_engine",
+      "phase": "engine_start",
+      "call": "ABORT",
+      "severity": "critical",
+      "subsystem": "core_engine",
+      "channels": [
+        "PC_CORE",
+        "N_LOX_TP",
+        "T_TURB_IN"
+      ],
+      "description": "Chamber pressure and turbopump speed build up too slowly after ignition.",
+      "positive_count": 172,
+      "prevalence": 0.0573333,
+      "median_severity": 0.295968,
+      "is_default": false,
+      "meets_min_positive": true
+    },
+    {
+      "canonical": "LOX_PUMP_CAVITATION",
+      "display": "LOX turbopump cavitation",
+      "category": "core_engine",
+      "phase": "engine_start",
+      "call": "ABORT",
+      "severity": "critical",
+      "subsystem": "core_engine",
+      "channels": [
+        "N_LOX_TP",
+        "PC_CORE",
+        "VIB_ENG"
+      ],
+      "description": "The LOX pump loses head in bursts: pump speed spikes, chamber pressure dips and vibration rises. Most likely during the engine start, when inlet pressure is lowest.",
+      "positive_count": 146,
+      "prevalence": 0.0486667,
+      "median_severity": 0.300987,
+      "is_default": false,
+      "meets_min_positive": true
+    },
+    {
+      "canonical": "COMBUSTION_INSTABILITY",
+      "display": "Combustion instability",
+      "category": "core_engine",
+      "phase": "engine_start_or_flight",
+      "call": "ABORT",
+      "severity": "critical",
+      "subsystem": "core_engine",
+      "channels": [
+        "PC_CORE",
+        "VIB_ENG"
+      ],
+      "description": "Rough combustion: chamber pressure ripple and a jump in engine-bay vibration.",
+      "positive_count": 201,
+      "prevalence": 0.067,
+      "median_severity": 0.346995,
+      "is_default": false,
+      "meets_min_positive": true
+    },
+    {
+      "canonical": "TURBINE_OVERTEMP",
+      "display": "Turbine over-temperature",
+      "category": "core_engine",
+      "phase": "flight",
+      "call": "CRITICAL",
+      "severity": "critical",
+      "subsystem": "core_engine",
+      "channels": [
+        "T_TURB_IN",
+        "N_LOX_TP",
+        "PC_CORE"
+      ],
+      "description": "Gas-generator mixture shift: turbine inlet temperature rises, and with the extra turbine power the pump speed and chamber pressure rise too.",
+      "positive_count": 190,
+      "prevalence": 0.0633333,
+      "median_severity": 0.292865,
+      "is_default": false,
+      "meets_min_positive": true
+    },
+    {
+      "canonical": "TEMP_SENSOR_FAULT",
+      "display": "Turbine temperature sensor fault",
+      "category": "instrumentation",
+      "phase": "flight",
+      "call": "ADVISORY",
+      "severity": "medium",
+      "subsystem": "core_engine",
+      "channels": [
+        "T_TURB_IN"
+      ],
+      "description": "The turbine temperature sensor fails (step, spikes, or stuck at full scale) while pump speed and chamber pressure stay nominal. A fixed redline cannot tell this from a real over-temperature.",
+      "positive_count": 169,
+      "prevalence": 0.0563333,
+      "median_severity": 0.334958,
+      "is_default": false,
+      "meets_min_positive": true
+    },
+    {
+      "canonical": "SRB_THRUST_ASYMMETRY",
+      "display": "Booster thrust imbalance",
+      "category": "boosters",
+      "phase": "flight",
+      "call": "WARNING",
+      "severity": "high",
+      "subsystem": "boosters",
+      "channels": [
+        "PC_SRB_L",
+        "PC_SRB_R",
+        "TVC_YAW"
+      ],
+      "description": "One booster's chamber pressure diverges; the core engine TVC takes a yaw offset to compensate the imbalance.",
+      "positive_count": 175,
+      "prevalence": 0.0583333,
+      "median_severity": 0.313746,
+      "is_default": false,
+      "meets_min_positive": true
+    },
+    {
+      "canonical": "TVC_ACTUATOR_DEGRADATION",
+      "display": "TVC actuator degradation",
+      "category": "flight_control",
+      "phase": "flight",
+      "call": "WARNING",
+      "severity": "high",
+      "subsystem": "flight_control",
+      "channels": [
+        "TVC_PITCH"
+      ],
+      "description": "The pitch actuator develops a limit cycle: a 1-2.2 Hz oscillation in deflection.",
+      "positive_count": 203,
+      "prevalence": 0.0676667,
+      "median_severity": 0.338071,
+      "is_default": false,
+      "meets_min_positive": true
+    },
+    {
+      "canonical": "POGO_ONSET",
+      "display": "POGO onset",
+      "category": "structural_dynamics",
+      "phase": "flight",
+      "call": "WARNING",
+      "severity": "high",
+      "subsystem": "structure",
+      "channels": [
+        "ACC_AX",
+        "PC_CORE"
+      ],
+      "description": "A growing longitudinal oscillation (12-18 Hz) in acceleration, coupled with chamber pressure, late in the boosted phase.",
+      "positive_count": 184,
+      "prevalence": 0.0613333,
+      "median_severity": 0.341911,
+      "is_default": false,
+      "meets_min_positive": true
+    },
+    {
+      "canonical": "TRAJECTORY_DEVIATION",
+      "display": "Trajectory deviation",
+      "category": "guidance",
+      "phase": "flight",
+      "call": "CRITICAL",
+      "severity": "critical",
+      "subsystem": "guidance",
+      "channels": [
+        "TRAJ_DEV"
+      ],
+      "description": "The guidance follows a wrong direction reference (a drifting gyro, or a wrong heading as on Ariane 5 VA241) and the vehicle flies it faithfully. It leaves its planned trajectory while engines and steering look normal; a sudden offset shows a short steering kick. Beyond the flight-safety corridor it is a destruct decision.",
+      "positive_count": 188,
+      "prevalence": 0.0626667,
+      "median_severity": 0.31678,
+      "is_default": false,
+      "meets_min_positive": true
+    },
+    {
+      "canonical": "NOMINAL",
+      "display": "Nominal",
+      "category": "nominal",
+      "phase": "all",
+      "call": "GO",
+      "severity": "none",
+      "subsystem": null,
+      "channels": [],
+      "description": "No failure injected: the launch runs within normal variation.",
+      "positive_count": 1436,
+      "prevalence": 0.478667,
+      "median_severity": null,
+      "is_default": true,
+      "meets_min_positive": true
+    }
+  ],
+  "categories": {
+    "pressurization": {
+      "label": "Propellant pressurization",
+      "diagnoses": [
+        "LOX_TANK_UNDERPRESSURE",
+        "LH2_PRESS_OSCILLATION"
+      ]
+    },
+    "electrical": {
+      "label": "Electrical",
+      "diagnoses": [
+        "BUS_VOLTAGE_SAG"
+      ]
+    },
+    "core_engine": {
+      "label": "Core engine",
+      "diagnoses": [
+        "SLOW_ENGINE_START",
+        "LOX_PUMP_CAVITATION",
+        "COMBUSTION_INSTABILITY",
+        "TURBINE_OVERTEMP"
+      ]
+    },
+    "instrumentation": {
+      "label": "Instrumentation",
+      "diagnoses": [
+        "TEMP_SENSOR_FAULT"
+      ]
+    },
+    "boosters": {
+      "label": "Solid boosters",
+      "diagnoses": [
+        "SRB_THRUST_ASYMMETRY"
+      ]
+    },
+    "flight_control": {
+      "label": "Flight control",
+      "diagnoses": [
+        "TVC_ACTUATOR_DEGRADATION"
+      ]
+    },
+    "structural_dynamics": {
+      "label": "Structural dynamics",
+      "diagnoses": [
+        "POGO_ONSET"
+      ]
+    },
+    "guidance": {
+      "label": "Guidance & navigation",
+      "diagnoses": [
+        "TRAJECTORY_DEVIATION"
+      ]
+    },
+    "nominal": {
+      "label": "Nominal",
+      "diagnoses": [
+        "NOMINAL"
+      ]
+    }
+  }
+}

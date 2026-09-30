@@ -1,0 +1,105 @@
+# Launch Vehicle Domain Specification (machine-readable)
+# Human-readable version: spec.md
+# Schema: spec_schema.py (DomainSpec)
+# All data is synthetic (launch_sim/, seed base 2026). Not data from a real vehicle.
+
+domain: launch-vehicle
+version: "0.1.0"
+
+database:
+  source_description: "Synthetic campaign from a notional heavy-launcher model (launch_sim/simulate.py)"
+  total_patients: 3000          # launches
+  signal_type: "12-channel launch telemetry, 50 Hz, H0-60 s to H0+150 s"
+  data_format: simulated
+  cohorts:
+    work:
+      file: layer-4/split.json
+      patient_count: 2500
+      role: training
+      split_source: "stratified, n_folds/(n_folds+1) of the campaign"
+    holdout:
+      file: layer-4/split.json
+      patient_count: 500
+      role: validation
+      split_source: "stratified, 1/(n_folds+1) of the campaign"
+
+signal_processing:
+  method: causal_phase_windowed_features
+  expected_feature_count: 137
+  feature_families:
+    CD: "Countdown [-60, -1) s: tank pressurization, bus voltage"
+    IGN: "Engine start [0, 6.5) s: rise times, roughness, pump-speed spikes"
+    ASC: "Boosted ascent [7, 136) s: rises vs pad plateau, oscillations, imbalance"
+    FLT: "Whole flight [7, 150] s: trajectory deviation, growth, ratio to the normal spread"
+    LATE: "Late ascent [100, 136) s: POGO band"
+    XC: "Cross-channel consistency checks"
+    CTX: "Evaluation time"
+  key_features:                # normal range = mean +/- 2 sd of nominal training launches
+    - name: Chamber pressure rise time (90 %)
+      qpsi_key: IGN__PC_CORE__t90
+      normal_range: "2.1-2.4"
+      unit: s
+    - name: LOX tank pressure, last 10 s of countdown
+      qpsi_key: CD__P_LOX_TANK__last10
+      normal_range: "3.44-3.56"
+      unit: bar
+    - name: Temperature rise not explained by pump speed
+      qpsi_key: XC__T_unexplained_max
+      normal_range: "< 4"
+      unit: K
+    - name: Booster chamber pressure imbalance, worst 2 s
+      qpsi_key: ASC__SRB__imbalance_max
+      normal_range: "< 2.2"
+      unit: "%"
+
+building_blocks:
+  classifier_type: hgb_ovr
+  training_cohort: work
+  canonical_diagnosis_count: 12
+  clinical_categories:
+    - Propellant pressurization
+    - Electrical
+    - Core engine
+    - Instrumentation
+    - Solid boosters
+    - Flight control
+    - Structural dynamics
+    - Nominal
+  pipeline_stages:
+    - causal_features
+    - ovr_classifier
+    - debounce
+    - exclusion_rule
+    - phase_call
+  error_correction:
+    - false_alarm_budget_thresholds
+    - exclusion_rule_overtemp_vs_sensor_fault
+
+product_vision:
+  product_type: realtime_guidance
+  llm_model: none
+  m1_config:
+    temperature: 0.0
+    max_tokens: 512
+    role: diagnostician
+  m2_config:
+    temperature: 0.7
+    max_tokens: 6144
+    role: architect
+  frontend_type: static_html
+  features:
+    - streaming_replay
+    - phase_calls
+    - rule_traced_explanations
+    - fixed_limit_comparison
+    - knowledge_graph_view
+
+acceptance:
+  overall_f1_target: 0.80       # fixed in the design before any result existed
+  inference_time_ms: 50.0       # per 0.5 s tick: features + 11 classifiers
+  validation_cohort: holdout
+  per_diagnosis_targets: {}
+  auditability_requirements:
+    - "Every alert names its failure mode, probability, confirmation time and supporting rules"
+    - "All rules expressed in clear text with sensitivity, specificity and evidence grade"
+    - "All reported metrics measured on launches the models never saw"

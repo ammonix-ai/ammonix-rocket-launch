@@ -1,0 +1,9 @@
+# Pinned: the committed results were produced with exactly these versions, and scikit-learn
+# models depend on the version. Python 3.11 or newer.
+numpy==2.5.3
+scipy==1.18.1
+scikit-learn==1.9.1
+threadpoolctl==3.7.0
+iterative-stratification==0.1.9
+PyYAML==6.0.3
+pytest==9.1.1

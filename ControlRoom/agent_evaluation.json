@@ -1,0 +1,8647 @@
+{
+ "n_launches": 500,
+ "per_class": {
+  "LOX_TANK_UNDERPRESSURE": {
+   "display": "LOX tank under-pressure",
+   "n_launches": 35,
+   "detected": 33,
+   "detection_rate": 0.9428571428571428,
+   "in_time_rate": 0.9142857142857143,
+   "median_latency_s": -3.5,
+   "false_alerts_per_1000": 4.301075268817204
+  },
+  "LH2_PRESS_OSCILLATION": {
+   "display": "LH2 pressure regulator oscillation",
+   "n_launches": 30,
+   "detected": 22,
+   "detection_rate": 0.7333333333333333,
+   "in_time_rate": 0.7333333333333333,
+   "median_latency_s": 4.004057142420974,
+   "false_alerts_per_1000": 0.0
+  },
+  "BUS_VOLTAGE_SAG": {
+   "display": "Bus voltage sag at power transfer",
+   "n_launches": 32,
+   "detected": 26,
+   "detection_rate": 0.8125,
+   "in_time_rate": 0.8125,
+   "median_latency_s": 1.0,
+   "false_alerts_per_1000": 0.0
+  },
+  "SLOW_ENGINE_START": {
+   "display": "Slow core engine start",
+   "n_launches": 29,
+   "detected": 21,
+   "detection_rate": 0.7241379310344828,
+   "in_time_rate": 0.7241379310344828,
+   "median_latency_s": 1.5,
+   "false_alerts_per_1000": 0.0
+  },
+  "LOX_PUMP_CAVITATION": {
+   "display": "LOX turbopump cavitation",
+   "n_launches": 24,
+   "detected": 21,
+   "detection_rate": 0.875,
+   "in_time_rate": 0.875,
+   "median_latency_s": 1.9581389883124887,
+   "false_alerts_per_1000": 0.0
+  },
+  "COMBUSTION_INSTABILITY": {
+   "display": "Combustion instability",
+   "n_launches": 33,
+   "detected": 33,
+   "detection_rate": 1.0,
+   "in_time_rate": 1.0,
+   "median_latency_s": 0.983327054278909,
+   "false_alerts_per_1000": 0.0
+  },
+  "TURBINE_OVERTEMP": {
+   "display": "Turbine over-temperature",
+   "n_launches": 32,
+   "detected": 26,
+   "detection_rate": 0.8125,
+   "in_time_rate": 0.8125,
+   "median_latency_s": 2.786629674117256,
+   "false_alerts_per_1000": 2.1367521367521367
+  },
+  "TEMP_SENSOR_FAULT": {
+   "display": "Turbine temperature sensor fault",
+   "n_launches": 28,
+   "detected": 28,
+   "detection_rate": 1.0,
+   "in_time_rate": 1.0,
+   "median_latency_s": 0.7075476218008916,
+   "false_alerts_per_1000": 2.1186440677966103
+  },
+  "SRB_THRUST_ASYMMETRY": {
+   "display": "Booster thrust imbalance",
+   "n_launches": 29,
+   "detected": 25,
+   "detection_rate": 0.8620689655172413,
+   "in_time_rate": 0.8620689655172413,
+   "median_latency_s": 4.2606225360269505,
+   "false_alerts_per_1000": 0.0
+  },
+  "TVC_ACTUATOR_DEGRADATION": {
+   "display": "TVC actuator degradation",
+   "n_launches": 34,
+   "detected": 17,
+   "detection_rate": 0.5,
+   "in_time_rate": 0.5,
+   "median_latency_s": 16.805451891823637,
+   "false_alerts_per_1000": 2.1459227467811157
+  },
+  "POGO_ONSET": {
+   "display": "POGO onset",
+   "n_launches": 31,
+   "detected": 29,
+   "detection_rate": 0.9354838709677419,
+   "in_time_rate": 0.9354838709677419,
+   "median_latency_s": -0.5442813744245427,
+   "false_alerts_per_1000": 0.0
+  },
+  "TRAJECTORY_DEVIATION": {
+   "display": "Trajectory deviation",
+   "n_launches": 31,
+   "detected": 31,
+   "detection_rate": 1.0,
+   "in_time_rate": 1.0,
+   "median_latency_s": -0.12000000000000455,
+   "false_alerts_per_1000": 2.1321961620469083
+  }
+ },
+ "countdown_failures_caught_before_ignition": {
+  "n_launches": 88,
+  "agent": 0.8522727272727273,
+  "redline": 0.5568181818181818
+ },
+ "start_failures_caught_before_booster_ignition": {
+  "n_launches": 72,
+  "agent": 0.8611111111111112,
+  "redline": 0.3888888888888889
+ },
+ "false_calls_on_nominal_launches": {
+  "n_nominal_launches": 237,
+  "agent_holds_per_1000": 4.219409282700422,
+  "agent_aborts_per_1000": 0.0,
+  "agent_flight_warnings_per_1000": 4.219409282700422,
+  "redline_holds_per_1000": 0.0,
+  "redline_aborts_per_1000": 0.0,
+  "redline_flight_alarms_per_1000": 4.219409282700422
+ },
+ "sensor_fault_vs_overtemp": {
+  "n_sensor_fault_launches": 28,
+  "agent_called_it_sensor_fault": 1.0,
+  "agent_called_it_overtemp": 0.0,
+  "redline_temperature_alarm": 0.6785714285714286,
+  "n_overtemp_launches": 32,
+  "agent_detected_overtemp": 0.8125,
+  "redline_detected_overtemp": 0.34375,
+  "agent_overtemp_median_latency_s": 2.786629674117256,
+  "redline_overtemp_median_latency_s": 4.560491091874155
+ },
+ "flight_median_latency_s": 1.7470886479590737,
+ "launches": [
+  {
+   "labels": {
+    "COMBUSTION_INSTABILITY": {
+     "manifest": 2.5521963427145242,
+     "severity": 0.23947864847912906
+    }
+   },
+   "first_alert": {
+    "COMBUSTION_INSTABILITY": 3.5
+   },
+   "hold_at": null,
+   "abort_at": 3.5,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600003
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600010
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600012
+  },
+  {
+   "labels": {
+    "LH2_PRESS_OSCILLATION": {
+     "manifest": -36.06713015329438,
+     "severity": 0.39868009551359507
+    }
+   },
+   "first_alert": {
+    "LH2_PRESS_OSCILLATION": -32.0
+   },
+   "hold_at": -32.0,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600013
+  },
+  {
+   "labels": {
+    "BUS_VOLTAGE_SAG": {
+     "manifest": -30.0,
+     "severity": 0.34785920236016293
+    }
+   },
+   "first_alert": {
+    "BUS_VOLTAGE_SAG": -29.0
+   },
+   "hold_at": -29.0,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -29.92,
+     "call": "HOLD",
+     "text": "Bus voltage below 27.0 V"
+    }
+   ],
+   "seed": 202600022
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600023
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600036
+  },
+  {
+   "labels": {
+    "COMBUSTION_INSTABILITY": {
+     "manifest": 19.266552304889203,
+     "severity": 0.11120675696207849
+    }
+   },
+   "first_alert": {
+    "COMBUSTION_INSTABILITY": 20.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 20.5,
+   "warning_at": 20.5,
+   "advisory_at": 20.5,
+   "redlines": [],
+   "seed": 202600046
+  },
+  {
+   "labels": {
+    "BUS_VOLTAGE_SAG": {
+     "manifest": -30.0,
+     "severity": 0.062013595782193426
+    }
+   },
+   "first_alert": {
+    "LOX_TANK_UNDERPRESSURE": -49.0
+   },
+   "hold_at": -49.0,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600050
+  },
+  {
+   "labels": {
+    "BUS_VOLTAGE_SAG": {
+     "manifest": -30.0,
+     "severity": 0.18450972381056632
+    }
+   },
+   "first_alert": {
+    "BUS_VOLTAGE_SAG": -26.5
+   },
+   "hold_at": -26.5,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600052
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600053
+  },
+  {
+   "labels": {},
+   "first_alert": {
+    "TVC_ACTUATOR_DEGRADATION": 54.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": 54.5,
+   "advisory_at": 54.5,
+   "redlines": [],
+   "seed": 202600064
+  },
+  {
+   "labels": {
+    "TVC_ACTUATOR_DEGRADATION": {
+     "manifest": 98.17409668433392,
+     "severity": 0.4013039566529486
+    }
+   },
+   "first_alert": {
+    "TVC_ACTUATOR_DEGRADATION": 116.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": 116.5,
+   "advisory_at": 116.5,
+   "redlines": [],
+   "seed": 202600066
+  },
+  {
+   "labels": {
+    "LH2_PRESS_OSCILLATION": {
+     "manifest": -19.135865948858868,
+     "severity": 0.026553101683500294
+    }
+   },
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600068
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600069
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600072
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600073
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600077
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600079
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600085
+  },
+  {
+   "labels": {
+    "TEMP_SENSOR_FAULT": {
+     "manifest": 55.50261292800416,
+     "severity": 0.1878061626975145
+    }
+   },
+   "first_alert": {
+    "TEMP_SENSOR_FAULT": 56.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": 56.0,
+   "redlines": [
+    {
+     "t": 55.58,
+     "call": "ALARM",
+     "text": "Turbine inlet temperature above 950 K"
+    }
+   ],
+   "seed": 202600086
+  },
+  {
+   "labels": {
+    "LOX_TANK_UNDERPRESSURE": {
+     "manifest": -52.0,
+     "severity": 0.4733232429965772
+    },
+    "SRB_THRUST_ASYMMETRY": {
+     "manifest": 53.73937746397305,
+     "severity": 0.2671998372655783
+    },
+    "TVC_ACTUATOR_DEGRADATION": {
+     "manifest": 57.69203955401241,
+     "severity": 0.00023173608642242712
+    }
+   },
+   "first_alert": {
+    "LOX_TANK_UNDERPRESSURE": -55.5,
+    "SRB_THRUST_ASYMMETRY": 58.0
+   },
+   "hold_at": -55.5,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -39.92,
+     "call": "HOLD",
+     "text": "LOX tank pressure below 3.30 bar"
+    }
+   ],
+   "seed": 202600093
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600097
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600098
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600116
+  },
+  {
+   "labels": {
+    "TURBINE_OVERTEMP": {
+     "manifest": 111.49591391547241,
+     "severity": 0.40596651952978813
+    }
+   },
+   "first_alert": {
+    "TURBINE_OVERTEMP": 114.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 114.5,
+   "warning_at": 114.5,
+   "advisory_at": 114.5,
+   "redlines": [
+    {
+     "t": 117.02000000000001,
+     "call": "ALARM",
+     "text": "Turbine inlet temperature above 950 K"
+    }
+   ],
+   "seed": 202600123
+  },
+  {
+   "labels": {
+    "POGO_ONSET": {
+     "manifest": 122.59763455104628,
+     "severity": 0.0014951785650291773
+    }
+   },
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600127
+  },
+  {
+   "labels": {
+    "TEMP_SENSOR_FAULT": {
+     "manifest": 52.67416779476676,
+     "severity": 0.8646582676661729
+    }
+   },
+   "first_alert": {
+    "TEMP_SENSOR_FAULT": 53.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": 53.5,
+   "redlines": [
+    {
+     "t": 52.760000000000005,
+     "call": "ALARM",
+     "text": "Turbine inlet temperature above 950 K"
+    }
+   ],
+   "seed": 202600128
+  },
+  {
+   "labels": {
+    "LH2_PRESS_OSCILLATION": {
+     "manifest": -30.028428440100434,
+     "severity": 0.5333951835411704
+    },
+    "COMBUSTION_INSTABILITY": {
+     "manifest": 95.15470554785573,
+     "severity": 0.18646417524722878
+    }
+   },
+   "first_alert": {
+    "LH2_PRESS_OSCILLATION": -28.0,
+    "COMBUSTION_INSTABILITY": 96.5
+   },
+   "hold_at": -28.0,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600140
+  },
+  {
+   "labels": {
+    "LH2_PRESS_OSCILLATION": {
+     "manifest": -31.858101022929596,
+     "severity": 0.5165105090224886
+    }
+   },
+   "first_alert": {
+    "LH2_PRESS_OSCILLATION": -30.0
+   },
+   "hold_at": -30.0,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600148
+  },
+  {
+   "labels": {
+    "SRB_THRUST_ASYMMETRY": {
+     "manifest": 75.88836652796765,
+     "severity": 0.1358219218280829
+    }
+   },
+   "first_alert": {
+    "SRB_THRUST_ASYMMETRY": 79.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": 79.0,
+   "advisory_at": 79.0,
+   "redlines": [],
+   "seed": 202600154
+  },
+  {
+   "labels": {
+    "LOX_TANK_UNDERPRESSURE": {
+     "manifest": -52.0,
+     "severity": 0.4767856579236948
+    },
+    "LH2_PRESS_OSCILLATION": {
+     "manifest": -42.43160401574505,
+     "severity": 0.1656844098357175
+    },
+    "BUS_VOLTAGE_SAG": {
+     "manifest": -30.0,
+     "severity": 0.559391291288539
+    },
+    "LOX_PUMP_CAVITATION": {
+     "manifest": 3.4733727093180216,
+     "severity": 0.45188637820022937
+    }
+   },
+   "first_alert": {
+    "LOX_TANK_UNDERPRESSURE": -55.5,
+    "LH2_PRESS_OSCILLATION": -32.5,
+    "BUS_VOLTAGE_SAG": -29.0,
+    "LOX_PUMP_CAVITATION": 4.0
+   },
+   "hold_at": -55.5,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -39.92,
+     "call": "HOLD",
+     "text": "LOX tank pressure below 3.30 bar"
+    },
+    {
+     "t": -29.92,
+     "call": "HOLD",
+     "text": "Bus voltage below 27.0 V"
+    }
+   ],
+   "seed": 202600177
+  },
+  {
+   "labels": {
+    "POGO_ONSET": {
+     "manifest": 112.90968632790828,
+     "severity": 0.2059230744000939
+    }
+   },
+   "first_alert": {
+    "POGO_ONSET": 117.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": 117.5,
+   "advisory_at": 117.5,
+   "redlines": [],
+   "seed": 202600182
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600184
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600185
+  },
+  {
+   "labels": {
+    "TEMP_SENSOR_FAULT": {
+     "manifest": 47.399336732133804,
+     "severity": 0.14292674702696484
+    }
+   },
+   "first_alert": {
+    "TEMP_SENSOR_FAULT": 48.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": 48.0,
+   "redlines": [],
+   "seed": 202600188
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600189
+  },
+  {
+   "labels": {
+    "SRB_THRUST_ASYMMETRY": {
+     "manifest": 33.362966328914055,
+     "severity": 0.12361184357060725
+    }
+   },
+   "first_alert": {
+    "SRB_THRUST_ASYMMETRY": 48.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": 48.5,
+   "advisory_at": 48.5,
+   "redlines": [],
+   "seed": 202600199
+  },
+  {
+   "labels": {
+    "LOX_TANK_UNDERPRESSURE": {
+     "manifest": -52.0,
+     "severity": 0.6555342305126807
+    },
+    "LOX_PUMP_CAVITATION": {
+     "manifest": 1.1246049073935425,
+     "severity": 0.3133209575592619
+    }
+   },
+   "first_alert": {
+    "LOX_TANK_UNDERPRESSURE": -55.5,
+    "LOX_PUMP_CAVITATION": 3.5
+   },
+   "hold_at": -55.5,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -39.92,
+     "call": "HOLD",
+     "text": "LOX tank pressure below 3.30 bar"
+    }
+   ],
+   "seed": 202600200
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600201
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600202
+  },
+  {
+   "labels": {
+    "TURBINE_OVERTEMP": {
+     "manifest": 60.809882203764126,
+     "severity": 0.04352518059656616
+    }
+   },
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600210
+  },
+  {
+   "labels": {
+    "LOX_TANK_UNDERPRESSURE": {
+     "manifest": -52.0,
+     "severity": 0.6198420055773673
+    },
+    "TURBINE_OVERTEMP": {
+     "manifest": 35.19380193715149,
+     "severity": 0.5110518135933521
+    },
+    "LOX_PUMP_CAVITATION": {
+     "manifest": 3.634183830924962,
+     "severity": 0.23884933182926385
+    }
+   },
+   "first_alert": {
+    "LOX_TANK_UNDERPRESSURE": -55.5,
+    "LOX_PUMP_CAVITATION": 4.5,
+    "TURBINE_OVERTEMP": 37.5
+   },
+   "hold_at": -55.5,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -39.92,
+     "call": "HOLD",
+     "text": "LOX tank pressure below 3.30 bar"
+    },
+    {
+     "t": 40.06,
+     "call": "ALARM",
+     "text": "Turbine inlet temperature above 950 K"
+    }
+   ],
+   "seed": 202600221
+  },
+  {
+   "labels": {
+    "LH2_PRESS_OSCILLATION": {
+     "manifest": -19.39504049214924,
+     "severity": 0.21823550964737812
+    },
+    "BUS_VOLTAGE_SAG": {
+     "manifest": -30.0,
+     "severity": 0.4549180637083446
+    }
+   },
+   "first_alert": {
+    "LH2_PRESS_OSCILLATION": -15.0,
+    "BUS_VOLTAGE_SAG": -29.0
+   },
+   "hold_at": -29.0,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -29.92,
+     "call": "HOLD",
+     "text": "Bus voltage below 27.0 V"
+    }
+   ],
+   "seed": 202600229
+  },
+  {
+   "labels": {
+    "BUS_VOLTAGE_SAG": {
+     "manifest": -30.0,
+     "severity": 0.5052495431750691
+    }
+   },
+   "first_alert": {
+    "BUS_VOLTAGE_SAG": -29.0
+   },
+   "hold_at": -29.0,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -29.92,
+     "call": "HOLD",
+     "text": "Bus voltage below 27.0 V"
+    }
+   ],
+   "seed": 202600234
+  },
+  {
+   "labels": {
+    "LOX_TANK_UNDERPRESSURE": {
+     "manifest": -52.0,
+     "severity": 0.37227153338135976
+    }
+   },
+   "first_alert": {
+    "LOX_TANK_UNDERPRESSURE": -55.5
+   },
+   "hold_at": -55.5,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -39.92,
+     "call": "HOLD",
+     "text": "LOX tank pressure below 3.30 bar"
+    }
+   ],
+   "seed": 202600249
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600259
+  },
+  {
+   "labels": {
+    "LH2_PRESS_OSCILLATION": {
+     "manifest": -27.082639148321952,
+     "severity": 0.08477592425096363
+    },
+    "COMBUSTION_INSTABILITY": {
+     "manifest": 4.594919248814496,
+     "severity": 0.17966320134947725
+    }
+   },
+   "first_alert": {
+    "COMBUSTION_INSTABILITY": 5.5
+   },
+   "hold_at": null,
+   "abort_at": 5.5,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600262
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600279
+  },
+  {
+   "labels": {
+    "COMBUSTION_INSTABILITY": {
+     "manifest": 2.016672945721091,
+     "severity": 0.6103534609691236
+    }
+   },
+   "first_alert": {
+    "COMBUSTION_INSTABILITY": 3.0
+   },
+   "hold_at": null,
+   "abort_at": 3.0,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": 2.1799999999999997,
+     "call": "ABORT",
+     "text": "Engine-bay vibration above 2 g rms"
+    }
+   ],
+   "seed": 202600289
+  },
+  {
+   "labels": {
+    "LH2_PRESS_OSCILLATION": {
+     "manifest": -14.051538922454395,
+     "severity": 0.44855054049210796
+    }
+   },
+   "first_alert": {
+    "LH2_PRESS_OSCILLATION": -11.5
+   },
+   "hold_at": -11.5,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600291
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600292
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600296
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600300
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600306
+  },
+  {
+   "labels": {
+    "LOX_PUMP_CAVITATION": {
+     "manifest": 2.626930588256288,
+     "severity": 0.19159369054896008
+    }
+   },
+   "first_alert": {
+    "LOX_PUMP_CAVITATION": 5.0
+   },
+   "hold_at": null,
+   "abort_at": 5.0,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600320
+  },
+  {
+   "labels": {
+    "BUS_VOLTAGE_SAG": {
+     "manifest": -30.0,
+     "severity": 0.4436793450125851
+    },
+    "TURBINE_OVERTEMP": {
+     "manifest": 86.33361363708896,
+     "severity": 0.09348636380508513
+    },
+    "POGO_ONSET": {
+     "manifest": 102.28722163338917,
+     "severity": 0.11344155037907183
+    }
+   },
+   "first_alert": {
+    "BUS_VOLTAGE_SAG": -29.0,
+    "POGO_ONSET": 107.0
+   },
+   "hold_at": -29.0,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -29.92,
+     "call": "HOLD",
+     "text": "Bus voltage below 27.0 V"
+    }
+   ],
+   "seed": 202600325
+  },
+  {
+   "labels": {
+    "LOX_TANK_UNDERPRESSURE": {
+     "manifest": -52.0,
+     "severity": 0.29744261080176987
+    },
+    "SRB_THRUST_ASYMMETRY": {
+     "manifest": 45.485939954577645,
+     "severity": 0.19186013469495325
+    }
+   },
+   "first_alert": {
+    "LOX_TANK_UNDERPRESSURE": -55.5,
+    "SRB_THRUST_ASYMMETRY": 50.5
+   },
+   "hold_at": -55.5,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -39.92,
+     "call": "HOLD",
+     "text": "LOX tank pressure below 3.30 bar"
+    }
+   ],
+   "seed": 202600326
+  },
+  {
+   "labels": {
+    "COMBUSTION_INSTABILITY": {
+     "manifest": 59.74645104451278,
+     "severity": 0.02974819042830204
+    },
+    "POGO_ONSET": {
+     "manifest": 105.03439462606939,
+     "severity": 0.14113780837398981
+    }
+   },
+   "first_alert": {
+    "COMBUSTION_INSTABILITY": 63.5,
+    "POGO_ONSET": 104.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 63.5,
+   "warning_at": 63.5,
+   "advisory_at": 63.5,
+   "redlines": [],
+   "seed": 202600334
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600347
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600364
+  },
+  {
+   "labels": {
+    "TEMP_SENSOR_FAULT": {
+     "manifest": 73.0487268365608,
+     "severity": 0.27797806241603096
+    },
+    "POGO_ONSET": {
+     "manifest": 112.04428137442454,
+     "severity": 0.7648624159721312
+    }
+   },
+   "first_alert": {
+    "TEMP_SENSOR_FAULT": 74.0,
+    "POGO_ONSET": 111.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": 111.5,
+   "advisory_at": 74.0,
+   "redlines": [],
+   "seed": 202600365
+  },
+  {
+   "labels": {
+    "TURBINE_OVERTEMP": {
+     "manifest": 28.34838075326147,
+     "severity": 0.5970393681088398
+    }
+   },
+   "first_alert": {
+    "TURBINE_OVERTEMP": 30.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 30.5,
+   "warning_at": 30.5,
+   "advisory_at": 30.5,
+   "redlines": [
+    {
+     "t": 32.86,
+     "call": "ALARM",
+     "text": "Turbine inlet temperature above 950 K"
+    }
+   ],
+   "seed": 202600366
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600369
+  },
+  {
+   "labels": {
+    "SLOW_ENGINE_START": {
+     "manifest": 2.0,
+     "severity": 0.5525676665145217
+    },
+    "TVC_ACTUATOR_DEGRADATION": {
+     "manifest": 95.19454810817636,
+     "severity": 0.43367868752495026
+    }
+   },
+   "first_alert": {
+    "SLOW_ENGINE_START": 3.5,
+    "TVC_ACTUATOR_DEGRADATION": 112.0
+   },
+   "hold_at": null,
+   "abort_at": 3.5,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600374
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600376
+  },
+  {
+   "labels": {
+    "BUS_VOLTAGE_SAG": {
+     "manifest": -30.0,
+     "severity": 0.36027910451624806
+    }
+   },
+   "first_alert": {
+    "BUS_VOLTAGE_SAG": -28.5
+   },
+   "hold_at": -28.5,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -29.92,
+     "call": "HOLD",
+     "text": "Bus voltage below 27.0 V"
+    }
+   ],
+   "seed": 202600378
+  },
+  {
+   "labels": {
+    "BUS_VOLTAGE_SAG": {
+     "manifest": -30.0,
+     "severity": 0.3227458650168542
+    }
+   },
+   "first_alert": {
+    "BUS_VOLTAGE_SAG": -29.0
+   },
+   "hold_at": -29.0,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -29.92,
+     "call": "HOLD",
+     "text": "Bus voltage below 27.0 V"
+    }
+   ],
+   "seed": 202600386
+  },
+  {
+   "labels": {
+    "COMBUSTION_INSTABILITY": {
+     "manifest": 103.62480782511612,
+     "severity": 0.39847389120816473
+    }
+   },
+   "first_alert": {
+    "COMBUSTION_INSTABILITY": 104.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 104.5,
+   "warning_at": 104.5,
+   "advisory_at": 104.5,
+   "redlines": [],
+   "seed": 202600395
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600397
+  },
+  {
+   "labels": {
+    "TURBINE_OVERTEMP": {
+     "manifest": 82.0112619633,
+     "severity": 0.17335273156752892
+    },
+    "TVC_ACTUATOR_DEGRADATION": {
+     "manifest": 69.83473456149687,
+     "severity": 0.3377961914420632
+    }
+   },
+   "first_alert": {
+    "TURBINE_OVERTEMP": 84.0,
+    "TVC_ACTUATOR_DEGRADATION": 106.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 84.0,
+   "warning_at": 84.0,
+   "advisory_at": 84.0,
+   "redlines": [],
+   "seed": 202600399
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600402
+  },
+  {
+   "labels": {
+    "TRAJECTORY_DEVIATION": {
+     "manifest": 86.16,
+     "severity": 0.2965101728760679
+    }
+   },
+   "first_alert": {
+    "TRAJECTORY_DEVIATION": 89.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 89.0,
+   "warning_at": 89.0,
+   "advisory_at": 89.0,
+   "redlines": [],
+   "seed": 202600412
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600420
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600422
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600432
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600434
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600437
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600438
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600447
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600462
+  },
+  {
+   "labels": {
+    "BUS_VOLTAGE_SAG": {
+     "manifest": -30.0,
+     "severity": 0.1842260252390214
+    }
+   },
+   "first_alert": {
+    "BUS_VOLTAGE_SAG": -29.0
+   },
+   "hold_at": -29.0,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600470
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600488
+  },
+  {
+   "labels": {
+    "BUS_VOLTAGE_SAG": {
+     "manifest": -30.0,
+     "severity": 0.03028696307136108
+    },
+    "TURBINE_OVERTEMP": {
+     "manifest": 77.57144773862777,
+     "severity": 0.2166254393761678
+    }
+   },
+   "first_alert": {
+    "TURBINE_OVERTEMP": 79.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 79.0,
+   "warning_at": 79.0,
+   "advisory_at": 79.0,
+   "redlines": [],
+   "seed": 202600498
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600503
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600521
+  },
+  {
+   "labels": {
+    "COMBUSTION_INSTABILITY": {
+     "manifest": 74.01504952548792,
+     "severity": 0.0007807025667400644
+    }
+   },
+   "first_alert": {
+    "COMBUSTION_INSTABILITY": 85.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 85.0,
+   "warning_at": 85.0,
+   "advisory_at": 85.0,
+   "redlines": [],
+   "seed": 202600530
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600534
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600545
+  },
+  {
+   "labels": {
+    "LOX_PUMP_CAVITATION": {
+     "manifest": 1.2540489175948857,
+     "severity": 0.4335706619015188
+    }
+   },
+   "first_alert": {
+    "LOX_PUMP_CAVITATION": 4.0
+   },
+   "hold_at": null,
+   "abort_at": 4.0,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600559
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600565
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600575
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600576
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600584
+  },
+  {
+   "labels": {
+    "LOX_TANK_UNDERPRESSURE": {
+     "manifest": -52.0,
+     "severity": 0.5395860858610014
+    },
+    "LOX_PUMP_CAVITATION": {
+     "manifest": 2.527655580933894,
+     "severity": 0.6755614241077508
+    }
+   },
+   "first_alert": {
+    "LOX_TANK_UNDERPRESSURE": -55.5,
+    "LOX_PUMP_CAVITATION": 3.5
+   },
+   "hold_at": -55.5,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -39.92,
+     "call": "HOLD",
+     "text": "LOX tank pressure below 3.30 bar"
+    }
+   ],
+   "seed": 202600601
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600602
+  },
+  {
+   "labels": {
+    "LOX_TANK_UNDERPRESSURE": {
+     "manifest": -52.0,
+     "severity": 0.6591270523668921
+    },
+    "POGO_ONSET": {
+     "manifest": 114.58800213540144,
+     "severity": 0.7184613402048091
+    }
+   },
+   "first_alert": {
+    "LOX_TANK_UNDERPRESSURE": -55.5,
+    "POGO_ONSET": 111.5
+   },
+   "hold_at": -55.5,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -39.92,
+     "call": "HOLD",
+     "text": "LOX tank pressure below 3.30 bar"
+    }
+   ],
+   "seed": 202600605
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600618
+  },
+  {
+   "labels": {
+    "BUS_VOLTAGE_SAG": {
+     "manifest": -30.0,
+     "severity": 0.8279949873997167
+    }
+   },
+   "first_alert": {
+    "BUS_VOLTAGE_SAG": -29.0
+   },
+   "hold_at": -29.0,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -29.92,
+     "call": "HOLD",
+     "text": "Bus voltage below 27.0 V"
+    }
+   ],
+   "seed": 202600624
+  },
+  {
+   "labels": {
+    "BUS_VOLTAGE_SAG": {
+     "manifest": -30.0,
+     "severity": 0.048820410045209824
+    },
+    "POGO_ONSET": {
+     "manifest": 119.88357059638963,
+     "severity": 0.9357704006450059
+    },
+    "TRAJECTORY_DEVIATION": {
+     "manifest": 43.379999999999995,
+     "severity": 0.3097150878374964
+    }
+   },
+   "first_alert": {
+    "POGO_ONSET": 117.5,
+    "TRAJECTORY_DEVIATION": 49.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 49.5,
+   "warning_at": 49.5,
+   "advisory_at": 49.5,
+   "redlines": [
+    {
+     "t": 128.92,
+     "call": "ALARM",
+     "text": "Trajectory deviation beyond the flight-safety corridor"
+    }
+   ],
+   "seed": 202600627
+  },
+  {
+   "labels": {
+    "COMBUSTION_INSTABILITY": {
+     "manifest": 3.156932228712913,
+     "severity": 0.04440468805052016
+    }
+   },
+   "first_alert": {
+    "COMBUSTION_INSTABILITY": 11.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 11.0,
+   "warning_at": 11.0,
+   "advisory_at": 11.0,
+   "redlines": [],
+   "seed": 202600639
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600640
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600648
+  },
+  {
+   "labels": {
+    "LOX_TANK_UNDERPRESSURE": {
+     "manifest": -52.0,
+     "severity": 0.8196801228163872
+    },
+    "SLOW_ENGINE_START": {
+     "manifest": 2.0,
+     "severity": 0.729828923270686
+    },
+    "LOX_PUMP_CAVITATION": {
+     "manifest": 2.2852139555326305,
+     "severity": 0.14895851158156156
+    }
+   },
+   "first_alert": {
+    "LOX_TANK_UNDERPRESSURE": -55.5,
+    "SLOW_ENGINE_START": 3.5
+   },
+   "hold_at": -55.5,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -39.92,
+     "call": "HOLD",
+     "text": "LOX tank pressure below 3.30 bar"
+    },
+    {
+     "t": 3.5799999999999983,
+     "call": "ABORT",
+     "text": "Chamber pressure below 100 bar after H0 + 3.5 s"
+    }
+   ],
+   "seed": 202600651
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600655
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600657
+  },
+  {
+   "labels": {
+    "COMBUSTION_INSTABILITY": {
+     "manifest": 1.8463155851381021,
+     "severity": 0.535489279317434
+    },
+    "POGO_ONSET": {
+     "manifest": 108.89677061724569,
+     "severity": 0.7579528649914166
+    }
+   },
+   "first_alert": {
+    "COMBUSTION_INSTABILITY": 3.0,
+    "POGO_ONSET": 104.5
+   },
+   "hold_at": null,
+   "abort_at": 3.0,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": 2.1000000000000014,
+     "call": "ABORT",
+     "text": "Engine-bay vibration above 2 g rms"
+    },
+    {
+     "t": 7.3799999999999955,
+     "call": "ALARM",
+     "text": "Engine-bay vibration above 6 g rms"
+    }
+   ],
+   "seed": 202600669
+  },
+  {
+   "labels": {
+    "SLOW_ENGINE_START": {
+     "manifest": 2.0,
+     "severity": 0.06903666957394752
+    }
+   },
+   "first_alert": {
+    "SLOW_ENGINE_START": 6.0
+   },
+   "hold_at": null,
+   "abort_at": 6.0,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600677
+  },
+  {
+   "labels": {
+    "COMBUSTION_INSTABILITY": {
+     "manifest": 4.154684707569585,
+     "severity": 0.04556588174588479
+    }
+   },
+   "first_alert": {
+    "COMBUSTION_INSTABILITY": 11.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 11.0,
+   "warning_at": 11.0,
+   "advisory_at": 11.0,
+   "redlines": [],
+   "seed": 202600682
+  },
+  {
+   "labels": {
+    "SLOW_ENGINE_START": {
+     "manifest": 2.0,
+     "severity": 0.6506478837863365
+    }
+   },
+   "first_alert": {
+    "SLOW_ENGINE_START": 3.5
+   },
+   "hold_at": null,
+   "abort_at": 3.5,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600684
+  },
+  {
+   "labels": {
+    "COMBUSTION_INSTABILITY": {
+     "manifest": 3.3111602254452297,
+     "severity": 0.09349160850735005
+    }
+   },
+   "first_alert": {
+    "COMBUSTION_INSTABILITY": 4.5
+   },
+   "hold_at": null,
+   "abort_at": 4.5,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600686
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600691
+  },
+  {
+   "labels": {
+    "LH2_PRESS_OSCILLATION": {
+     "manifest": -11.376725625996075,
+     "severity": 0.26960150441782826
+    },
+    "SRB_THRUST_ASYMMETRY": {
+     "manifest": 80.04647332039075,
+     "severity": 0.049657424414162904
+    }
+   },
+   "first_alert": {
+    "LH2_PRESS_OSCILLATION": -8.0
+   },
+   "hold_at": -8.0,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600698
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600701
+  },
+  {
+   "labels": {
+    "LOX_TANK_UNDERPRESSURE": {
+     "manifest": -52.0,
+     "severity": 0.5465536700482133
+    },
+    "LOX_PUMP_CAVITATION": {
+     "manifest": 2.6968092320120367,
+     "severity": 0.07851272039737224
+    }
+   },
+   "first_alert": {
+    "LOX_TANK_UNDERPRESSURE": -55.5
+   },
+   "hold_at": -55.5,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -39.92,
+     "call": "HOLD",
+     "text": "LOX tank pressure below 3.30 bar"
+    }
+   ],
+   "seed": 202600703
+  },
+  {
+   "labels": {
+    "SRB_THRUST_ASYMMETRY": {
+     "manifest": 51.269095184172954,
+     "severity": 0.4871634115662097
+    },
+    "TVC_ACTUATOR_DEGRADATION": {
+     "manifest": 68.0131707249539,
+     "severity": 0.33430738869203697
+    }
+   },
+   "first_alert": {
+    "SRB_THRUST_ASYMMETRY": 54.5,
+    "TVC_ACTUATOR_DEGRADATION": 107.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": 54.5,
+   "advisory_at": 54.5,
+   "redlines": [],
+   "seed": 202600705
+  },
+  {
+   "labels": {
+    "COMBUSTION_INSTABILITY": {
+     "manifest": 4.111096587999011,
+     "severity": 0.15127857327112745
+    }
+   },
+   "first_alert": {
+    "COMBUSTION_INSTABILITY": 5.0
+   },
+   "hold_at": null,
+   "abort_at": 5.0,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600709
+  },
+  {
+   "labels": {
+    "TVC_ACTUATOR_DEGRADATION": {
+     "manifest": 34.33295504690479,
+     "severity": 0.03939802849615794
+    }
+   },
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600716
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600722
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600724
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600728
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600730
+  },
+  {
+   "labels": {
+    "TVC_ACTUATOR_DEGRADATION": {
+     "manifest": 79.96751157829307,
+     "severity": 0.7558591007714822
+    }
+   },
+   "first_alert": {
+    "TVC_ACTUATOR_DEGRADATION": 88.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": 88.0,
+   "advisory_at": 88.0,
+   "redlines": [],
+   "seed": 202600740
+  },
+  {
+   "labels": {
+    "COMBUSTION_INSTABILITY": {
+     "manifest": 2.0323600663054946,
+     "severity": 0.626976211956321
+    },
+    "TURBINE_OVERTEMP": {
+     "manifest": 44.35788328436816,
+     "severity": 0.19782419493579734
+    },
+    "POGO_ONSET": {
+     "manifest": 107.05333288331906,
+     "severity": 0.6715823398232886
+    }
+   },
+   "first_alert": {
+    "COMBUSTION_INSTABILITY": 3.0,
+    "TURBINE_OVERTEMP": 47.5,
+    "POGO_ONSET": 101.5
+   },
+   "hold_at": null,
+   "abort_at": 3.0,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": 2.259999999999998,
+     "call": "ABORT",
+     "text": "Engine-bay vibration above 2 g rms"
+    }
+   ],
+   "seed": 202600743
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600744
+  },
+  {
+   "labels": {
+    "LOX_TANK_UNDERPRESSURE": {
+     "manifest": -52.0,
+     "severity": 0.390910000452132
+    },
+    "TEMP_SENSOR_FAULT": {
+     "manifest": 73.03538969717933,
+     "severity": 0.3428226130901567
+    }
+   },
+   "first_alert": {
+    "LOX_TANK_UNDERPRESSURE": -55.5,
+    "TEMP_SENSOR_FAULT": 74.0
+   },
+   "hold_at": -55.5,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -39.92,
+     "call": "HOLD",
+     "text": "LOX tank pressure below 3.30 bar"
+    },
+    {
+     "t": 73.12,
+     "call": "ALARM",
+     "text": "Turbine inlet temperature above 950 K"
+    }
+   ],
+   "seed": 202600749
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600768
+  },
+  {
+   "labels": {
+    "SRB_THRUST_ASYMMETRY": {
+     "manifest": 25.282189010462048,
+     "severity": 0.7085119983932848
+    }
+   },
+   "first_alert": {
+    "SRB_THRUST_ASYMMETRY": 27.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": 27.5,
+   "advisory_at": 27.5,
+   "redlines": [],
+   "seed": 202600771
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600782
+  },
+  {
+   "labels": {
+    "TURBINE_OVERTEMP": {
+     "manifest": 26.739201798346972,
+     "severity": 0.3224191570918023
+    }
+   },
+   "first_alert": {
+    "TURBINE_OVERTEMP": 29.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 29.0,
+   "warning_at": 29.0,
+   "advisory_at": 29.0,
+   "redlines": [],
+   "seed": 202600798
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600805
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600812
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600827
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600835
+  },
+  {
+   "labels": {
+    "TURBINE_OVERTEMP": {
+     "manifest": 95.70900407001902,
+     "severity": 0.08002980571304544
+    }
+   },
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600841
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600846
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600855
+  },
+  {
+   "labels": {
+    "SLOW_ENGINE_START": {
+     "manifest": 2.0,
+     "severity": 0.09312339820753068
+    }
+   },
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600872
+  },
+  {
+   "labels": {
+    "LOX_PUMP_CAVITATION": {
+     "manifest": 3.5418610116875113,
+     "severity": 0.07339191874679912
+    }
+   },
+   "first_alert": {
+    "LOX_PUMP_CAVITATION": 5.5
+   },
+   "hold_at": null,
+   "abort_at": 5.5,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600874
+  },
+  {
+   "labels": {
+    "LOX_TANK_UNDERPRESSURE": {
+     "manifest": -52.0,
+     "severity": 0.7227706235542458
+    },
+    "LOX_PUMP_CAVITATION": {
+     "manifest": 3.74770158364407,
+     "severity": 0.024109248963557713
+    }
+   },
+   "first_alert": {
+    "LOX_TANK_UNDERPRESSURE": -55.5
+   },
+   "hold_at": -55.5,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -39.92,
+     "call": "HOLD",
+     "text": "LOX tank pressure below 3.30 bar"
+    }
+   ],
+   "seed": 202600890
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600891
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600893
+  },
+  {
+   "labels": {
+    "LH2_PRESS_OSCILLATION": {
+     "manifest": -20.44098413154757,
+     "severity": 0.25154597637617626
+    },
+    "BUS_VOLTAGE_SAG": {
+     "manifest": -30.0,
+     "severity": 0.04017227614320514
+    }
+   },
+   "first_alert": {
+    "LH2_PRESS_OSCILLATION": -16.5
+   },
+   "hold_at": -16.5,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600900
+  },
+  {
+   "labels": {
+    "COMBUSTION_INSTABILITY": {
+     "manifest": 1.8451879896823487,
+     "severity": 0.33032529476749334
+    }
+   },
+   "first_alert": {
+    "COMBUSTION_INSTABILITY": 3.0
+   },
+   "hold_at": null,
+   "abort_at": 3.0,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600908
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600913
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600917
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600922
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600931
+  },
+  {
+   "labels": {
+    "SRB_THRUST_ASYMMETRY": {
+     "manifest": 88.21037725454187,
+     "severity": 0.46220566889339515
+    },
+    "TRAJECTORY_DEVIATION": {
+     "manifest": 50.120000000000005,
+     "severity": 0.38474741405487817
+    }
+   },
+   "first_alert": {
+    "SRB_THRUST_ASYMMETRY": 90.5,
+    "TRAJECTORY_DEVIATION": 50.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 50.0,
+   "warning_at": 50.0,
+   "advisory_at": 50.0,
+   "redlines": [
+    {
+     "t": 123.97999999999999,
+     "call": "ALARM",
+     "text": "Trajectory deviation beyond the flight-safety corridor"
+    }
+   ],
+   "seed": 202600933
+  },
+  {
+   "labels": {
+    "TEMP_SENSOR_FAULT": {
+     "manifest": 8.467087325418872,
+     "severity": 0.18844271034565752
+    }
+   },
+   "first_alert": {
+    "TEMP_SENSOR_FAULT": 9.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": 9.0,
+   "redlines": [],
+   "seed": 202600937
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600948
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202600952
+  },
+  {
+   "labels": {
+    "SRB_THRUST_ASYMMETRY": {
+     "manifest": 49.98119044079588,
+     "severity": 0.23574090325429836
+    }
+   },
+   "first_alert": {
+    "SRB_THRUST_ASYMMETRY": 53.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": 53.5,
+   "advisory_at": 53.5,
+   "redlines": [],
+   "seed": 202600960
+  },
+  {
+   "labels": {
+    "TRAJECTORY_DEVIATION": {
+     "manifest": 52.84,
+     "severity": 0.7085048679446727
+    }
+   },
+   "first_alert": {
+    "TRAJECTORY_DEVIATION": 57.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 57.0,
+   "warning_at": 57.0,
+   "advisory_at": 57.0,
+   "redlines": [
+    {
+     "t": 84.44,
+     "call": "ALARM",
+     "text": "Trajectory deviation beyond the flight-safety corridor"
+    }
+   ],
+   "seed": 202600978
+  },
+  {
+   "labels": {
+    "TEMP_SENSOR_FAULT": {
+     "manifest": 16.9270432144908,
+     "severity": 0.1899833604287573
+    }
+   },
+   "first_alert": {
+    "TEMP_SENSOR_FAULT": 17.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": 17.5,
+   "redlines": [
+    {
+     "t": 19.439999999999998,
+     "call": "ALARM",
+     "text": "Turbine inlet temperature above 950 K"
+    }
+   ],
+   "seed": 202600999
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601006
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601011
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601019
+  },
+  {
+   "labels": {
+    "LOX_TANK_UNDERPRESSURE": {
+     "manifest": -52.0,
+     "severity": 0.8563564029567338
+    },
+    "LOX_PUMP_CAVITATION": {
+     "manifest": 0.9027375090193193,
+     "severity": 0.5382766959136663
+    }
+   },
+   "first_alert": {
+    "LOX_TANK_UNDERPRESSURE": -55.5,
+    "LOX_PUMP_CAVITATION": 3.5
+   },
+   "hold_at": -55.5,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -39.92,
+     "call": "HOLD",
+     "text": "LOX tank pressure below 3.30 bar"
+    }
+   ],
+   "seed": 202601036
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601046
+  },
+  {
+   "labels": {
+    "SLOW_ENGINE_START": {
+     "manifest": 2.0,
+     "severity": 0.21412145252724696
+    },
+    "TRAJECTORY_DEVIATION": {
+     "manifest": 33.459999999999994,
+     "severity": 0.38173277041616654
+    }
+   },
+   "first_alert": {
+    "SLOW_ENGINE_START": 2.5,
+    "TRAJECTORY_DEVIATION": 33.0
+   },
+   "hold_at": null,
+   "abort_at": 2.5,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": 89.18,
+     "call": "ALARM",
+     "text": "Trajectory deviation beyond the flight-safety corridor"
+    }
+   ],
+   "seed": 202601051
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601052
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601058
+  },
+  {
+   "labels": {
+    "TRAJECTORY_DEVIATION": {
+     "manifest": 58.459999999999994,
+     "severity": 0.6615774843220151
+    }
+   },
+   "first_alert": {
+    "TRAJECTORY_DEVIATION": 56.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 56.0,
+   "warning_at": 56.0,
+   "advisory_at": 56.0,
+   "redlines": [
+    {
+     "t": 90.22,
+     "call": "ALARM",
+     "text": "Trajectory deviation beyond the flight-safety corridor"
+    }
+   ],
+   "seed": 202601067
+  },
+  {
+   "labels": {
+    "LOX_TANK_UNDERPRESSURE": {
+     "manifest": -52.0,
+     "severity": 0.44756728109528526
+    },
+    "LOX_PUMP_CAVITATION": {
+     "manifest": 1.3321010980380827,
+     "severity": 0.8919442631800576
+    },
+    "TRAJECTORY_DEVIATION": {
+     "manifest": 69.06,
+     "severity": 0.4757181709249881
+    }
+   },
+   "first_alert": {
+    "LOX_TANK_UNDERPRESSURE": -55.5,
+    "LOX_PUMP_CAVITATION": 3.5,
+    "TRAJECTORY_DEVIATION": 68.0
+   },
+   "hold_at": -55.5,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -39.92,
+     "call": "HOLD",
+     "text": "LOX tank pressure below 3.30 bar"
+    },
+    {
+     "t": 2.719999999999999,
+     "call": "ABORT",
+     "text": "LOX pump speed above 103.5 %"
+    },
+    {
+     "t": 105.06,
+     "call": "ALARM",
+     "text": "Trajectory deviation beyond the flight-safety corridor"
+    }
+   ],
+   "seed": 202601069
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601094
+  },
+  {
+   "labels": {
+    "SRB_THRUST_ASYMMETRY": {
+     "manifest": 43.05655396360088,
+     "severity": 0.31374590741586333
+    }
+   },
+   "first_alert": {
+    "SRB_THRUST_ASYMMETRY": 49.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": 49.5,
+   "advisory_at": 49.5,
+   "redlines": [],
+   "seed": 202601100
+  },
+  {
+   "labels": {
+    "COMBUSTION_INSTABILITY": {
+     "manifest": 100.82733776721331,
+     "severity": 0.36117710434934164
+    },
+    "LOX_PUMP_CAVITATION": {
+     "manifest": 3.4140499119544154,
+     "severity": 0.17335242197970688
+    }
+   },
+   "first_alert": {
+    "LOX_PUMP_CAVITATION": 4.0,
+    "COMBUSTION_INSTABILITY": 102.0
+   },
+   "hold_at": null,
+   "abort_at": 4.0,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601103
+  },
+  {
+   "labels": {
+    "TVC_ACTUATOR_DEGRADATION": {
+     "manifest": 88.46304650047867,
+     "severity": 0.05273751995237149
+    }
+   },
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601117
+  },
+  {
+   "labels": {
+    "SRB_THRUST_ASYMMETRY": {
+     "manifest": 44.974824028109815,
+     "severity": 0.24575712899913452
+    }
+   },
+   "first_alert": {
+    "SRB_THRUST_ASYMMETRY": 50.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": 50.0,
+   "advisory_at": 50.0,
+   "redlines": [],
+   "seed": 202601123
+  },
+  {
+   "labels": {
+    "LOX_TANK_UNDERPRESSURE": {
+     "manifest": -52.0,
+     "severity": 0.5710387689777973
+    },
+    "LOX_PUMP_CAVITATION": {
+     "manifest": 1.7022354624628198,
+     "severity": 0.30806739411583745
+    }
+   },
+   "first_alert": {
+    "LOX_TANK_UNDERPRESSURE": -55.5,
+    "LOX_PUMP_CAVITATION": 6.5
+   },
+   "hold_at": -55.5,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -39.92,
+     "call": "HOLD",
+     "text": "LOX tank pressure below 3.30 bar"
+    }
+   ],
+   "seed": 202601134
+  },
+  {
+   "labels": {
+    "COMBUSTION_INSTABILITY": {
+     "manifest": 14.88562228437526,
+     "severity": 0.47688661477685923
+    }
+   },
+   "first_alert": {
+    "COMBUSTION_INSTABILITY": 15.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 15.5,
+   "warning_at": 15.5,
+   "advisory_at": 15.5,
+   "redlines": [],
+   "seed": 202601141
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601146
+  },
+  {
+   "labels": {
+    "POGO_ONSET": {
+     "manifest": 115.66556070367817,
+     "severity": 0.31940910680806406
+    }
+   },
+   "first_alert": {
+    "POGO_ONSET": 118.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": 118.0,
+   "advisory_at": 118.0,
+   "redlines": [],
+   "seed": 202601153
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601159
+  },
+  {
+   "labels": {
+    "COMBUSTION_INSTABILITY": {
+     "manifest": 2.5572305369575696,
+     "severity": 0.21798597511110318
+    },
+    "SRB_THRUST_ASYMMETRY": {
+     "manifest": 24.168020595846517,
+     "severity": 0.35036254189553717
+    }
+   },
+   "first_alert": {
+    "COMBUSTION_INSTABILITY": 3.5,
+    "SRB_THRUST_ASYMMETRY": 29.5
+   },
+   "hold_at": null,
+   "abort_at": 3.5,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601168
+  },
+  {
+   "labels": {
+    "LH2_PRESS_OSCILLATION": {
+     "manifest": -13.555024416484496,
+     "severity": 0.3716336542487892
+    }
+   },
+   "first_alert": {
+    "LH2_PRESS_OSCILLATION": -10.5
+   },
+   "hold_at": -10.5,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601175
+  },
+  {
+   "labels": {
+    "POGO_ONSET": {
+     "manifest": 116.29844905544627,
+     "severity": 0.22977407667212374
+    }
+   },
+   "first_alert": {
+    "POGO_ONSET": 117.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": 117.5,
+   "advisory_at": 117.5,
+   "redlines": [],
+   "seed": 202601184
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601187
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601194
+  },
+  {
+   "labels": {
+    "BUS_VOLTAGE_SAG": {
+     "manifest": -30.0,
+     "severity": 0.8521270814350829
+    },
+    "TRAJECTORY_DEVIATION": {
+     "manifest": 75.02000000000001,
+     "severity": 0.6522408339926793
+    }
+   },
+   "first_alert": {
+    "BUS_VOLTAGE_SAG": -29.0,
+    "TRAJECTORY_DEVIATION": 76.5
+   },
+   "hold_at": -29.0,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -29.92,
+     "call": "HOLD",
+     "text": "Bus voltage below 27.0 V"
+    },
+    {
+     "t": 107.18,
+     "call": "ALARM",
+     "text": "Trajectory deviation beyond the flight-safety corridor"
+    }
+   ],
+   "seed": 202601198
+  },
+  {
+   "labels": {
+    "SLOW_ENGINE_START": {
+     "manifest": 2.0,
+     "severity": 0.2896288186250336
+    }
+   },
+   "first_alert": {
+    "SLOW_ENGINE_START": 3.5
+   },
+   "hold_at": null,
+   "abort_at": 3.5,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601199
+  },
+  {
+   "labels": {
+    "TURBINE_OVERTEMP": {
+     "manifest": 92.01325074131714,
+     "severity": 0.40385209839218333
+    }
+   },
+   "first_alert": {
+    "TURBINE_OVERTEMP": 93.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 93.5,
+   "warning_at": 93.5,
+   "advisory_at": 93.5,
+   "redlines": [],
+   "seed": 202601204
+  },
+  {
+   "labels": {
+    "POGO_ONSET": {
+     "manifest": 119.38463829691203,
+     "severity": 0.7743212587574679
+    }
+   },
+   "first_alert": {
+    "POGO_ONSET": 117.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": 117.5,
+   "advisory_at": 117.5,
+   "redlines": [],
+   "seed": 202601205
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601217
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601228
+  },
+  {
+   "labels": {
+    "SRB_THRUST_ASYMMETRY": {
+     "manifest": 79.62509959853763,
+     "severity": 0.31777995763909983
+    }
+   },
+   "first_alert": {
+    "SRB_THRUST_ASYMMETRY": 81.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": 81.5,
+   "advisory_at": 81.5,
+   "redlines": [],
+   "seed": 202601234
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601239
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601241
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601243
+  },
+  {
+   "labels": {
+    "COMBUSTION_INSTABILITY": {
+     "manifest": 5.094222711853742,
+     "severity": 0.10921928513916965
+    },
+    "TURBINE_OVERTEMP": {
+     "manifest": 32.706995611003855,
+     "severity": 0.933580326608498
+    }
+   },
+   "first_alert": {
+    "COMBUSTION_INSTABILITY": 6.5,
+    "TURBINE_OVERTEMP": 34.0
+   },
+   "hold_at": null,
+   "abort_at": 6.5,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": 33.900000000000006,
+     "call": "ALARM",
+     "text": "Turbine inlet temperature above 950 K"
+    }
+   ],
+   "seed": 202601248
+  },
+  {
+   "labels": {
+    "SRB_THRUST_ASYMMETRY": {
+     "manifest": 65.8076265868988,
+     "severity": 0.2825000630972345
+    },
+    "POGO_ONSET": {
+     "manifest": 122.47893455806528,
+     "severity": 0.274740383527193
+    }
+   },
+   "first_alert": {
+    "SRB_THRUST_ASYMMETRY": 68.0,
+    "POGO_ONSET": 127.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": 68.0,
+   "advisory_at": 68.0,
+   "redlines": [],
+   "seed": 202601249
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601252
+  },
+  {
+   "labels": {
+    "LOX_PUMP_CAVITATION": {
+     "manifest": 3.0446437652978373,
+     "severity": 0.32918386814687983
+    }
+   },
+   "first_alert": {
+    "LOX_PUMP_CAVITATION": 3.5
+   },
+   "hold_at": null,
+   "abort_at": 3.5,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601253
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601257
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601269
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601278
+  },
+  {
+   "labels": {
+    "COMBUSTION_INSTABILITY": {
+     "manifest": 83.98880835834191,
+     "severity": 0.44753416456912215
+    }
+   },
+   "first_alert": {
+    "COMBUSTION_INSTABILITY": 84.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 84.5,
+   "warning_at": 84.5,
+   "advisory_at": 84.5,
+   "redlines": [],
+   "seed": 202601279
+  },
+  {
+   "labels": {
+    "SRB_THRUST_ASYMMETRY": {
+     "manifest": 48.00939415391174,
+     "severity": 0.0975922986883061
+    }
+   },
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601282
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601284
+  },
+  {
+   "labels": {
+    "COMBUSTION_INSTABILITY": {
+     "manifest": 4.3465179971652335,
+     "severity": 0.5122136716609391
+    },
+    "TURBINE_OVERTEMP": {
+     "manifest": 107.92569145487084,
+     "severity": 0.6370187926722523
+    }
+   },
+   "first_alert": {
+    "COMBUSTION_INSTABILITY": 5.0,
+    "TEMP_SENSOR_FAULT": 109.5
+   },
+   "hold_at": null,
+   "abort_at": 5.0,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": 4.359999999999999,
+     "call": "ABORT",
+     "text": "Engine-bay vibration above 2 g rms"
+    },
+    {
+     "t": 109.53999999999999,
+     "call": "ALARM",
+     "text": "Turbine inlet temperature above 950 K"
+    }
+   ],
+   "seed": 202601290
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601293
+  },
+  {
+   "labels": {
+    "LOX_PUMP_CAVITATION": {
+     "manifest": 1.8977116559653031,
+     "severity": 0.30828523099975685
+    }
+   },
+   "first_alert": {
+    "LOX_PUMP_CAVITATION": 6.0
+   },
+   "hold_at": null,
+   "abort_at": 6.0,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601302
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601304
+  },
+  {
+   "labels": {
+    "POGO_ONSET": {
+     "manifest": 107.64644815740249,
+     "severity": 0.4014551380791462
+    }
+   },
+   "first_alert": {
+    "POGO_ONSET": 105.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": 105.5,
+   "advisory_at": 105.5,
+   "redlines": [],
+   "seed": 202601313
+  },
+  {
+   "labels": {
+    "TRAJECTORY_DEVIATION": {
+     "manifest": 75.1,
+     "severity": 0.03738870171439688
+    }
+   },
+   "first_alert": {
+    "TRAJECTORY_DEVIATION": 93.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 93.0,
+   "warning_at": 93.0,
+   "advisory_at": 93.0,
+   "redlines": [
+    {
+     "t": 145.78,
+     "call": "ALARM",
+     "text": "Trajectory deviation beyond the flight-safety corridor"
+    }
+   ],
+   "seed": 202601318
+  },
+  {
+   "labels": {
+    "POGO_ONSET": {
+     "manifest": 120.05623407947823,
+     "severity": 0.14125151501327368
+    },
+    "TRAJECTORY_DEVIATION": {
+     "manifest": 49.44,
+     "severity": 0.2023078296954377
+    }
+   },
+   "first_alert": {
+    "POGO_ONSET": 128.0,
+    "TRAJECTORY_DEVIATION": 51.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 51.0,
+   "warning_at": 51.0,
+   "advisory_at": 51.0,
+   "redlines": [],
+   "seed": 202601319
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601333
+  },
+  {
+   "labels": {
+    "TRAJECTORY_DEVIATION": {
+     "manifest": 45.239999999999995,
+     "severity": 0.319908571711027
+    }
+   },
+   "first_alert": {
+    "TRAJECTORY_DEVIATION": 46.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 46.5,
+   "warning_at": 46.5,
+   "advisory_at": 46.5,
+   "redlines": [
+    {
+     "t": 124.72,
+     "call": "ALARM",
+     "text": "Trajectory deviation beyond the flight-safety corridor"
+    }
+   ],
+   "seed": 202601334
+  },
+  {
+   "labels": {
+    "TEMP_SENSOR_FAULT": {
+     "manifest": 28.160186586537368,
+     "severity": 0.5089757524779235
+    },
+    "TVC_ACTUATOR_DEGRADATION": {
+     "manifest": 96.03101140822156,
+     "severity": 0.5878466309624106
+    },
+    "POGO_ONSET": {
+     "manifest": 107.7092215826178,
+     "severity": 0.5701896128932437
+    }
+   },
+   "first_alert": {
+    "TEMP_SENSOR_FAULT": 29.0,
+    "TVC_ACTUATOR_DEGRADATION": 117.0,
+    "POGO_ONSET": 105.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": 105.5,
+   "advisory_at": 29.0,
+   "redlines": [
+    {
+     "t": 28.239999999999995,
+     "call": "ALARM",
+     "text": "Turbine inlet temperature above 950 K"
+    }
+   ],
+   "seed": 202601350
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601352
+  },
+  {
+   "labels": {
+    "LH2_PRESS_OSCILLATION": {
+     "manifest": -29.904099766338806,
+     "severity": 0.04381186851799935
+    }
+   },
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601358
+  },
+  {
+   "labels": {
+    "SRB_THRUST_ASYMMETRY": {
+     "manifest": 55.225256005732106,
+     "severity": 0.014895308944585031
+    },
+    "POGO_ONSET": {
+     "manifest": 121.98495286348685,
+     "severity": 0.30297785908320535
+    }
+   },
+   "first_alert": {
+    "SRB_THRUST_ASYMMETRY": 85.5,
+    "POGO_ONSET": 121.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": 85.5,
+   "advisory_at": 85.5,
+   "redlines": [],
+   "seed": 202601363
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601364
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601367
+  },
+  {
+   "labels": {
+    "COMBUSTION_INSTABILITY": {
+     "manifest": 40.24337524130138,
+     "severity": 0.2570126304630372
+    },
+    "TURBINE_OVERTEMP": {
+     "manifest": 37.176054939036966,
+     "severity": 0.2357004904494655
+    }
+   },
+   "first_alert": {
+    "COMBUSTION_INSTABILITY": 41.0,
+    "TURBINE_OVERTEMP": 40.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 40.0,
+   "warning_at": 40.0,
+   "advisory_at": 40.0,
+   "redlines": [],
+   "seed": 202601369
+  },
+  {
+   "labels": {
+    "BUS_VOLTAGE_SAG": {
+     "manifest": -30.0,
+     "severity": 0.16928156005195522
+    }
+   },
+   "first_alert": {
+    "BUS_VOLTAGE_SAG": -26.5
+   },
+   "hold_at": -26.5,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601381
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601397
+  },
+  {
+   "labels": {
+    "SLOW_ENGINE_START": {
+     "manifest": 2.0,
+     "severity": 0.00845813935723046
+    },
+    "TURBINE_OVERTEMP": {
+     "manifest": 32.122454400508005,
+     "severity": 0.787607741179194
+    }
+   },
+   "first_alert": {
+    "TURBINE_OVERTEMP": 32.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 32.5,
+   "warning_at": 32.5,
+   "advisory_at": 32.5,
+   "redlines": [
+    {
+     "t": 33.78,
+     "call": "ALARM",
+     "text": "Turbine inlet temperature above 950 K"
+    }
+   ],
+   "seed": 202601398
+  },
+  {
+   "labels": {
+    "COMBUSTION_INSTABILITY": {
+     "manifest": 5.456122611028937,
+     "severity": 0.43081972799184537
+    }
+   },
+   "first_alert": {
+    "COMBUSTION_INSTABILITY": 6.0
+   },
+   "hold_at": null,
+   "abort_at": 6.0,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": 5.540000000000006,
+     "call": "ABORT",
+     "text": "Engine-bay vibration above 2 g rms"
+    }
+   ],
+   "seed": 202601401
+  },
+  {
+   "labels": {
+    "BUS_VOLTAGE_SAG": {
+     "manifest": -30.0,
+     "severity": 0.07482715270757101
+    },
+    "COMBUSTION_INSTABILITY": {
+     "manifest": 61.69504035172478,
+     "severity": 0.02670028915662166
+    }
+   },
+   "first_alert": {
+    "COMBUSTION_INSTABILITY": 65.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 65.5,
+   "warning_at": 65.5,
+   "advisory_at": 65.5,
+   "redlines": [],
+   "seed": 202601404
+  },
+  {
+   "labels": {
+    "TURBINE_OVERTEMP": {
+     "manifest": 99.1221107141529,
+     "severity": 0.22975249799470038
+    }
+   },
+   "first_alert": {
+    "TURBINE_OVERTEMP": 103.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 103.0,
+   "warning_at": 103.0,
+   "advisory_at": 103.0,
+   "redlines": [],
+   "seed": 202601409
+  },
+  {
+   "labels": {
+    "TVC_ACTUATOR_DEGRADATION": {
+     "manifest": 21.617338224047842,
+     "severity": 0.7104710633390746
+    }
+   },
+   "first_alert": {
+    "TVC_ACTUATOR_DEGRADATION": 23.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": 23.5,
+   "advisory_at": 23.5,
+   "redlines": [],
+   "seed": 202601417
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601430
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601433
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601445
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601446
+  },
+  {
+   "labels": {
+    "SLOW_ENGINE_START": {
+     "manifest": 2.0,
+     "severity": 0.05448657416892228
+    }
+   },
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601454
+  },
+  {
+   "labels": {
+    "LOX_TANK_UNDERPRESSURE": {
+     "manifest": -52.0,
+     "severity": 0.1873392831429989
+    }
+   },
+   "first_alert": {
+    "LOX_TANK_UNDERPRESSURE": -55.5
+   },
+   "hold_at": -55.5,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -39.92,
+     "call": "HOLD",
+     "text": "LOX tank pressure below 3.30 bar"
+    }
+   ],
+   "seed": 202601459
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601466
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601467
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601468
+  },
+  {
+   "labels": {
+    "SLOW_ENGINE_START": {
+     "manifest": 2.0,
+     "severity": 0.07422943854265153
+    }
+   },
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601477
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601485
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601488
+  },
+  {
+   "labels": {
+    "TVC_ACTUATOR_DEGRADATION": {
+     "manifest": 87.61561233048732,
+     "severity": 0.4349419901558494
+    }
+   },
+   "first_alert": {
+    "TVC_ACTUATOR_DEGRADATION": 98.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": 98.0,
+   "advisory_at": 98.0,
+   "redlines": [],
+   "seed": 202601497
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601504
+  },
+  {
+   "labels": {
+    "TURBINE_OVERTEMP": {
+     "manifest": 69.5614713123348,
+     "severity": 0.26324478624421727
+    }
+   },
+   "first_alert": {
+    "TURBINE_OVERTEMP": 73.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 73.0,
+   "warning_at": 73.0,
+   "advisory_at": 73.0,
+   "redlines": [],
+   "seed": 202601513
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601516
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601519
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601522
+  },
+  {
+   "labels": {
+    "SLOW_ENGINE_START": {
+     "manifest": 2.0,
+     "severity": 0.5253104869908493
+    }
+   },
+   "first_alert": {
+    "SLOW_ENGINE_START": 3.5
+   },
+   "hold_at": null,
+   "abort_at": 3.5,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": 67.22,
+     "call": "ALARM",
+     "text": "TVC deflection above 4 deg"
+    }
+   ],
+   "seed": 202601539
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601549
+  },
+  {
+   "labels": {
+    "POGO_ONSET": {
+     "manifest": 111.42920771074338,
+     "severity": 0.9054753109118332
+    }
+   },
+   "first_alert": {
+    "POGO_ONSET": 109.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": 109.5,
+   "advisory_at": 109.5,
+   "redlines": [],
+   "seed": 202601557
+  },
+  {
+   "labels": {
+    "TURBINE_OVERTEMP": {
+     "manifest": 24.750685712728522,
+     "severity": 0.4677992417310955
+    }
+   },
+   "first_alert": {
+    "TURBINE_OVERTEMP": 27.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 27.5,
+   "warning_at": 27.5,
+   "advisory_at": 27.5,
+   "redlines": [
+    {
+     "t": 32.879999999999995,
+     "call": "ALARM",
+     "text": "Turbine inlet temperature above 950 K"
+    }
+   ],
+   "seed": 202601569
+  },
+  {
+   "labels": {
+    "TVC_ACTUATOR_DEGRADATION": {
+     "manifest": 80.03661572016053,
+     "severity": 0.5803018458432109
+    }
+   },
+   "first_alert": {
+    "TVC_ACTUATOR_DEGRADATION": 91.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": 91.5,
+   "advisory_at": 91.5,
+   "redlines": [],
+   "seed": 202601577
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601582
+  },
+  {
+   "labels": {
+    "LH2_PRESS_OSCILLATION": {
+     "manifest": -38.845294745642,
+     "severity": 0.495386377517412
+    },
+    "TVC_ACTUATOR_DEGRADATION": {
+     "manifest": 79.24820523568664,
+     "severity": 0.19887157915734432
+    }
+   },
+   "first_alert": {
+    "LH2_PRESS_OSCILLATION": -31.5
+   },
+   "hold_at": -31.5,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": 54.31999999999999,
+     "call": "ALARM",
+     "text": "TVC deflection above 4 deg"
+    }
+   ],
+   "seed": 202601585
+  },
+  {
+   "labels": {
+    "LH2_PRESS_OSCILLATION": {
+     "manifest": -20.726077907025612,
+     "severity": 0.13143620092955735
+    },
+    "BUS_VOLTAGE_SAG": {
+     "manifest": -30.0,
+     "severity": 0.2594847942634779
+    }
+   },
+   "first_alert": {
+    "LH2_PRESS_OSCILLATION": -10.0,
+    "BUS_VOLTAGE_SAG": -29.0
+   },
+   "hold_at": -29.0,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -29.92,
+     "call": "HOLD",
+     "text": "Bus voltage below 27.0 V"
+    }
+   ],
+   "seed": 202601588
+  },
+  {
+   "labels": {
+    "LOX_TANK_UNDERPRESSURE": {
+     "manifest": -52.0,
+     "severity": 0.4053803054467859
+    },
+    "TVC_ACTUATOR_DEGRADATION": {
+     "manifest": 31.552836626938262,
+     "severity": 0.9084086087298476
+    }
+   },
+   "first_alert": {
+    "LOX_TANK_UNDERPRESSURE": -55.5,
+    "TVC_ACTUATOR_DEGRADATION": 35.0
+   },
+   "hold_at": -55.5,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -39.92,
+     "call": "HOLD",
+     "text": "LOX tank pressure below 3.30 bar"
+    }
+   ],
+   "seed": 202601617
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601618
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601641
+  },
+  {
+   "labels": {
+    "TVC_ACTUATOR_DEGRADATION": {
+     "manifest": 110.22294110581223,
+     "severity": 0.04080745353935174
+    }
+   },
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601642
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601644
+  },
+  {
+   "labels": {
+    "POGO_ONSET": {
+     "manifest": 102.35627148245425,
+     "severity": 0.09344928653641009
+    }
+   },
+   "first_alert": {
+    "POGO_ONSET": 106.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": 106.0,
+   "advisory_at": 106.0,
+   "redlines": [],
+   "seed": 202601649
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601655
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601665
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601672
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601699
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601702
+  },
+  {
+   "labels": {
+    "SLOW_ENGINE_START": {
+     "manifest": 2.0,
+     "severity": 0.055683708325047786
+    },
+    "TVC_ACTUATOR_DEGRADATION": {
+     "manifest": 38.261799912010446,
+     "severity": 0.19161124522906642
+    }
+   },
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601722
+  },
+  {
+   "labels": {
+    "LH2_PRESS_OSCILLATION": {
+     "manifest": -27.17112422978307,
+     "severity": 0.24238303151629412
+    },
+    "SLOW_ENGINE_START": {
+     "manifest": 2.0,
+     "severity": 0.1736088287212025
+    }
+   },
+   "first_alert": {
+    "LH2_PRESS_OSCILLATION": -23.0,
+    "SLOW_ENGINE_START": 2.5
+   },
+   "hold_at": -23.0,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601727
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601743
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601748
+  },
+  {
+   "labels": {
+    "TEMP_SENSOR_FAULT": {
+     "manifest": 123.78616549747727,
+     "severity": 0.039000573460666633
+    },
+    "TRAJECTORY_DEVIATION": {
+     "manifest": 60.68000000000001,
+     "severity": 0.39827880942529575
+    }
+   },
+   "first_alert": {
+    "TEMP_SENSOR_FAULT": 124.5,
+    "TRAJECTORY_DEVIATION": 66.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 66.5,
+   "warning_at": 66.5,
+   "advisory_at": 66.5,
+   "redlines": [
+    {
+     "t": 100.56,
+     "call": "ALARM",
+     "text": "Trajectory deviation beyond the flight-safety corridor"
+    }
+   ],
+   "seed": 202601757
+  },
+  {
+   "labels": {
+    "TURBINE_OVERTEMP": {
+     "manifest": 17.86570311526163,
+     "severity": 0.07932340002477212
+    },
+    "SRB_THRUST_ASYMMETRY": {
+     "manifest": 53.919353627052935,
+     "severity": 0.3414667735105604
+    },
+    "TVC_ACTUATOR_DEGRADATION": {
+     "manifest": 106.52845943850085,
+     "severity": 0.2893204411777316
+    },
+    "POGO_ONSET": {
+     "manifest": 117.16536172478045,
+     "severity": 0.15950019151253558
+    }
+   },
+   "first_alert": {
+    "SRB_THRUST_ASYMMETRY": 61.5,
+    "POGO_ONSET": 121.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": 61.5,
+   "advisory_at": 61.5,
+   "redlines": [],
+   "seed": 202601760
+  },
+  {
+   "labels": {
+    "TVC_ACTUATOR_DEGRADATION": {
+     "manifest": 83.30737767718945,
+     "severity": 0.2731176739457149
+    }
+   },
+   "first_alert": {
+    "TVC_ACTUATOR_DEGRADATION": 135.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": 135.5,
+   "advisory_at": 135.5,
+   "redlines": [],
+   "seed": 202601763
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601764
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601767
+  },
+  {
+   "labels": {
+    "LOX_TANK_UNDERPRESSURE": {
+     "manifest": -52.0,
+     "severity": 0.4026524132677742
+    },
+    "LH2_PRESS_OSCILLATION": {
+     "manifest": -37.49177897533994,
+     "severity": 0.404359465645209
+    }
+   },
+   "first_alert": {
+    "LOX_TANK_UNDERPRESSURE": -55.5,
+    "LH2_PRESS_OSCILLATION": -31.5
+   },
+   "hold_at": -55.5,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -39.92,
+     "call": "HOLD",
+     "text": "LOX tank pressure below 3.30 bar"
+    }
+   ],
+   "seed": 202601777
+  },
+  {
+   "labels": {
+    "POGO_ONSET": {
+     "manifest": 119.05675030501465,
+     "severity": 0.24235846687679735
+    }
+   },
+   "first_alert": {
+    "POGO_ONSET": 123.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": 123.5,
+   "advisory_at": 123.5,
+   "redlines": [],
+   "seed": 202601778
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601786
+  },
+  {
+   "labels": {
+    "TEMP_SENSOR_FAULT": {
+     "manifest": 77.4102602497843,
+     "severity": 0.20298898920353334
+    },
+    "POGO_ONSET": {
+     "manifest": 101.46321812517859,
+     "severity": 0.6133711664979904
+    }
+   },
+   "first_alert": {
+    "TEMP_SENSOR_FAULT": 78.0,
+    "POGO_ONSET": 101.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": 101.5,
+   "advisory_at": 78.0,
+   "redlines": [],
+   "seed": 202601792
+  },
+  {
+   "labels": {
+    "BUS_VOLTAGE_SAG": {
+     "manifest": -30.0,
+     "severity": 0.5315138288379907
+    }
+   },
+   "first_alert": {
+    "BUS_VOLTAGE_SAG": -29.0
+   },
+   "hold_at": -29.0,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -29.92,
+     "call": "HOLD",
+     "text": "Bus voltage below 27.0 V"
+    }
+   ],
+   "seed": 202601802
+  },
+  {
+   "labels": {
+    "BUS_VOLTAGE_SAG": {
+     "manifest": -30.0,
+     "severity": 0.256677680403998
+    },
+    "TEMP_SENSOR_FAULT": {
+     "manifest": 93.64885691700096,
+     "severity": 0.5049788735441761
+    }
+   },
+   "first_alert": {
+    "BUS_VOLTAGE_SAG": -29.0,
+    "TEMP_SENSOR_FAULT": 94.5
+   },
+   "hold_at": -29.0,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -29.92,
+     "call": "HOLD",
+     "text": "Bus voltage below 27.0 V"
+    },
+    {
+     "t": 124.52000000000001,
+     "call": "ALARM",
+     "text": "Turbine inlet temperature above 950 K"
+    }
+   ],
+   "seed": 202601808
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601816
+  },
+  {
+   "labels": {
+    "BUS_VOLTAGE_SAG": {
+     "manifest": -30.0,
+     "severity": 0.314310044604146
+    },
+    "SRB_THRUST_ASYMMETRY": {
+     "manifest": 75.4410733195922,
+     "severity": 0.5721194157301558
+    }
+   },
+   "first_alert": {
+    "BUS_VOLTAGE_SAG": -29.0,
+    "SRB_THRUST_ASYMMETRY": 77.5
+   },
+   "hold_at": -29.0,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -29.92,
+     "call": "HOLD",
+     "text": "Bus voltage below 27.0 V"
+    }
+   ],
+   "seed": 202601821
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601822
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601824
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601834
+  },
+  {
+   "labels": {
+    "SRB_THRUST_ASYMMETRY": {
+     "manifest": 29.21610616854406,
+     "severity": 0.22659527978806476
+    }
+   },
+   "first_alert": {
+    "SRB_THRUST_ASYMMETRY": 99.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": 99.5,
+   "advisory_at": 99.5,
+   "redlines": [],
+   "seed": 202601837
+  },
+  {
+   "labels": {
+    "LH2_PRESS_OSCILLATION": {
+     "manifest": -41.843678293688725,
+     "severity": 0.05004609507971915
+    }
+   },
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601840
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601841
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601842
+  },
+  {
+   "labels": {
+    "COMBUSTION_INSTABILITY": {
+     "manifest": 3.942424401126432,
+     "severity": 0.6355241944277626
+    }
+   },
+   "first_alert": {
+    "COMBUSTION_INSTABILITY": 4.5
+   },
+   "hold_at": null,
+   "abort_at": 4.5,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": 3.8200000000000003,
+     "call": "ABORT",
+     "text": "Engine-bay vibration above 2 g rms"
+    },
+    {
+     "t": 7.359999999999999,
+     "call": "ALARM",
+     "text": "Engine-bay vibration above 6 g rms"
+    }
+   ],
+   "seed": 202601854
+  },
+  {
+   "labels": {
+    "TRAJECTORY_DEVIATION": {
+     "manifest": 87.86000000000001,
+     "severity": 0.22813312175060846
+    }
+   },
+   "first_alert": {
+    "TRAJECTORY_DEVIATION": 98.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 98.0,
+   "warning_at": 98.0,
+   "advisory_at": 98.0,
+   "redlines": [],
+   "seed": 202601860
+  },
+  {
+   "labels": {
+    "LH2_PRESS_OSCILLATION": {
+     "manifest": -27.810099899092602,
+     "severity": 0.018121107665683298
+    }
+   },
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601862
+  },
+  {
+   "labels": {
+    "SLOW_ENGINE_START": {
+     "manifest": 2.0,
+     "severity": 0.0511929816048795
+    }
+   },
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601870
+  },
+  {
+   "labels": {
+    "SLOW_ENGINE_START": {
+     "manifest": 2.0,
+     "severity": 0.6111128112210723
+    }
+   },
+   "first_alert": {
+    "SLOW_ENGINE_START": 3.0
+   },
+   "hold_at": null,
+   "abort_at": 3.0,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601874
+  },
+  {
+   "labels": {
+    "BUS_VOLTAGE_SAG": {
+     "manifest": -30.0,
+     "severity": 0.3648729013688553
+    }
+   },
+   "first_alert": {
+    "BUS_VOLTAGE_SAG": -29.0
+   },
+   "hold_at": -29.0,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -29.92,
+     "call": "HOLD",
+     "text": "Bus voltage below 27.0 V"
+    }
+   ],
+   "seed": 202601880
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601885
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601886
+  },
+  {
+   "labels": {
+    "TURBINE_OVERTEMP": {
+     "manifest": 75.25899005098069,
+     "severity": 0.704295017422901
+    }
+   },
+   "first_alert": {
+    "TURBINE_OVERTEMP": 77.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 77.0,
+   "warning_at": 77.0,
+   "advisory_at": 77.0,
+   "redlines": [
+    {
+     "t": 80.02000000000001,
+     "call": "ALARM",
+     "text": "Turbine inlet temperature above 950 K"
+    }
+   ],
+   "seed": 202601887
+  },
+  {
+   "labels": {
+    "POGO_ONSET": {
+     "manifest": 112.82230712502233,
+     "severity": 0.17915513032587818
+    }
+   },
+   "first_alert": {
+    "POGO_ONSET": 121.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": 121.0,
+   "advisory_at": 121.0,
+   "redlines": [],
+   "seed": 202601891
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601913
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601923
+  },
+  {
+   "labels": {
+    "TEMP_SENSOR_FAULT": {
+     "manifest": 126.04469425756177,
+     "severity": 0.21137439212133055
+    },
+    "TRAJECTORY_DEVIATION": {
+     "manifest": 102.69999999999999,
+     "severity": 0.18008633480957326
+    }
+   },
+   "first_alert": {
+    "TEMP_SENSOR_FAULT": 127.0,
+    "TRAJECTORY_DEVIATION": 96.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 96.0,
+   "warning_at": 96.0,
+   "advisory_at": 96.0,
+   "redlines": [
+    {
+     "t": 126.13999999999999,
+     "call": "ALARM",
+     "text": "Turbine inlet temperature above 950 K"
+    }
+   ],
+   "seed": 202601925
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601931
+  },
+  {
+   "labels": {
+    "LH2_PRESS_OSCILLATION": {
+     "manifest": -19.344317609364957,
+     "severity": 0.6189379190564324
+    }
+   },
+   "first_alert": {
+    "LH2_PRESS_OSCILLATION": -16.5
+   },
+   "hold_at": -16.5,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601935
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601939
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601945
+  },
+  {
+   "labels": {
+    "LOX_TANK_UNDERPRESSURE": {
+     "manifest": -52.0,
+     "severity": 0.13574997193509883
+    },
+    "TEMP_SENSOR_FAULT": {
+     "manifest": 86.93029039285537,
+     "severity": 0.1972513035383676
+    }
+   },
+   "first_alert": {
+    "LOX_TANK_UNDERPRESSURE": -55.5,
+    "TEMP_SENSOR_FAULT": 87.5
+   },
+   "hold_at": -55.5,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601957
+  },
+  {
+   "labels": {
+    "BUS_VOLTAGE_SAG": {
+     "manifest": -30.0,
+     "severity": 0.4226762605142542
+    }
+   },
+   "first_alert": {
+    "BUS_VOLTAGE_SAG": -29.0
+   },
+   "hold_at": -29.0,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -29.92,
+     "call": "HOLD",
+     "text": "Bus voltage below 27.0 V"
+    }
+   ],
+   "seed": 202601959
+  },
+  {
+   "labels": {
+    "TVC_ACTUATOR_DEGRADATION": {
+     "manifest": 96.67852842342604,
+     "severity": 0.3001486923544382
+    }
+   },
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601967
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601978
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601981
+  },
+  {
+   "labels": {
+    "LOX_TANK_UNDERPRESSURE": {
+     "manifest": -52.0,
+     "severity": 0.4902421653376592
+    },
+    "LOX_PUMP_CAVITATION": {
+     "manifest": 2.077379895251554,
+     "severity": 0.5518462212897661
+    }
+   },
+   "first_alert": {
+    "LOX_TANK_UNDERPRESSURE": -55.5,
+    "LOX_PUMP_CAVITATION": 6.0
+   },
+   "hold_at": -55.5,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -39.92,
+     "call": "HOLD",
+     "text": "LOX tank pressure below 3.30 bar"
+    }
+   ],
+   "seed": 202601983
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202601994
+  },
+  {
+   "labels": {
+    "SLOW_ENGINE_START": {
+     "manifest": 2.0,
+     "severity": 0.014057269886433433
+    },
+    "SRB_THRUST_ASYMMETRY": {
+     "manifest": 48.2423723171,
+     "severity": 0.2078947714252288
+    }
+   },
+   "first_alert": {
+    "SRB_THRUST_ASYMMETRY": 53.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": 53.5,
+   "advisory_at": 53.5,
+   "redlines": [],
+   "seed": 202602001
+  },
+  {
+   "labels": {
+    "COMBUSTION_INSTABILITY": {
+     "manifest": 3.988090792321874,
+     "severity": 0.7432332927479859
+    }
+   },
+   "first_alert": {
+    "COMBUSTION_INSTABILITY": 4.5
+   },
+   "hold_at": null,
+   "abort_at": 4.5,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": 3.8999999999999986,
+     "call": "ABORT",
+     "text": "Engine-bay vibration above 2 g rms"
+    }
+   ],
+   "seed": 202602020
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602021
+  },
+  {
+   "labels": {
+    "TRAJECTORY_DEVIATION": {
+     "manifest": 103.56,
+     "severity": 0.24468008262840274
+    }
+   },
+   "first_alert": {
+    "TRAJECTORY_DEVIATION": 91.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 91.5,
+   "warning_at": 91.5,
+   "advisory_at": 91.5,
+   "redlines": [],
+   "seed": 202602025
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602026
+  },
+  {
+   "labels": {
+    "LH2_PRESS_OSCILLATION": {
+     "manifest": -28.998472049545995,
+     "severity": 0.001261750795874987
+    }
+   },
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602027
+  },
+  {
+   "labels": {
+    "LOX_TANK_UNDERPRESSURE": {
+     "manifest": -52.0,
+     "severity": 0.3456080455704698
+    },
+    "TVC_ACTUATOR_DEGRADATION": {
+     "manifest": 41.32584477105152,
+     "severity": 0.07930023412287365
+    }
+   },
+   "first_alert": {
+    "LOX_TANK_UNDERPRESSURE": -55.5
+   },
+   "hold_at": -55.5,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -39.92,
+     "call": "HOLD",
+     "text": "LOX tank pressure below 3.30 bar"
+    }
+   ],
+   "seed": 202602034
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602036
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602043
+  },
+  {
+   "labels": {
+    "TEMP_SENSOR_FAULT": {
+     "manifest": 42.23104987178787,
+     "severity": 0.9333888203244008
+    }
+   },
+   "first_alert": {
+    "TEMP_SENSOR_FAULT": 43.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": 43.0,
+   "redlines": [
+    {
+     "t": 42.31999999999999,
+     "call": "ALARM",
+     "text": "Turbine inlet temperature above 950 K"
+    }
+   ],
+   "seed": 202602044
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602050
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602055
+  },
+  {
+   "labels": {
+    "SLOW_ENGINE_START": {
+     "manifest": 2.0,
+     "severity": 0.27619346766993846
+    }
+   },
+   "first_alert": {
+    "SLOW_ENGINE_START": 3.5
+   },
+   "hold_at": null,
+   "abort_at": 3.5,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602056
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602058
+  },
+  {
+   "labels": {
+    "TURBINE_OVERTEMP": {
+     "manifest": 45.75950890812584,
+     "severity": 0.6221921279701733
+    }
+   },
+   "first_alert": {
+    "TURBINE_OVERTEMP": 48.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 48.0,
+   "warning_at": 48.0,
+   "advisory_at": 48.0,
+   "redlines": [
+    {
+     "t": 50.31999999999999,
+     "call": "ALARM",
+     "text": "Turbine inlet temperature above 950 K"
+    }
+   ],
+   "seed": 202602066
+  },
+  {
+   "labels": {
+    "SLOW_ENGINE_START": {
+     "manifest": 2.0,
+     "severity": 0.6544334588769902
+    }
+   },
+   "first_alert": {
+    "SLOW_ENGINE_START": 3.5
+   },
+   "hold_at": null,
+   "abort_at": 3.5,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602068
+  },
+  {
+   "labels": {
+    "TVC_ACTUATOR_DEGRADATION": {
+     "manifest": 94.93762670549641,
+     "severity": 0.17198447154898264
+    },
+    "TRAJECTORY_DEVIATION": {
+     "manifest": 100.63999999999999,
+     "severity": 0.43264371474488666
+    }
+   },
+   "first_alert": {
+    "TRAJECTORY_DEVIATION": 98.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 98.0,
+   "warning_at": 98.0,
+   "advisory_at": 98.0,
+   "redlines": [
+    {
+     "t": 141.56,
+     "call": "ALARM",
+     "text": "Trajectory deviation beyond the flight-safety corridor"
+    }
+   ],
+   "seed": 202602075
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602076
+  },
+  {
+   "labels": {
+    "TEMP_SENSOR_FAULT": {
+     "manifest": 82.02878037183216,
+     "severity": 0.016234911491887622
+    }
+   },
+   "first_alert": {
+    "TEMP_SENSOR_FAULT": 83.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": 83.0,
+   "redlines": [],
+   "seed": 202602080
+  },
+  {
+   "labels": {
+    "LH2_PRESS_OSCILLATION": {
+     "manifest": -29.769719558881576,
+     "severity": 0.4142963170203846
+    }
+   },
+   "first_alert": {
+    "LH2_PRESS_OSCILLATION": -28.0
+   },
+   "hold_at": -28.0,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602083
+  },
+  {
+   "labels": {
+    "TRAJECTORY_DEVIATION": {
+     "manifest": 97.16,
+     "severity": 0.45780642391767173
+    }
+   },
+   "first_alert": {
+    "TRAJECTORY_DEVIATION": 90.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 90.5,
+   "warning_at": 90.5,
+   "advisory_at": 90.5,
+   "redlines": [
+    {
+     "t": 131.08,
+     "call": "ALARM",
+     "text": "Trajectory deviation beyond the flight-safety corridor"
+    }
+   ],
+   "seed": 202602084
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602097
+  },
+  {
+   "labels": {
+    "BUS_VOLTAGE_SAG": {
+     "manifest": -30.0,
+     "severity": 0.29676065257468437
+    }
+   },
+   "first_alert": {
+    "BUS_VOLTAGE_SAG": -29.0
+   },
+   "hold_at": -29.0,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -29.92,
+     "call": "HOLD",
+     "text": "Bus voltage below 27.0 V"
+    }
+   ],
+   "seed": 202602114
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602117
+  },
+  {
+   "labels": {
+    "POGO_ONSET": {
+     "manifest": 116.49028773285505,
+     "severity": 0.9643527326478697
+    }
+   },
+   "first_alert": {
+    "POGO_ONSET": 114.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": 114.5,
+   "advisory_at": 114.5,
+   "redlines": [],
+   "seed": 202602128
+  },
+  {
+   "labels": {
+    "SRB_THRUST_ASYMMETRY": {
+     "manifest": 72.3480493431286,
+     "severity": 0.1117487469844101
+    }
+   },
+   "first_alert": {
+    "SRB_THRUST_ASYMMETRY": 99.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": 99.5,
+   "advisory_at": 99.5,
+   "redlines": [],
+   "seed": 202602130
+  },
+  {
+   "labels": {
+    "LOX_PUMP_CAVITATION": {
+     "manifest": 2.710767763790779,
+     "severity": 0.27439646276977175
+    }
+   },
+   "first_alert": {
+    "LOX_PUMP_CAVITATION": 3.5
+   },
+   "hold_at": null,
+   "abort_at": 3.5,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602132
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602135
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602137
+  },
+  {
+   "labels": {
+    "SLOW_ENGINE_START": {
+     "manifest": 2.0,
+     "severity": 0.8021735147949325
+    }
+   },
+   "first_alert": {
+    "SLOW_ENGINE_START": 3.5
+   },
+   "hold_at": null,
+   "abort_at": 3.5,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": 3.5799999999999983,
+     "call": "ABORT",
+     "text": "Chamber pressure below 100 bar after H0 + 3.5 s"
+    }
+   ],
+   "seed": 202602141
+  },
+  {
+   "labels": {
+    "TURBINE_OVERTEMP": {
+     "manifest": 46.623288779984264,
+     "severity": 0.2763232391801482
+    }
+   },
+   "first_alert": {
+    "TURBINE_OVERTEMP": 50.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 50.5,
+   "warning_at": 50.5,
+   "advisory_at": 50.5,
+   "redlines": [],
+   "seed": 202602152
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602164
+  },
+  {
+   "labels": {
+    "TRAJECTORY_DEVIATION": {
+     "manifest": 89.06,
+     "severity": 0.48286006055632347
+    }
+   },
+   "first_alert": {
+    "TRAJECTORY_DEVIATION": 84.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 84.5,
+   "warning_at": 84.5,
+   "advisory_at": 84.5,
+   "redlines": [
+    {
+     "t": 122.63999999999999,
+     "call": "ALARM",
+     "text": "Trajectory deviation beyond the flight-safety corridor"
+    }
+   ],
+   "seed": 202602165
+  },
+  {
+   "labels": {
+    "SLOW_ENGINE_START": {
+     "manifest": 2.0,
+     "severity": 0.37698127952227733
+    },
+    "TEMP_SENSOR_FAULT": {
+     "manifest": 77.91181978437768,
+     "severity": 0.02713229947399089
+    }
+   },
+   "first_alert": {
+    "SLOW_ENGINE_START": 3.0,
+    "TEMP_SENSOR_FAULT": 78.5
+   },
+   "hold_at": null,
+   "abort_at": 3.0,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": 78.0,
+     "call": "ALARM",
+     "text": "Turbine inlet temperature above 950 K"
+    }
+   ],
+   "seed": 202602170
+  },
+  {
+   "labels": {
+    "BUS_VOLTAGE_SAG": {
+     "manifest": -30.0,
+     "severity": 0.45676413636854796
+    }
+   },
+   "first_alert": {
+    "BUS_VOLTAGE_SAG": -29.0
+   },
+   "hold_at": -29.0,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -29.92,
+     "call": "HOLD",
+     "text": "Bus voltage below 27.0 V"
+    }
+   ],
+   "seed": 202602179
+  },
+  {
+   "labels": {
+    "TEMP_SENSOR_FAULT": {
+     "manifest": 62.30672332906721,
+     "severity": 0.6371245501607636
+    }
+   },
+   "first_alert": {
+    "TEMP_SENSOR_FAULT": 63.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": 63.0,
+   "redlines": [
+    {
+     "t": 62.379999999999995,
+     "call": "ALARM",
+     "text": "Turbine inlet temperature above 950 K"
+    }
+   ],
+   "seed": 202602210
+  },
+  {
+   "labels": {
+    "COMBUSTION_INSTABILITY": {
+     "manifest": 4.716837181659887,
+     "severity": 0.5675131290859049
+    }
+   },
+   "first_alert": {
+    "COMBUSTION_INSTABILITY": 5.5
+   },
+   "hold_at": null,
+   "abort_at": 5.5,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": 4.700000000000003,
+     "call": "ABORT",
+     "text": "Engine-bay vibration above 2 g rms"
+    }
+   ],
+   "seed": 202602218
+  },
+  {
+   "labels": {
+    "LH2_PRESS_OSCILLATION": {
+     "manifest": -18.706378226480652,
+     "severity": 0.045597107616024285
+    }
+   },
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602222
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602223
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602228
+  },
+  {
+   "labels": {
+    "LH2_PRESS_OSCILLATION": {
+     "manifest": -34.503589248596256,
+     "severity": 0.26608198486604984
+    },
+    "COMBUSTION_INSTABILITY": {
+     "manifest": 47.42744754269275,
+     "severity": 0.019011368163738527
+    },
+    "TEMP_SENSOR_FAULT": {
+     "manifest": 125.76583829747958,
+     "severity": 0.13868110410322915
+    }
+   },
+   "first_alert": {
+    "LH2_PRESS_OSCILLATION": -30.0,
+    "COMBUSTION_INSTABILITY": 57.5,
+    "TEMP_SENSOR_FAULT": 126.5
+   },
+   "hold_at": -30.0,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602230
+  },
+  {
+   "labels": {
+    "TURBINE_OVERTEMP": {
+     "manifest": 38.08024966936807,
+     "severity": 0.19175558038566268
+    }
+   },
+   "first_alert": {
+    "TURBINE_OVERTEMP": 43.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 43.5,
+   "warning_at": 43.5,
+   "advisory_at": 43.5,
+   "redlines": [],
+   "seed": 202602232
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602251
+  },
+  {
+   "labels": {
+    "SRB_THRUST_ASYMMETRY": {
+     "manifest": 82.54829728339419,
+     "severity": 0.034618188271157355
+    }
+   },
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602259
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602261
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602267
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602271
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602274
+  },
+  {
+   "labels": {
+    "SLOW_ENGINE_START": {
+     "manifest": 2.0,
+     "severity": 0.7965660105800594
+    }
+   },
+   "first_alert": {
+    "SLOW_ENGINE_START": 2.5
+   },
+   "hold_at": null,
+   "abort_at": 2.5,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": 3.5799999999999983,
+     "call": "ABORT",
+     "text": "Chamber pressure below 100 bar after H0 + 3.5 s"
+    }
+   ],
+   "seed": 202602287
+  },
+  {
+   "labels": {
+    "TVC_ACTUATOR_DEGRADATION": {
+     "manifest": 104.835444692734,
+     "severity": 0.034530230642545935
+    }
+   },
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602294
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602300
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602304
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602305
+  },
+  {
+   "labels": {
+    "LOX_TANK_UNDERPRESSURE": {
+     "manifest": -52.0,
+     "severity": 0.5471999094604464
+    },
+    "TVC_ACTUATOR_DEGRADATION": {
+     "manifest": 102.87331740205873,
+     "severity": 0.52445659059415
+    },
+    "LOX_PUMP_CAVITATION": {
+     "manifest": 2.9637078698652397,
+     "severity": 0.4606968455719552
+    }
+   },
+   "first_alert": {
+    "LOX_TANK_UNDERPRESSURE": -55.5,
+    "LOX_PUMP_CAVITATION": 3.5,
+    "TVC_ACTUATOR_DEGRADATION": 133.0
+   },
+   "hold_at": -55.5,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -39.92,
+     "call": "HOLD",
+     "text": "LOX tank pressure below 3.30 bar"
+    }
+   ],
+   "seed": 202602312
+  },
+  {
+   "labels": {
+    "SLOW_ENGINE_START": {
+     "manifest": 2.0,
+     "severity": 0.434276800937346
+    }
+   },
+   "first_alert": {
+    "SLOW_ENGINE_START": 2.5
+   },
+   "hold_at": null,
+   "abort_at": 2.5,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602319
+  },
+  {
+   "labels": {
+    "LOX_TANK_UNDERPRESSURE": {
+     "manifest": -52.0,
+     "severity": 0.013862193365397941
+    }
+   },
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602320
+  },
+  {
+   "labels": {
+    "SLOW_ENGINE_START": {
+     "manifest": 2.0,
+     "severity": 0.12166239951879826
+    },
+    "TRAJECTORY_DEVIATION": {
+     "manifest": 59.16,
+     "severity": 0.5547324241803416
+    }
+   },
+   "first_alert": {
+    "TRAJECTORY_DEVIATION": 61.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 61.5,
+   "warning_at": 61.5,
+   "advisory_at": 61.5,
+   "redlines": [
+    {
+     "t": 94.18,
+     "call": "ALARM",
+     "text": "Trajectory deviation beyond the flight-safety corridor"
+    }
+   ],
+   "seed": 202602325
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602326
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602327
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602328
+  },
+  {
+   "labels": {
+    "TEMP_SENSOR_FAULT": {
+     "manifest": 105.50940643794823,
+     "severity": 0.5850366842141376
+    }
+   },
+   "first_alert": {
+    "TEMP_SENSOR_FAULT": 106.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": 106.0,
+   "redlines": [
+    {
+     "t": 105.58000000000001,
+     "call": "ALARM",
+     "text": "Turbine inlet temperature above 950 K"
+    }
+   ],
+   "seed": 202602333
+  },
+  {
+   "labels": {
+    "SRB_THRUST_ASYMMETRY": {
+     "manifest": 76.10390438227302,
+     "severity": 0.8312282892783582
+    }
+   },
+   "first_alert": {
+    "SRB_THRUST_ASYMMETRY": 78.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": 78.5,
+   "advisory_at": 78.5,
+   "redlines": [],
+   "seed": 202602334
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602335
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602340
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602349
+  },
+  {
+   "labels": {
+    "LOX_TANK_UNDERPRESSURE": {
+     "manifest": -52.0,
+     "severity": 0.037052342539846794
+    }
+   },
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602356
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602359
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602371
+  },
+  {
+   "labels": {
+    "LOX_PUMP_CAVITATION": {
+     "manifest": 3.241193093929505,
+     "severity": 0.30878443576953374
+    }
+   },
+   "first_alert": {
+    "LOX_PUMP_CAVITATION": 4.0
+   },
+   "hold_at": null,
+   "abort_at": 4.0,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602377
+  },
+  {
+   "labels": {
+    "BUS_VOLTAGE_SAG": {
+     "manifest": -30.0,
+     "severity": 0.9693309569459064
+    }
+   },
+   "first_alert": {
+    "BUS_VOLTAGE_SAG": -29.0
+   },
+   "hold_at": -29.0,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -29.92,
+     "call": "HOLD",
+     "text": "Bus voltage below 27.0 V"
+    }
+   ],
+   "seed": 202602381
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602401
+  },
+  {
+   "labels": {
+    "BUS_VOLTAGE_SAG": {
+     "manifest": -30.0,
+     "severity": 0.6215838698225012
+    },
+    "TEMP_SENSOR_FAULT": {
+     "manifest": 19.57324123169566,
+     "severity": 0.43971921821983895
+    }
+   },
+   "first_alert": {
+    "BUS_VOLTAGE_SAG": -29.0,
+    "TEMP_SENSOR_FAULT": 20.5
+   },
+   "hold_at": -29.0,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -29.92,
+     "call": "HOLD",
+     "text": "Bus voltage below 27.0 V"
+    },
+    {
+     "t": 40.72,
+     "call": "ALARM",
+     "text": "Turbine inlet temperature above 950 K"
+    }
+   ],
+   "seed": 202602402
+  },
+  {
+   "labels": {
+    "LH2_PRESS_OSCILLATION": {
+     "manifest": -33.55139113016688,
+     "severity": 0.4865906163356495
+    }
+   },
+   "first_alert": {
+    "LH2_PRESS_OSCILLATION": -30.5
+   },
+   "hold_at": -30.5,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602403
+  },
+  {
+   "labels": {
+    "TEMP_SENSOR_FAULT": {
+     "manifest": 95.43456740135642,
+     "severity": 0.25478002898067487
+    },
+    "TRAJECTORY_DEVIATION": {
+     "manifest": 36.019999999999996,
+     "severity": 0.44646629447788266
+    }
+   },
+   "first_alert": {
+    "TEMP_SENSOR_FAULT": 96.0,
+    "TRAJECTORY_DEVIATION": 38.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 38.0,
+   "warning_at": 38.0,
+   "advisory_at": 38.0,
+   "redlines": [
+    {
+     "t": 66.46,
+     "call": "ALARM",
+     "text": "Trajectory deviation beyond the flight-safety corridor"
+    },
+    {
+     "t": 100.38,
+     "call": "ALARM",
+     "text": "Turbine inlet temperature above 950 K"
+    }
+   ],
+   "seed": 202602404
+  },
+  {
+   "labels": {
+    "LOX_TANK_UNDERPRESSURE": {
+     "manifest": -52.0,
+     "severity": 0.5796371040307614
+    },
+    "BUS_VOLTAGE_SAG": {
+     "manifest": -30.0,
+     "severity": 0.0212964702302206
+    },
+    "TEMP_SENSOR_FAULT": {
+     "manifest": 85.29873925892095,
+     "severity": 0.7634854614326875
+    },
+    "TVC_ACTUATOR_DEGRADATION": {
+     "manifest": 95.51907551587257,
+     "severity": 0.1514068729644027
+    }
+   },
+   "first_alert": {
+    "LOX_TANK_UNDERPRESSURE": -55.5,
+    "TEMP_SENSOR_FAULT": 86.0,
+    "TRAJECTORY_DEVIATION": 55.0
+   },
+   "hold_at": -55.5,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -39.92,
+     "call": "HOLD",
+     "text": "LOX tank pressure below 3.30 bar"
+    },
+    {
+     "t": 54.16,
+     "call": "ALARM",
+     "text": "TVC deflection above 4 deg"
+    },
+    {
+     "t": 85.38,
+     "call": "ALARM",
+     "text": "Turbine inlet temperature above 950 K"
+    }
+   ],
+   "seed": 202602405
+  },
+  {
+   "labels": {
+    "TVC_ACTUATOR_DEGRADATION": {
+     "manifest": 97.21385419184752,
+     "severity": 0.7913642317610967
+    }
+   },
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602407
+  },
+  {
+   "labels": {
+    "TURBINE_OVERTEMP": {
+     "manifest": 60.27830278949651,
+     "severity": 0.2374437686116907
+    }
+   },
+   "first_alert": {
+    "TURBINE_OVERTEMP": 64.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 64.0,
+   "warning_at": 64.0,
+   "advisory_at": 64.0,
+   "redlines": [],
+   "seed": 202602408
+  },
+  {
+   "labels": {
+    "TURBINE_OVERTEMP": {
+     "manifest": 15.005374760444614,
+     "severity": 0.33057851789034287
+    }
+   },
+   "first_alert": {
+    "TURBINE_OVERTEMP": 18.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 18.0,
+   "warning_at": 18.0,
+   "advisory_at": 18.0,
+   "redlines": [],
+   "seed": 202602409
+  },
+  {
+   "labels": {
+    "TRAJECTORY_DEVIATION": {
+     "manifest": 103.02000000000001,
+     "severity": 0.3360491247047435
+    }
+   },
+   "first_alert": {
+    "TRAJECTORY_DEVIATION": 102.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 102.5,
+   "warning_at": 102.5,
+   "advisory_at": 102.5,
+   "redlines": [],
+   "seed": 202602411
+  },
+  {
+   "labels": {
+    "POGO_ONSET": {
+     "manifest": 107.2297344335221,
+     "severity": 0.39868625875499897
+    }
+   },
+   "first_alert": {
+    "POGO_ONSET": 106.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": 106.0,
+   "advisory_at": 106.0,
+   "redlines": [],
+   "seed": 202602413
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602424
+  },
+  {
+   "labels": {},
+   "first_alert": {
+    "LOX_TANK_UNDERPRESSURE": -44.5
+   },
+   "hold_at": -44.5,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602426
+  },
+  {
+   "labels": {
+    "TURBINE_OVERTEMP": {
+     "manifest": 69.41228688765486,
+     "severity": 0.3152750160338675
+    }
+   },
+   "first_alert": {
+    "TURBINE_OVERTEMP": 72.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 72.5,
+   "warning_at": 72.5,
+   "advisory_at": 72.5,
+   "redlines": [],
+   "seed": 202602428
+  },
+  {
+   "labels": {
+    "TURBINE_OVERTEMP": {
+     "manifest": 37.33846736774098,
+     "severity": 0.14200947602524427
+    }
+   },
+   "first_alert": {
+    "TURBINE_OVERTEMP": 43.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 43.0,
+   "warning_at": 43.0,
+   "advisory_at": 43.0,
+   "redlines": [],
+   "seed": 202602447
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602449
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602451
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602461
+  },
+  {
+   "labels": {
+    "TEMP_SENSOR_FAULT": {
+     "manifest": 17.675331609798462,
+     "severity": 0.25564622704621115
+    }
+   },
+   "first_alert": {
+    "TEMP_SENSOR_FAULT": 18.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": 18.5,
+   "redlines": [
+    {
+     "t": 17.760000000000005,
+     "call": "ALARM",
+     "text": "Turbine inlet temperature above 950 K"
+    }
+   ],
+   "seed": 202602464
+  },
+  {
+   "labels": {
+    "BUS_VOLTAGE_SAG": {
+     "manifest": -30.0,
+     "severity": 0.5658263544180941
+    }
+   },
+   "first_alert": {
+    "BUS_VOLTAGE_SAG": -29.0
+   },
+   "hold_at": -29.0,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -29.92,
+     "call": "HOLD",
+     "text": "Bus voltage below 27.0 V"
+    }
+   ],
+   "seed": 202602471
+  },
+  {
+   "labels": {
+    "LOX_TANK_UNDERPRESSURE": {
+     "manifest": -52.0,
+     "severity": 0.386008592583889
+    }
+   },
+   "first_alert": {
+    "LOX_TANK_UNDERPRESSURE": -55.5
+   },
+   "hold_at": -55.5,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -39.92,
+     "call": "HOLD",
+     "text": "LOX tank pressure below 3.30 bar"
+    }
+   ],
+   "seed": 202602477
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602479
+  },
+  {
+   "labels": {
+    "SLOW_ENGINE_START": {
+     "manifest": 2.0,
+     "severity": 0.3331353088796116
+    }
+   },
+   "first_alert": {
+    "SLOW_ENGINE_START": 3.5,
+    "TURBINE_OVERTEMP": 106.0
+   },
+   "hold_at": null,
+   "abort_at": 3.5,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602487
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602496
+  },
+  {
+   "labels": {
+    "POGO_ONSET": {
+     "manifest": 102.4834223473201,
+     "severity": 0.15230436599671213
+    }
+   },
+   "first_alert": {
+    "POGO_ONSET": 103.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": 103.0,
+   "advisory_at": 103.0,
+   "redlines": [],
+   "seed": 202602497
+  },
+  {
+   "labels": {
+    "LH2_PRESS_OSCILLATION": {
+     "manifest": -45.50092425724531,
+     "severity": 0.5085164827067973
+    }
+   },
+   "first_alert": {
+    "LH2_PRESS_OSCILLATION": -32.5
+   },
+   "hold_at": -32.5,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602503
+  },
+  {
+   "labels": {
+    "SRB_THRUST_ASYMMETRY": {
+     "manifest": 72.02441970425191,
+     "severity": 0.3299490164735302
+    }
+   },
+   "first_alert": {
+    "SRB_THRUST_ASYMMETRY": 76.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": 76.0,
+   "advisory_at": 76.0,
+   "redlines": [],
+   "seed": 202602504
+  },
+  {
+   "labels": {
+    "SLOW_ENGINE_START": {
+     "manifest": 2.0,
+     "severity": 0.9197589661736406
+    }
+   },
+   "first_alert": {
+    "SLOW_ENGINE_START": 3.5
+   },
+   "hold_at": null,
+   "abort_at": 3.5,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": 3.5799999999999983,
+     "call": "ABORT",
+     "text": "Chamber pressure below 100 bar after H0 + 3.5 s"
+    }
+   ],
+   "seed": 202602507
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602515
+  },
+  {
+   "labels": {
+    "TEMP_SENSOR_FAULT": {
+     "manifest": 44.394050294325965,
+     "severity": 0.35048198832900057
+    }
+   },
+   "first_alert": {
+    "TEMP_SENSOR_FAULT": 45.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": 45.0,
+   "redlines": [
+    {
+     "t": 44.480000000000004,
+     "call": "ALARM",
+     "text": "Turbine inlet temperature above 950 K"
+    }
+   ],
+   "seed": 202602540
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602547
+  },
+  {
+   "labels": {
+    "TVC_ACTUATOR_DEGRADATION": {
+     "manifest": 81.26673563828658,
+     "severity": 0.020370285638077145
+    },
+    "LOX_PUMP_CAVITATION": {
+     "manifest": 2.428354211584465,
+     "severity": 0.7582027508021913
+    }
+   },
+   "first_alert": {
+    "LOX_PUMP_CAVITATION": 3.5
+   },
+   "hold_at": null,
+   "abort_at": 3.5,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602548
+  },
+  {
+   "labels": {
+    "TVC_ACTUATOR_DEGRADATION": {
+     "manifest": 54.22011393590401,
+     "severity": 0.24779767504785713
+    }
+   },
+   "first_alert": {
+    "TVC_ACTUATOR_DEGRADATION": 79.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": 79.5,
+   "advisory_at": 79.5,
+   "redlines": [],
+   "seed": 202602558
+  },
+  {
+   "labels": {
+    "TRAJECTORY_DEVIATION": {
+     "manifest": 89.46000000000001,
+     "severity": 0.7069177574687575
+    }
+   },
+   "first_alert": {
+    "TRAJECTORY_DEVIATION": 84.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 84.5,
+   "warning_at": 84.5,
+   "advisory_at": 84.5,
+   "redlines": [
+    {
+     "t": 148.2,
+     "call": "ALARM",
+     "text": "Trajectory deviation beyond the flight-safety corridor"
+    }
+   ],
+   "seed": 202602562
+  },
+  {
+   "labels": {
+    "BUS_VOLTAGE_SAG": {
+     "manifest": -30.0,
+     "severity": 0.5231476697105031
+    }
+   },
+   "first_alert": {
+    "BUS_VOLTAGE_SAG": -29.0
+   },
+   "hold_at": -29.0,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -29.92,
+     "call": "HOLD",
+     "text": "Bus voltage below 27.0 V"
+    }
+   ],
+   "seed": 202602564
+  },
+  {
+   "labels": {
+    "LH2_PRESS_OSCILLATION": {
+     "manifest": -26.82104644312532,
+     "severity": 0.7280605568388896
+    }
+   },
+   "first_alert": {
+    "LH2_PRESS_OSCILLATION": -26.5
+   },
+   "hold_at": -26.5,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602569
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602572
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602576
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602594
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602597
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602598
+  },
+  {
+   "labels": {
+    "SRB_THRUST_ASYMMETRY": {
+     "manifest": 70.45597342671789,
+     "severity": 0.8157030150448764
+    }
+   },
+   "first_alert": {
+    "SRB_THRUST_ASYMMETRY": 72.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": 72.0,
+   "advisory_at": 72.0,
+   "redlines": [],
+   "seed": 202602605
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602607
+  },
+  {
+   "labels": {
+    "LOX_TANK_UNDERPRESSURE": {
+     "manifest": -52.0,
+     "severity": 0.1264058746478618
+    },
+    "SRB_THRUST_ASYMMETRY": {
+     "manifest": 22.435767727208386,
+     "severity": 0.5023362744694911
+    }
+   },
+   "first_alert": {
+    "LOX_TANK_UNDERPRESSURE": -55.5,
+    "SRB_THRUST_ASYMMETRY": 29.5
+   },
+   "hold_at": -55.5,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602615
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602620
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602621
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602627
+  },
+  {
+   "labels": {
+    "TURBINE_OVERTEMP": {
+     "manifest": 34.442170484058764,
+     "severity": 0.38279347436054895
+    }
+   },
+   "first_alert": {
+    "TURBINE_OVERTEMP": 37.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 37.0,
+   "warning_at": 37.0,
+   "advisory_at": 37.0,
+   "redlines": [],
+   "seed": 202602628
+  },
+  {
+   "labels": {
+    "TEMP_SENSOR_FAULT": {
+     "manifest": 26.830907673180548,
+     "severity": 0.26342642250161136
+    }
+   },
+   "first_alert": {
+    "TEMP_SENSOR_FAULT": 27.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": 27.5,
+   "redlines": [
+    {
+     "t": 26.92,
+     "call": "ALARM",
+     "text": "Turbine inlet temperature above 950 K"
+    }
+   ],
+   "seed": 202602643
+  },
+  {
+   "labels": {
+    "LOX_TANK_UNDERPRESSURE": {
+     "manifest": -52.0,
+     "severity": 0.04474973441752967
+    },
+    "TEMP_SENSOR_FAULT": {
+     "manifest": 32.34276426873086,
+     "severity": 0.01862862730581346
+    }
+   },
+   "first_alert": {
+    "LOX_TANK_UNDERPRESSURE": -52.0,
+    "TEMP_SENSOR_FAULT": 33.0
+   },
+   "hold_at": -52.0,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": 32.42,
+     "call": "ALARM",
+     "text": "Turbine inlet temperature above 950 K"
+    }
+   ],
+   "seed": 202602647
+  },
+  {
+   "labels": {
+    "LOX_PUMP_CAVITATION": {
+     "manifest": 1.3482514831741643,
+     "severity": 0.727251658175246
+    }
+   },
+   "first_alert": {
+    "LOX_PUMP_CAVITATION": 3.5
+   },
+   "hold_at": null,
+   "abort_at": 3.5,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602648
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602649
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602658
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602676
+  },
+  {
+   "labels": {
+    "SRB_THRUST_ASYMMETRY": {
+     "manifest": 20.409753437093347,
+     "severity": 0.4873957133409702
+    }
+   },
+   "first_alert": {
+    "SRB_THRUST_ASYMMETRY": 24.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": 24.5,
+   "advisory_at": 24.5,
+   "redlines": [],
+   "seed": 202602679
+  },
+  {
+   "labels": {
+    "BUS_VOLTAGE_SAG": {
+     "manifest": -30.0,
+     "severity": 0.6104378348392194
+    },
+    "POGO_ONSET": {
+     "manifest": 113.1091677712766,
+     "severity": 0.7390609472559833
+    },
+    "TRAJECTORY_DEVIATION": {
+     "manifest": 94.25999999999999,
+     "severity": 0.5124349551522299
+    }
+   },
+   "first_alert": {
+    "BUS_VOLTAGE_SAG": -29.0,
+    "POGO_ONSET": 111.0,
+    "TRAJECTORY_DEVIATION": 85.0
+   },
+   "hold_at": -29.0,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -29.92,
+     "call": "HOLD",
+     "text": "Bus voltage below 27.0 V"
+    }
+   ],
+   "seed": 202602683
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602684
+  },
+  {
+   "labels": {
+    "LOX_PUMP_CAVITATION": {
+     "manifest": 1.976645896467705,
+     "severity": 0.5925766308336544
+    }
+   },
+   "first_alert": {
+    "LOX_PUMP_CAVITATION": 4.0
+   },
+   "hold_at": null,
+   "abort_at": 4.0,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602689
+  },
+  {
+   "labels": {
+    "TVC_ACTUATOR_DEGRADATION": {
+     "manifest": 70.62009510959874,
+     "severity": 0.16057197247455365
+    }
+   },
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602690
+  },
+  {
+   "labels": {
+    "BUS_VOLTAGE_SAG": {
+     "manifest": -30.0,
+     "severity": 0.22929521275945644
+    },
+    "COMBUSTION_INSTABILITY": {
+     "manifest": 3.125749555212393,
+     "severity": 0.12722084899409336
+    }
+   },
+   "first_alert": {
+    "BUS_VOLTAGE_SAG": -29.0,
+    "COMBUSTION_INSTABILITY": 4.5
+   },
+   "hold_at": -29.0,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -29.92,
+     "call": "HOLD",
+     "text": "Bus voltage below 27.0 V"
+    }
+   ],
+   "seed": 202602695
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602699
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602700
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602707
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602710
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602713
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602715
+  },
+  {
+   "labels": {
+    "LOX_TANK_UNDERPRESSURE": {
+     "manifest": -52.0,
+     "severity": 0.49282539464033415
+    }
+   },
+   "first_alert": {
+    "LOX_TANK_UNDERPRESSURE": -55.5
+   },
+   "hold_at": -55.5,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -39.92,
+     "call": "HOLD",
+     "text": "LOX tank pressure below 3.30 bar"
+    }
+   ],
+   "seed": 202602718
+  },
+  {
+   "labels": {
+    "TVC_ACTUATOR_DEGRADATION": {
+     "manifest": 39.19714788292704,
+     "severity": 0.012514740144567195
+    }
+   },
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602724
+  },
+  {
+   "labels": {
+    "TVC_ACTUATOR_DEGRADATION": {
+     "manifest": 99.82496146585177,
+     "severity": 0.6598346547973404
+    }
+   },
+   "first_alert": {
+    "TVC_ACTUATOR_DEGRADATION": 113.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": 113.5,
+   "advisory_at": 113.5,
+   "redlines": [],
+   "seed": 202602725
+  },
+  {
+   "labels": {
+    "TURBINE_OVERTEMP": {
+     "manifest": 89.30048270307142,
+     "severity": 0.408331086652534
+    },
+    "TVC_ACTUATOR_DEGRADATION": {
+     "manifest": 54.87173675655576,
+     "severity": 0.13407495540762443
+    },
+    "POGO_ONSET": {
+     "manifest": 111.94609491583417,
+     "severity": 0.27090829292132296
+    }
+   },
+   "first_alert": {
+    "TURBINE_OVERTEMP": 92.5,
+    "POGO_ONSET": 110.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 92.5,
+   "warning_at": 92.5,
+   "advisory_at": 92.5,
+   "redlines": [
+    {
+     "t": 97.58000000000001,
+     "call": "ALARM",
+     "text": "Turbine inlet temperature above 950 K"
+    }
+   ],
+   "seed": 202602726
+  },
+  {
+   "labels": {
+    "SRB_THRUST_ASYMMETRY": {
+     "manifest": 25.94760876261878,
+     "severity": 0.18599700874344335
+    },
+    "POGO_ONSET": {
+     "manifest": 108.56409456922789,
+     "severity": 0.26759886595713234
+    }
+   },
+   "first_alert": {
+    "SRB_THRUST_ASYMMETRY": 39.0,
+    "POGO_ONSET": 111.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": 39.0,
+   "advisory_at": 39.0,
+   "redlines": [],
+   "seed": 202602727
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602739
+  },
+  {
+   "labels": {
+    "TVC_ACTUATOR_DEGRADATION": {
+     "manifest": 91.20754091463812,
+     "severity": 0.8989954185994596
+    }
+   },
+   "first_alert": {
+    "TVC_ACTUATOR_DEGRADATION": 100.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": 100.0,
+   "advisory_at": 100.0,
+   "redlines": [],
+   "seed": 202602743
+  },
+  {
+   "labels": {
+    "POGO_ONSET": {
+     "manifest": 119.78951019339134,
+     "severity": 0.6000925409336013
+    }
+   },
+   "first_alert": {
+    "POGO_ONSET": 117.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": 117.5,
+   "advisory_at": 117.5,
+   "redlines": [],
+   "seed": 202602748
+  },
+  {
+   "labels": {
+    "COMBUSTION_INSTABILITY": {
+     "manifest": 94.94797229672976,
+     "severity": 0.8672335014286813
+    },
+    "TURBINE_OVERTEMP": {
+     "manifest": 108.30918899238446,
+     "severity": 0.26054122566608373
+    }
+   },
+   "first_alert": {
+    "COMBUSTION_INSTABILITY": 95.5,
+    "TURBINE_OVERTEMP": 112.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 95.5,
+   "warning_at": 95.5,
+   "advisory_at": 95.5,
+   "redlines": [],
+   "seed": 202602753
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602755
+  },
+  {
+   "labels": {
+    "LH2_PRESS_OSCILLATION": {
+     "manifest": -23.728975883437812,
+     "severity": 0.15325287521859104
+    }
+   },
+   "first_alert": {
+    "LH2_PRESS_OSCILLATION": -17.5
+   },
+   "hold_at": -17.5,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602763
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602765
+  },
+  {
+   "labels": {
+    "SLOW_ENGINE_START": {
+     "manifest": 2.0,
+     "severity": 0.7781860104013494
+    },
+    "TRAJECTORY_DEVIATION": {
+     "manifest": 95.41999999999999,
+     "severity": 0.21623788284580578
+    }
+   },
+   "first_alert": {
+    "SLOW_ENGINE_START": 3.5,
+    "TRAJECTORY_DEVIATION": 89.5
+   },
+   "hold_at": null,
+   "abort_at": 3.5,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": 3.5799999999999983,
+     "call": "ABORT",
+     "text": "Chamber pressure below 100 bar after H0 + 3.5 s"
+    }
+   ],
+   "seed": 202602773
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602781
+  },
+  {
+   "labels": {
+    "LOX_TANK_UNDERPRESSURE": {
+     "manifest": -52.0,
+     "severity": 0.13476347964870933
+    },
+    "TRAJECTORY_DEVIATION": {
+     "manifest": 102.28,
+     "severity": 0.034020419865228295
+    }
+   },
+   "first_alert": {
+    "LOX_TANK_UNDERPRESSURE": -55.5,
+    "TRAJECTORY_DEVIATION": 91.0
+   },
+   "hold_at": -55.5,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602783
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602785
+  },
+  {
+   "labels": {
+    "TRAJECTORY_DEVIATION": {
+     "manifest": 89.06,
+     "severity": 0.21042218103043717
+    }
+   },
+   "first_alert": {
+    "TRAJECTORY_DEVIATION": 83.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 83.5,
+   "warning_at": 83.5,
+   "advisory_at": 83.5,
+   "redlines": [
+    {
+     "t": 133.3,
+     "call": "ALARM",
+     "text": "Trajectory deviation beyond the flight-safety corridor"
+    }
+   ],
+   "seed": 202602787
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602800
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602806
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602811
+  },
+  {
+   "labels": {
+    "LOX_TANK_UNDERPRESSURE": {
+     "manifest": -52.0,
+     "severity": 0.4818866459294999
+    },
+    "POGO_ONSET": {
+     "manifest": 121.1281017552165,
+     "severity": 0.052050832408444124
+    }
+   },
+   "first_alert": {
+    "LOX_TANK_UNDERPRESSURE": -55.5
+   },
+   "hold_at": -55.5,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -39.92,
+     "call": "HOLD",
+     "text": "LOX tank pressure below 3.30 bar"
+    }
+   ],
+   "seed": 202602812
+  },
+  {
+   "labels": {
+    "SLOW_ENGINE_START": {
+     "manifest": 2.0,
+     "severity": 0.5555211350656009
+    },
+    "COMBUSTION_INSTABILITY": {
+     "manifest": 2.1372751342573673,
+     "severity": 0.2658547325469335
+    },
+    "TRAJECTORY_DEVIATION": {
+     "manifest": 37.06,
+     "severity": 0.27705809986468866
+    }
+   },
+   "first_alert": {
+    "SLOW_ENGINE_START": 3.5,
+    "COMBUSTION_INSTABILITY": 4.0,
+    "TRAJECTORY_DEVIATION": 43.0
+   },
+   "hold_at": null,
+   "abort_at": 3.5,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": 74.97999999999999,
+     "call": "ALARM",
+     "text": "Trajectory deviation beyond the flight-safety corridor"
+    }
+   ],
+   "seed": 202602823
+  },
+  {
+   "labels": {
+    "LOX_TANK_UNDERPRESSURE": {
+     "manifest": -52.0,
+     "severity": 0.06555153000482274
+    }
+   },
+   "first_alert": {
+    "LOX_TANK_UNDERPRESSURE": 3.0
+   },
+   "hold_at": null,
+   "abort_at": 3.0,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602830
+  },
+  {
+   "labels": {
+    "LOX_TANK_UNDERPRESSURE": {
+     "manifest": -52.0,
+     "severity": 0.3290135131489128
+    },
+    "TEMP_SENSOR_FAULT": {
+     "manifest": 50.77906753665824,
+     "severity": 0.15221055094877972
+    }
+   },
+   "first_alert": {
+    "LOX_TANK_UNDERPRESSURE": -55.5,
+    "TEMP_SENSOR_FAULT": 51.5
+   },
+   "hold_at": -55.5,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -39.92,
+     "call": "HOLD",
+     "text": "LOX tank pressure below 3.30 bar"
+    }
+   ],
+   "seed": 202602849
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602854
+  },
+  {
+   "labels": {
+    "LH2_PRESS_OSCILLATION": {
+     "manifest": -20.19237554961219,
+     "severity": 0.6179115040503309
+    },
+    "TEMP_SENSOR_FAULT": {
+     "manifest": 126.1062739761837,
+     "severity": 0.3913947275782408
+    }
+   },
+   "first_alert": {
+    "LH2_PRESS_OSCILLATION": -18.5,
+    "TEMP_SENSOR_FAULT": 127.0
+   },
+   "hold_at": -18.5,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": 126.18,
+     "call": "ALARM",
+     "text": "Turbine inlet temperature above 950 K"
+    }
+   ],
+   "seed": 202602860
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602862
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602864
+  },
+  {
+   "labels": {
+    "COMBUSTION_INSTABILITY": {
+     "manifest": 2.283506125925609,
+     "severity": 0.4585375128463291
+    }
+   },
+   "first_alert": {
+    "COMBUSTION_INSTABILITY": 3.5
+   },
+   "hold_at": null,
+   "abort_at": 3.5,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": 2.8400000000000034,
+     "call": "ABORT",
+     "text": "Engine-bay vibration above 2 g rms"
+    }
+   ],
+   "seed": 202602865
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602866
+  },
+  {
+   "labels": {
+    "SLOW_ENGINE_START": {
+     "manifest": 2.0,
+     "severity": 0.26844233940366796
+    }
+   },
+   "first_alert": {
+    "SLOW_ENGINE_START": 3.5
+   },
+   "hold_at": null,
+   "abort_at": 3.5,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602872
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602876
+  },
+  {
+   "labels": {
+    "TURBINE_OVERTEMP": {
+     "manifest": 15.017573447877316,
+     "severity": 0.6093173083784061
+    },
+    "TVC_ACTUATOR_DEGRADATION": {
+     "manifest": 69.10037031878346,
+     "severity": 0.46107854573011936
+    }
+   },
+   "first_alert": {
+    "TURBINE_OVERTEMP": 17.0,
+    "TVC_ACTUATOR_DEGRADATION": 102.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 17.0,
+   "warning_at": 17.0,
+   "advisory_at": 17.0,
+   "redlines": [
+    {
+     "t": 19.480000000000004,
+     "call": "ALARM",
+     "text": "Turbine inlet temperature above 950 K"
+    }
+   ],
+   "seed": 202602879
+  },
+  {
+   "labels": {
+    "TURBINE_OVERTEMP": {
+     "manifest": 37.132286242217354,
+     "severity": 0.08801972711225949
+    }
+   },
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602880
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602881
+  },
+  {
+   "labels": {
+    "SRB_THRUST_ASYMMETRY": {
+     "manifest": 78.53118043280983,
+     "severity": 0.00284034266572732
+    }
+   },
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602888
+  },
+  {
+   "labels": {
+    "TRAJECTORY_DEVIATION": {
+     "manifest": 79.72,
+     "severity": 0.6341822909518079
+    }
+   },
+   "first_alert": {
+    "TRAJECTORY_DEVIATION": 87.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 87.5,
+   "warning_at": 87.5,
+   "advisory_at": 87.5,
+   "redlines": [],
+   "seed": 202602894
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": 58.0,
+     "call": "ALARM",
+     "text": "TVC deflection above 4 deg"
+    }
+   ],
+   "seed": 202602897
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602925
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602935
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602938
+  },
+  {
+   "labels": {
+    "TRAJECTORY_DEVIATION": {
+     "manifest": 70.22,
+     "severity": 0.16202665937648958
+    }
+   },
+   "first_alert": {
+    "TRAJECTORY_DEVIATION": 71.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 71.5,
+   "warning_at": 71.5,
+   "advisory_at": 71.5,
+   "redlines": [],
+   "seed": 202602940
+  },
+  {
+   "labels": {
+    "LOX_TANK_UNDERPRESSURE": {
+     "manifest": -52.0,
+     "severity": 0.018320785947853222
+    },
+    "LH2_PRESS_OSCILLATION": {
+     "manifest": -36.590071994906175,
+     "severity": 0.28954064324862633
+    }
+   },
+   "first_alert": {
+    "LOX_TANK_UNDERPRESSURE": -45.5,
+    "LH2_PRESS_OSCILLATION": -31.5
+   },
+   "hold_at": -45.5,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602947
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602951
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602952
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602956
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602958
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602961
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602968
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602974
+  },
+  {
+   "labels": {
+    "LOX_TANK_UNDERPRESSURE": {
+     "manifest": -52.0,
+     "severity": 0.27463902854787914
+    },
+    "LH2_PRESS_OSCILLATION": {
+     "manifest": -23.79753451555155,
+     "severity": 0.08363782362315744
+    },
+    "LOX_PUMP_CAVITATION": {
+     "manifest": 2.589594224306519,
+     "severity": 0.5382725463284429
+    }
+   },
+   "first_alert": {
+    "LOX_TANK_UNDERPRESSURE": -55.5,
+    "LOX_PUMP_CAVITATION": 3.5
+   },
+   "hold_at": -55.5,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": -39.92,
+     "call": "HOLD",
+     "text": "LOX tank pressure below 3.30 bar"
+    }
+   ],
+   "seed": 202602976
+  },
+  {
+   "labels": {
+    "SLOW_ENGINE_START": {
+     "manifest": 2.0,
+     "severity": 0.2801447180830056
+    },
+    "TRAJECTORY_DEVIATION": {
+     "manifest": 68.78,
+     "severity": 0.4013724641052654
+    }
+   },
+   "first_alert": {
+    "SLOW_ENGINE_START": 3.5,
+    "TRAJECTORY_DEVIATION": 67.0
+   },
+   "hold_at": null,
+   "abort_at": 3.5,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": 104.0,
+     "call": "ALARM",
+     "text": "Trajectory deviation beyond the flight-safety corridor"
+    }
+   ],
+   "seed": 202602978
+  },
+  {
+   "labels": {
+    "TRAJECTORY_DEVIATION": {
+     "manifest": 100.24000000000001,
+     "severity": 0.07169023452816156
+    }
+   },
+   "first_alert": {
+    "TRAJECTORY_DEVIATION": 101.5
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": 101.5,
+   "warning_at": 101.5,
+   "advisory_at": 101.5,
+   "redlines": [],
+   "seed": 202602985
+  },
+  {
+   "labels": {
+    "COMBUSTION_INSTABILITY": {
+     "manifest": 2.698498640386973,
+     "severity": 0.4394536861012995
+    }
+   },
+   "first_alert": {
+    "COMBUSTION_INSTABILITY": 3.5
+   },
+   "hold_at": null,
+   "abort_at": 3.5,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [
+    {
+     "t": 2.979999999999997,
+     "call": "ABORT",
+     "text": "Engine-bay vibration above 2 g rms"
+    }
+   ],
+   "seed": 202602987
+  },
+  {
+   "labels": {
+    "TVC_ACTUATOR_DEGRADATION": {
+     "manifest": 40.419453171198114,
+     "severity": 0.3485036972395276
+    }
+   },
+   "first_alert": {
+    "TVC_ACTUATOR_DEGRADATION": 52.0
+   },
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": 52.0,
+   "advisory_at": 52.0,
+   "redlines": [],
+   "seed": 202602991
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602996
+  },
+  {
+   "labels": {},
+   "first_alert": {},
+   "hold_at": null,
+   "abort_at": null,
+   "critical_at": null,
+   "warning_at": null,
+   "advisory_at": null,
+   "redlines": [],
+   "seed": 202602997
+  }
+ ]
+}

@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+# built on your machine by run_factory.py (pickles depend on the scikit-learn version)
+layer-4/model.pkl
+layer-4/streaming_scores.npz

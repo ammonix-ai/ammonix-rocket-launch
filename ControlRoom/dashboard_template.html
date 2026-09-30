@@ -1,0 +1,2336 @@
+<title>Launch Control Agent</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root {
+  color-scheme: light;
+  --page: #f1f3f4;
+  --surface: #fcfcfb;
+  --surface-2: #e9edef;
+  --ink: #0e1316;
+  --ink-2: #4a5156;
+  --muted: #7f878c;
+  --grid: #e0e5e8;
+  --axis: #c3cace;
+  --ring: rgba(14, 19, 22, 0.10);
+  --trace: #2a78d6;
+  --band: rgba(84, 96, 108, 0.16);
+  --s1: #2a78d6;
+  --s2: #eb6834;
+  --go: #0ca30c;
+  --go-ink: #006300;
+  --hold: #fab219;
+  --serious: #ec835a;
+  --critical: #d03b3b;
+  --advisory: #4a3aa7;
+  --focus: #1f5fa8;
+  --sans: "Barlow", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --cond: "Barlow Condensed", "Arial Narrow", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #0d1012;
+    --surface: #15191b;
+    --surface-2: #1d2225;
+    --ink: #f1f4f5;
+    --ink-2: #c0c7ca;
+    --muted: #8a9296;
+    --grid: #252b2e;
+    --axis: #394146;
+    --ring: rgba(255, 255, 255, 0.10);
+    --trace: #3987e5;
+    --band: rgba(190, 204, 214, 0.13);
+    --s1: #3987e5;
+    --s2: #d95926;
+    --go-ink: #0ca30c;
+    --advisory: #9085e9;
+    --focus: #6aa7ef;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d1012;
+  --surface: #15191b;
+  --surface-2: #1d2225;
+  --ink: #f1f4f5;
+  --ink-2: #c0c7ca;
+  --muted: #8a9296;
+  --grid: #252b2e;
+  --axis: #394146;
+  --ring: rgba(255, 255, 255, 0.10);
+  --trace: #3987e5;
+  --band: rgba(190, 204, 214, 0.13);
+  --s1: #3987e5;
+  --s2: #d95926;
+  --go-ink: #0ca30c;
+  --advisory: #9085e9;
+  --focus: #6aa7ef;
+}
+* { box-sizing: border-box; }
+html, body { background: var(--page); color: var(--ink); }
+body { margin: 0; font-family: var(--sans); font-size: 15px; line-height: 1.45; }
+button, select, input { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.wrap { max-width: 1480px; margin: 0 auto; padding-inline: clamp(16px, 2.5vw, 32px); padding-block: 18px 48px; }
+header.top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 10px 24px; }
+.brand h1 { font-family: var(--cond); font-weight: 700; font-size: 30px; letter-spacing: 0.02em; margin: 0; line-height: 1.05; text-wrap: balance; }
+.brand p { margin: 4px 0 0; color: var(--ink-2); font-size: 14px; }
+.disclaimer { font-size: 12.5px; color: var(--ink-2); border: 1px solid var(--ring); background: var(--surface); padding: 6px 10px; border-radius: 6px; max-width: 520px; }
+.disclaimer b { color: var(--ink); font-weight: 600; }
+nav.tabs { display: flex; gap: 4px; margin: 18px 0 16px; border-bottom: 1px solid var(--axis); overflow-x: auto; }
+nav.tabs button { background: none; border: 0; padding: 10px 14px; font-family: var(--cond); font-weight: 600; font-size: 16px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -1px; white-space: nowrap; }
+nav.tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--ink); }
+.eyebrow { font-family: var(--cond); font-weight: 600; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.panel { background: var(--surface); border: 1px solid var(--ring); border-radius: 8px; }
+.mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+
+/* ---------- control room ---------- */
+.room { display: grid; grid-template-columns: 240px minmax(0, 1fr) 360px; gap: 16px; align-items: start; }
+.picker { display: flex; flex-direction: column; gap: 14px; }
+.picker .group { display: flex; flex-direction: column; gap: 2px; }
+.picker button { text-align: left; background: none; border: 0; border-radius: 6px; padding: 7px 10px; cursor: pointer; color: var(--ink-2); display: flex; justify-content: space-between; gap: 8px; }
+.picker button:hover { background: var(--surface-2); color: var(--ink); }
+.picker button[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: inset 0 0 0 1px var(--ring); font-weight: 600; }
+.picker .select-row { display: none; }
+.main { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.story h2 { font-family: var(--cond); font-weight: 700; font-size: 24px; margin: 0; letter-spacing: 0.01em; }
+.story p { margin: 2px 0 0; color: var(--ink-2); max-width: 70ch; }
+.console { padding: 12px 14px; display: flex; flex-direction: column; gap: 10px; }
+.clockrow { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 18px; }
+.clock { font-family: var(--mono); font-size: 34px; font-weight: 500; letter-spacing: 0.01em; line-height: 1; }
+.phase { font-family: var(--cond); font-weight: 600; font-size: 15px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); }
+.transport { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.btn { border: 1px solid var(--axis); background: var(--surface); border-radius: 6px; padding: 6px 12px; cursor: pointer; font-weight: 600; }
+.btn:hover { border-color: var(--ink-2); }
+.btn.primary { background: var(--ink); color: var(--surface); border-color: var(--ink); min-width: 84px; }
+.seg { display: inline-flex; border: 1px solid var(--axis); border-radius: 6px; overflow: hidden; }
+.seg button { border: 0; background: var(--surface); padding: 6px 10px; cursor: pointer; font-family: var(--mono); font-size: 13px; }
+.seg button[aria-pressed="true"] { background: var(--surface-2); font-weight: 600; }
+.scrub { position: relative; padding-bottom: 18px; }
+.scrub input { width: 100%; accent-color: var(--ink); margin: 0; }
+.scrub .marks { position: absolute; left: 0; right: 0; bottom: 0; height: 16px; font-size: 11px; color: var(--muted); }
+.scrub .marks span { position: absolute; transform: translateX(-50%); white-space: nowrap; font-family: var(--cond); letter-spacing: 0.04em; text-transform: uppercase; }
+.boards { display: grid; grid-template-columns: 1.4fr 1fr; gap: 10px; }
+.board { border-radius: 8px; padding: 10px 12px; border: 1px solid var(--ring); background: var(--surface); position: relative; overflow: hidden; }
+.board::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 6px; background: var(--state, var(--axis)); }
+.board .who { font-family: var(--cond); font-weight: 600; font-size: 12.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); padding-left: 4px; }
+.board .call { font-family: var(--cond); font-weight: 700; font-size: 34px; letter-spacing: 0.04em; line-height: 1.05; padding-left: 4px; display: flex; align-items: center; gap: 8px; }
+.board .call svg { width: 22px; height: 22px; flex: none; }
+.board .why { padding-left: 4px; color: var(--ink-2); font-size: 13.5px; min-height: 1.4em; }
+.strips { padding: 6px 0 4px; }
+.subsys { font-family: var(--cond); font-weight: 600; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); padding: 8px 14px 2px; }
+.strip { display: grid; grid-template-columns: 188px minmax(0, 1fr); align-items: center; gap: 10px; padding: 1px 14px; }
+.strip .lab { display: flex; flex-direction: column; line-height: 1.15; min-width: 0; }
+.strip .lab .n { font-size: 13px; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.strip .lab .v { font-family: var(--mono); font-size: 13px; font-variant-numeric: tabular-nums; color: var(--ink); }
+.strip.flag .lab .n { color: var(--ink); font-weight: 600; }
+.strip.flag .lab .n::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--flag, var(--critical)); margin-right: 6px; vertical-align: 1px; }
+.strip canvas { width: 100%; height: 46px; display: block; cursor: crosshair; touch-action: pan-y; }
+.axis-row { display: grid; grid-template-columns: 188px minmax(0, 1fr); gap: 10px; padding: 0 14px 6px; }
+.axis-row canvas { width: 100%; height: 18px; display: block; }
+.side { display: flex; flex-direction: column; gap: 12px; }
+.side .panel { padding: 12px 14px; }
+.probs { display: flex; flex-direction: column; gap: 2px; margin-top: 6px; }
+.prow { display: grid; grid-template-columns: minmax(0, 1fr) 96px 38px; align-items: center; gap: 8px; font-size: 13px; }
+.prow .nm { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-2); }
+.prow.on .nm { color: var(--ink); font-weight: 600; }
+.prow .bar { position: relative; height: 8px; background: var(--surface-2); border-radius: 0 4px 4px 0; }
+.prow .bar i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 0 4px 4px 0; background: var(--muted); }
+.prow .bar b { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--ink-2); }
+.prow .pv { font-family: var(--mono); font-size: 12px; text-align: right; color: var(--ink-2); }
+.phase-h { font-family: var(--cond); font-weight: 600; font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-top: 6px; }
+.finding h3 { font-family: var(--cond); font-weight: 700; font-size: 19px; margin: 2px 0 6px; letter-spacing: 0.01em; display: flex; align-items: center; gap: 8px; }
+.finding .empty { color: var(--muted); font-size: 13.5px; }
+.finding ul { margin: 6px 0; padding-left: 18px; font-size: 13.5px; color: var(--ink-2); }
+.finding li { margin: 2px 0; }
+.rule { font-size: 13px; border-top: 1px solid var(--grid); padding: 6px 0 2px; color: var(--ink-2); }
+.rule .rid { font-family: var(--mono); font-size: 12px; color: var(--ink); }
+.grade { display: inline-block; font-family: var(--mono); font-size: 11.5px; font-weight: 600; border: 1px solid var(--axis); border-radius: 4px; padding: 0 5px; margin: 0 4px; color: var(--ink); }
+.graphnote { font-size: 13px; color: var(--ink-2); border-top: 1px solid var(--grid); padding-top: 6px; margin-top: 4px; }
+.pill { display: inline-flex; align-items: center; gap: 5px; font-family: var(--cond); font-weight: 700; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; padding: 1px 8px; border-radius: 999px; background: var(--surface-2); color: var(--ink); }
+.pill::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--state, var(--muted)); }
+.log { max-height: 300px; overflow-y: auto; display: flex; flex-direction: column; gap: 0; margin-top: 6px; }
+.log .e { display: grid; grid-template-columns: 78px minmax(0, 1fr); gap: 8px; font-size: 13px; padding: 5px 0; border-top: 1px solid var(--grid); }
+.log .e .t { font-family: var(--mono); font-size: 12px; color: var(--muted); padding-top: 1px; }
+.log .e.vehicle .x { color: var(--ink-2); }
+.log .e .x b { font-weight: 600; }
+.truth { margin-top: 8px; font-size: 13.5px; }
+.truth table { width: 100%; border-collapse: collapse; }
+.truth td, .truth th { text-align: left; padding: 3px 4px; border-top: 1px solid var(--grid); font-weight: 400; }
+.truth th { color: var(--muted); font-size: 12px; }
+.hint { font-size: 12.5px; color: var(--muted); }
+
+/* ---------- picker hover card, plain-language story line ---------- */
+.picker { position: relative; }
+.laycard { position: absolute; left: calc(100% + 12px); width: 310px; z-index: 15; background: var(--surface); border: 1px solid var(--ring); box-shadow: 0 10px 28px rgba(0, 0, 0, 0.16); border-radius: 8px; padding: 10px 13px 11px; font-size: 14px; line-height: 1.45; color: var(--ink-2); pointer-events: none; }
+.laycard .k { font-family: var(--cond); font-weight: 600; font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.laycard b { display: block; font-family: var(--cond); font-weight: 700; font-size: 17px; color: var(--ink); margin: 1px 0 3px; }
+.laycard.left { left: auto; right: calc(100% + 12px); }   /* in the free page margin, when it is wide enough */
+.laycard div + div { margin-top: 5px; }
+
+/* ---------- unseen launches: failure type first, then its held-out launches ---------- */
+.picker .sel-hint { font-size: 12.5px; color: var(--muted); padding: 0 10px 2px; line-height: 1.4; }
+.picker .sel-note { font-size: 12.5px; color: var(--ink-2); padding: 4px 10px 0; line-height: 1.4; }
+.picker .sel-note:empty { display: none; }
+.picker .types, .picker .cases { display: flex; flex-direction: column; gap: 2px; }
+.picker .cases { position: relative; max-height: min(62vh, 600px); overflow-y: auto; overscroll-behavior: contain; }
+.picker button .n { font-family: var(--mono); font-size: 12.5px; font-weight: 400; color: var(--muted); white-space: nowrap; }
+.picker button.two { flex-direction: column; gap: 1px; }
+.picker button.two > span { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; min-width: 0; }
+.picker button.two .r2 { font-size: 12.5px; font-weight: 400; color: var(--muted); }
+.picker button.two .r2 > span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.picker .res::before { content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--state, var(--axis)); margin-right: 6px; vertical-align: 1px; }
+.picker .gname { font-family: var(--cond); font-weight: 700; font-size: 17px; color: var(--ink); padding: 2px 10px 0; }
+.picker button[aria-disabled="true"] { opacity: 0.5; }
+.picker .built { font-family: var(--cond); font-weight: 600; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); border: 1px solid var(--axis); border-radius: 4px; padding: 0 4px; }
+.story .lay { display: none; margin: 6px 0 0; color: var(--ink-2); max-width: 70ch; border-left: 3px solid var(--axis); padding-left: 10px; }
+
+/* ---------- vehicle scene ---------- */
+.vehicle .scene { margin-top: 6px; border-radius: 6px; overflow: hidden; background: #0d1c30; }
+.vehicle canvas.sc { display: block; width: 100%; height: 250px; }
+
+/* ---------- knowledge universe ---------- */
+#view-universe [hidden], .ucard[hidden] { display: none !important; }
+.uhead { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px 24px; margin-bottom: 6px; }
+.uhead h2 { font-family: var(--cond); font-weight: 700; font-size: 24px; margin: 0 0 4px; }
+.uhead p { margin: 0; max-width: 80ch; color: var(--ink-2); }
+.ustats { display: flex; flex-wrap: wrap; gap: 8px; }
+.ustat { background: var(--surface); border: 1px solid var(--ring); border-radius: 8px; padding: 6px 12px; min-width: 112px; }
+.ustat b { display: block; font-family: var(--cond); font-weight: 700; font-size: 22px; line-height: 1.15; color: var(--ink); }
+.ustat span { font-size: 12.5px; color: var(--muted); }
+.ubar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; margin: 10px 0; }
+.useg { display: inline-flex; align-items: center; }
+.useg .eyebrow { margin-right: 8px; }
+.useg button { border: 1px solid var(--axis); background: var(--surface); color: var(--ink); padding: 5px 10px; font-size: 13.5px; cursor: pointer; }
+.useg button + button { margin-left: -1px; }
+.useg button:first-of-type { border-radius: 6px 0 0 6px; }
+.useg button:last-of-type { border-radius: 0 6px 6px 0; }
+.useg button[aria-pressed="true"] { background: var(--surface-2); font-weight: 600; }
+.ucheck { display: inline-flex; align-items: center; gap: 6px; font-size: 13.5px; cursor: pointer; }
+.uwrap { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 12px; }
+.ustage { position: relative; height: min(74vh, 780px); min-height: 420px; border-radius: 8px; overflow: hidden; background: radial-gradient(ellipse at 50% 42%, #14253d 0%, #0a1322 58%, #050a12 100%); }
+.ustage canvas { display: block; width: 100%; height: 100%; cursor: grab; touch-action: none; outline: none; }
+.ustage canvas:focus-visible { box-shadow: inset 0 0 0 2px var(--focus); }
+.ustage canvas.dragging { cursor: grabbing; }
+.ulabels { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.ulabels span { position: absolute; font-family: var(--cond); font-weight: 600; font-size: 13px; letter-spacing: 0.02em; color: #e9eff6; text-shadow: 0 1px 3px #000, 0 0 8px rgba(0, 0, 0, 0.7); white-space: nowrap; }
+.unote { position: absolute; inset: 0; display: grid; place-items: center; padding: 24px; text-align: center; color: #c9d4df; font-size: 14.5px; }
+.uhelp { position: absolute; left: 10px; bottom: 8px; right: 10px; font-size: 12px; color: #9fb0c2; pointer-events: none; }
+.ulegend { padding: 10px 10px 8px; align-self: start; max-height: min(74vh, 780px); overflow-y: auto; }
+.ulegend .li { display: grid; grid-template-columns: 12px minmax(0, 1fr) auto; gap: 8px; align-items: center; width: 100%; padding: 4px 6px; border: 0; border-radius: 6px; background: none; color: var(--ink); font: inherit; text-align: left; cursor: pointer; }
+.ulegend .li:hover { background: var(--surface-2); }
+.ulegend .li[aria-pressed="false"] { opacity: 0.38; }
+.ulegend .sw { width: 12px; height: 12px; border-radius: 50%; background: var(--c); }
+.ulegend .nm { display: block; font-size: 13.5px; line-height: 1.25; }
+.ulegend .sub { display: block; font-size: 11.5px; color: var(--muted); }
+.ulegend .n { font-family: var(--mono); font-size: 11.5px; color: var(--muted); }
+.ulegend .hint { margin: 8px 6px 0; }
+.ucard { position: fixed; z-index: 30; width: 336px; pointer-events: none; background: var(--surface); border: 1px solid var(--ring); border-radius: 8px; box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3); padding: 9px 12px 10px; font-size: 13px; line-height: 1.4; color: var(--ink-2); }
+.ucard .hd { display: flex; align-items: center; gap: 8px; }
+.ucard .hd b { font-family: var(--cond); font-weight: 700; font-size: 17px; color: var(--ink); }
+.ucard .sw { flex: none; width: 11px; height: 11px; border-radius: 50%; background: var(--c); }
+.ucard .kv { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 2px 8px; margin: 6px 0; }
+.ucard .kv dt { color: var(--muted); font-size: 12px; padding-top: 1px; }
+.ucard .kv dd { margin: 0; color: var(--ink); }
+.ucard .pr { display: grid; grid-template-columns: minmax(0, 1fr) 84px 34px; gap: 2px 8px; align-items: center; font-size: 12px; }
+.ucard .pr .on { color: var(--ink); font-weight: 600; }
+.ucard .bar { position: relative; height: 6px; border-radius: 3px; background: var(--grid); }
+.ucard .bar i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 3px; background: var(--c); }
+.ucard .bar u { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--ink-2); }
+.ucard .num { font-family: var(--mono); text-align: right; }
+.ulaunch { margin-top: 12px; }
+.ulaunch .top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px; }
+.ulaunch .tl { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 6px 10px; align-items: center; margin-top: 10px; font-size: 13px; }
+.ulaunch .runs { display: flex; height: 16px; border-radius: 4px; overflow: hidden; background: var(--grid); }
+.ulaunch .runs i { display: block; min-width: 1px; background: var(--c); }
+.ulaunch .ax { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 11.5px; color: var(--muted); }
+.uhow p { margin: 0 0 8px; max-width: 95ch; color: var(--ink-2); }
+@media (max-width: 1100px) {
+  .uwrap { grid-template-columns: minmax(0, 1fr); }
+  .ulegend { max-height: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 2px; }
+  .ulegend .eyebrow, .ulegend .hint { grid-column: 1 / -1; }
+}
+@media (max-width: 520px) { .ustage { height: 62vh; min-height: 340px; } .ucard { width: calc(100vw - 24px); } }
+.vehicle .cap { font-size: 13.5px; color: var(--ink-2); margin: 7px 0 0; min-height: 2.9em; }
+.vehicle .cap b { color: var(--ink); font-weight: 600; }
+.stages { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 4px; margin-top: 8px; }
+.stages button { border: 1px solid var(--ring); background: var(--surface); border-radius: 6px; padding: 0 0 3px; cursor: pointer; display: flex; flex-direction: column; overflow: hidden; min-width: 0; }
+.stages canvas { width: 100%; height: 62px; display: block; }
+.stages span { font-family: var(--cond); font-weight: 600; font-size: 10.5px; letter-spacing: 0; color: var(--muted); text-align: center; line-height: 1.15; padding: 3px 2px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.stages button[aria-current="step"] { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+.stages button[aria-current="step"] span { color: var(--ink); }
+.stages button.unreached { cursor: default; }
+.stages button.unreached span { opacity: 0.6; }
+
+/* ---------- analyst ---------- */
+.an-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.an-model { font-size: 12px; color: var(--muted); display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+.an-model::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--state, var(--axis)); }
+details.facts { margin-top: 8px; border-top: 1px solid var(--grid); padding-top: 6px; }
+details.facts summary { cursor: pointer; font-family: var(--cond); font-weight: 600; font-size: 12.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.chat { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; max-height: 460px; overflow-y: auto; overscroll-behavior: contain; }
+.chat:empty { display: none; }
+.msg { font-size: 14px; line-height: 1.5; }
+.msg .who { font-family: var(--cond); font-weight: 600; font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
+.msg.bot { border-left: 3px solid var(--advisory); padding-left: 10px; }
+.msg.user { align-self: flex-end; max-width: 88%; background: var(--surface-2); border-radius: 10px 10px 2px 10px; padding: 6px 10px; color: var(--ink); }
+.msg .body p { margin: 0 0 6px; }
+.msg .body p:last-child { margin-bottom: 0; }
+.msg .body ul { margin: 0 0 6px; padding-left: 18px; }
+.msg .body.pending { color: var(--muted); }
+.msg .err { color: var(--critical); font-size: 13px; margin-top: 4px; }
+.msg .err button { margin-left: 6px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.chip { border: 1px solid var(--axis); background: var(--surface); border-radius: 999px; padding: 3px 10px; font-size: 13px; cursor: pointer; color: var(--ink-2); }
+.chip:hover:not(:disabled) { border-color: var(--ink-2); color: var(--ink); }
+.chip.primary { background: var(--ink); border-color: var(--ink); color: var(--surface); font-weight: 600; }
+.chip:disabled { opacity: 0.45; cursor: default; }
+.ask { display: flex; gap: 6px; margin-top: 8px; }
+.ask input { flex: 1; min-width: 0; border: 1px solid var(--axis); background: var(--surface); border-radius: 6px; padding: 7px 10px; }
+.ask .btn { min-width: 64px; }
+.auto { display: flex; align-items: center; gap: 7px; font-size: 13px; color: var(--ink-2); margin-top: 8px; cursor: pointer; }
+.an-note { font-size: 13px; color: var(--ink-2); margin: 10px 0 0; border-top: 1px solid var(--grid); padding-top: 8px; }
+.an-note code { background: var(--surface-2); border-radius: 4px; padding: 0 4px; }
+
+/* ---------- other tabs ---------- */
+section.tab { display: none; }
+section.tab.on { display: block; }
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.kpi { padding: 12px 14px; }
+.kpi .l { font-size: 13.5px; color: var(--ink-2); min-height: 2.8em; }
+.kpi .vals { display: flex; gap: 16px; align-items: baseline; margin-top: 6px; flex-wrap: wrap; }
+.kpi .big { font-size: 34px; font-weight: 600; line-height: 1; }
+.kpi .vs { font-size: 14px; color: var(--ink-2); }
+.kpi .vs b { font-weight: 600; color: var(--ink); }
+.kpi .key { display: inline-block; width: 14px; height: 3px; border-radius: 2px; vertical-align: middle; margin-right: 6px; }
+.card { padding: 14px 16px; }
+.card h2 { font-family: var(--cond); font-weight: 700; font-size: 21px; margin: 0 0 4px; letter-spacing: 0.01em; }
+.card h2 + p, .card .sub { margin: 0 0 10px; color: var(--ink-2); font-size: 14px; max-width: 75ch; }
+.tablewrap { overflow-x: auto; }
+table.data { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+table.data th { text-align: left; font-weight: 600; color: var(--muted); font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; font-family: var(--cond); padding: 6px 8px; border-bottom: 1px solid var(--axis); white-space: nowrap; }
+table.data td { padding: 6px 8px; border-bottom: 1px solid var(--grid); vertical-align: top; }
+table.data td.num { font-family: var(--mono); font-size: 12.5px; font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+table.data th.num { text-align: right; }
+.legend { display: flex; gap: 16px; font-size: 13px; color: var(--ink-2); margin: 4px 0 8px; flex-wrap: wrap; }
+.legend span::before { content: ""; display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; background: var(--c); }
+.flow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 16px; }
+.flow .step { padding: 12px 14px; }
+.flow .step .n { font-family: var(--cond); font-weight: 700; font-size: 13px; letter-spacing: 0.08em; color: var(--muted); text-transform: uppercase; }
+.flow .step .h { font-weight: 600; font-size: 16px; }
+.flow .step .d { color: var(--ink-2); font-size: 13.5px; }
+.graphbox { overflow-x: auto; }
+.graphbox svg { display: block; min-width: 760px; width: 100%; height: auto; }
+.graphbox text { font-family: var(--sans); font-size: 12.5px; fill: var(--ink-2); }
+.graphbox .colh { font-family: var(--cond); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; fill: var(--muted); }
+.graphbox .node circle { fill: var(--surface); stroke: var(--ink-2); stroke-width: 1.5; }
+.graphbox .node.hot text { fill: var(--ink); font-weight: 600; }
+.graphbox .node.hot circle { fill: var(--ink); }
+.graphbox .edge { fill: none; stroke: var(--axis); stroke-width: 1; }
+.graphbox .edge.hot { stroke: var(--ink-2); stroke-width: 1.6; }
+.graphbox .edge.dim { opacity: 0.25; }
+.graphbox .edge.co { stroke: var(--s1); stroke-width: 2.2; }
+.graphbox .edge.ex { stroke: var(--critical); stroke-width: 2.2; }
+.graphbox .elabel { font-family: var(--cond); font-size: 12.5px; font-weight: 600; letter-spacing: 0.03em; }
+.note { font-size: 13.5px; color: var(--ink-2); }
+code { font-family: var(--mono); font-size: 12.5px; }
+.filterrow { display: flex; gap: 10px; align-items: center; margin-bottom: 8px; flex-wrap: wrap; }
+.filterrow select { border: 1px solid var(--axis); background: var(--surface); border-radius: 6px; padding: 5px 8px; }
+.tip { position: fixed; pointer-events: none; background: var(--surface); border: 1px solid var(--ring); box-shadow: 0 4px 16px rgba(0,0,0,0.12); border-radius: 6px; padding: 6px 9px; font-size: 12.5px; z-index: 20; }
+.tip b { font-family: var(--mono); font-weight: 600; font-size: 13px; }
+
+@media (max-width: 1240px) {
+  .room { grid-template-columns: minmax(0, 1fr) 340px; }
+  .picker { grid-column: 1 / -1; }
+  .picker #grp-show { display: none; }
+  .picker .types, .picker .cases { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); align-content: start; }
+  .picker .cases { max-height: 330px; }
+  .picker .select-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; order: -1; }
+  .picker select { border: 1px solid var(--axis); background: var(--surface); border-radius: 6px; padding: 7px 9px; max-width: 100%; }
+  .laycard { display: none; }
+  .story .lay { display: block; }
+  .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (hover: none) {
+  .laycard { display: none; }
+  .story .lay { display: block; }
+}
+@media (max-width: 860px) {
+  .room { grid-template-columns: minmax(0, 1fr); }
+  .side { order: 2; }
+  .main { order: 1; }
+  .flow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .strip, .axis-row { grid-template-columns: 124px minmax(0, 1fr); gap: 8px; padding-inline: 10px; }
+  .strip .lab .n { font-size: 12px; }
+  .boards { grid-template-columns: minmax(0, 1fr); }
+  .clock { font-size: 28px; }
+}
+@media (max-width: 520px) {
+  .picker .types { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .picker .types button { padding: 6px 8px; font-size: 13.5px; }
+  .kpis { grid-template-columns: minmax(0, 1fr); }
+  .flow { grid-template-columns: minmax(0, 1fr); }
+  .brand h1 { font-size: 25px; }
+  .board .call { font-size: 28px; }
+}
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <h1>Launch Control Agent</h1>
+      <p>Built from 3,000 simulated launches with the Ammonix platform code.</p>
+    </div>
+    <div class="disclaimer"><b>Synthetic telemetry</b> from a notional heavy launcher (cryogenic core stage, two solid boosters). Not data from a real vehicle; all values are illustrative.</div>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="Views">
+    <button role="tab" id="tab-room" aria-selected="true" aria-controls="view-room">Control room</button>
+    <button role="tab" id="tab-factory" aria-selected="false" aria-controls="view-factory">What the factory learned</button>
+    <button role="tab" id="tab-perf" aria-selected="false" aria-controls="view-perf">Performance</button>
+    <button role="tab" id="tab-universe" aria-selected="false" aria-controls="view-universe">Knowledge universe</button>
+  </nav>
+
+  <!-- CONTROL ROOM -->
+  <section class="tab on" id="view-room" role="tabpanel" aria-labelledby="tab-room">
+    <div class="room">
+      <aside class="picker" aria-label="Launches">
+        <div class="group" id="grp-show"><div class="eyebrow">Showcase stories</div></div>
+        <div class="group" id="grp-test" aria-label="Unseen test launches"></div>
+        <div class="select-row"><label class="eyebrow" for="launch-select">Showcase story</label><select id="launch-select"></select></div>
+        <div class="laycard" id="laycard" hidden></div>
+      </aside>
+
+      <div class="main">
+        <div class="story"><h2 id="story-title"></h2><p id="story-summary"></p><p class="lay" id="story-lay"></p></div>
+        <div class="panel console">
+          <div class="clockrow">
+            <div><div class="clock" id="clock">H0 − 00:60.0</div><div class="phase" id="phase">Final countdown</div></div>
+            <div class="transport">
+              <button class="btn primary" id="play" type="button">Play</button>
+              <div class="seg" role="group" aria-label="Replay speed">
+                <button type="button" data-speed="1" aria-pressed="false">1×</button>
+                <button type="button" data-speed="5" aria-pressed="true">5×</button>
+                <button type="button" data-speed="20" aria-pressed="false">20×</button>
+              </div>
+              <button class="btn" id="restart" type="button">Restart</button>
+            </div>
+          </div>
+          <div class="scrub"><input type="range" id="scrub" min="-60" max="150" step="0.1" value="-60" aria-label="Replay time"><div class="marks" id="marks"></div></div>
+          <div class="boards">
+            <div class="board" id="board-agent"><div class="who">Agent call</div><div class="call" id="agent-call">GO</div><div class="why" id="agent-why"></div></div>
+            <div class="board" id="board-red"><div class="who">Fixed limits (redlines)</div><div class="call" id="red-call">Clear</div><div class="why" id="red-why"></div></div>
+          </div>
+        </div>
+        <div class="panel strips" id="strips" aria-label="Telemetry"></div>
+        <p class="hint">Grey band: 5th-95th percentile of 120 nominal launches. Hover or drag across the traces to read values at any moment. Gaps are lost telemetry frames.</p>
+      </div>
+
+      <aside class="side">
+        <div class="panel vehicle">
+          <div class="eyebrow">The vehicle now</div>
+          <div class="scene"><canvas class="sc" id="scene" role="img" aria-label="Illustration of the rocket"></canvas></div>
+          <p class="cap" id="scene-cap"></p>
+          <div class="stages" id="stages" role="group" aria-label="Flight stages: jump to a moment"></div>
+          <p class="hint" style="margin:6px 0 0">Drawn from the replayed telemetry: flame sizes follow the chamber pressures, the nozzle tilt follows the steering data. Not to scale.</p>
+        </div>
+        <div class="panel" id="analyst">
+          <div class="an-head"><div class="eyebrow">Latest finding</div><span class="an-model" id="an-model">Analyst offline</span></div>
+          <div class="finding" id="finding"></div>
+          <details class="facts" id="facts" hidden><summary>The agent's facts (no LLM)</summary><div class="finding" id="facts-body"></div></details>
+          <div class="chat" id="chat" aria-live="polite"></div>
+          <div class="chips" id="chips" hidden></div>
+          <form class="ask" id="ask" hidden autocomplete="off"><input id="ask-input" type="text" maxlength="600" placeholder="Ask about this launch" aria-label="Question for the analyst"><button class="btn primary" id="ask-send" type="submit">Ask</button></form>
+          <label class="auto" id="auto-row" hidden><input type="checkbox" id="auto"> Explain each new alert as it happens</label>
+          <p class="an-note" id="an-note"></p>
+        </div>
+        <div class="panel">
+          <div class="eyebrow">Failure-mode probability now</div>
+          <div class="probs" id="probs"></div>
+          <p class="hint" style="margin:8px 0 0">Tick mark: alert threshold, calibrated so each mode false-alarms on at most 0.15 % of launches.</p>
+        </div>
+        <div class="panel">
+          <div class="eyebrow">Event log</div>
+          <div class="log" id="log" aria-live="polite"></div>
+          <div id="truth-box"></div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- FACTORY -->
+  <section class="tab" id="view-factory" role="tabpanel" aria-labelledby="tab-factory">
+    <div class="flow" id="flow"></div>
+    <div class="panel card" style="margin-bottom:16px">
+      <h2>Layer 3 · Knowledge graph</h2>
+      <p>Subsystems, the channels that measure them, the failure modes seen on those channels, and the call each one triggers. The blue link was found from the data alone; the red one is an exclusion rule. Hover a node to trace its connections.</p>
+      <div class="graphbox" id="graph"></div>
+    </div>
+    <div class="panel card" style="margin-bottom:16px">
+      <h2>Layer 2 · Rules discovered</h2>
+      <p id="rules-sub"></p>
+      <div class="filterrow"><label for="rule-filter" class="eyebrow">Failure mode</label><select id="rule-filter"></select></div>
+      <div class="tablewrap"><table class="data" id="rules-table"></table></div>
+      <p class="note" id="rules-gap"></p>
+    </div>
+    <div class="panel card">
+      <h2>Layer 1 · Failure-mode taxonomy</h2>
+      <p id="tax-sub"></p>
+      <div class="tablewrap"><table class="data" id="tax-table"></table></div>
+    </div>
+  </section>
+
+  <!-- PERFORMANCE -->
+  <section class="tab" id="view-perf" role="tabpanel" aria-labelledby="tab-perf">
+    <p class="note" id="perf-sub" style="max-width:95ch;margin-top:0"></p>
+    <div class="kpis" id="kpis"></div>
+    <div class="panel card" style="margin-top:16px">
+      <h2>Failures caught in time, by failure mode</h2>
+      <p>Share of the held-out launches with that failure where an alert came in time: before ignition for countdown failures, before booster ignition for engine-start failures, at any point for flight failures. The fixed-limit set has no limit that responds to POGO or to a TVC limit cycle, so it scores zero there by construction.</p>
+      <div class="legend"><span style="--c:var(--s1)">Agent</span><span style="--c:var(--s2)">Fixed limits</span></div>
+      <div id="perf-chart"></div>
+    </div>
+    <div class="panel card" style="margin-top:16px">
+      <h2>Per failure mode</h2>
+      <p>Streaming replays of the 500 held-out launches, plus the classifier snapshot at the end of the window (H0 + 150 s). Median delay counts from the moment the simulator marks a failure as visible; a negative value means the agent saw it earlier than that conservative mark.</p>
+      <div class="tablewrap"><table class="data" id="perf-table"></table></div>
+    </div>
+  </section>
+
+  <!-- KNOWLEDGE UNIVERSE -->
+  <section class="tab" id="view-universe" role="tabpanel" aria-labelledby="tab-universe">
+    <div class="uhead">
+      <div>
+        <h2>Knowledge universe</h2>
+        <p>Every star is one action state: the failure-mode probabilities (one per failure mode) the agent held for one launch at one 0.5 s check. States the agent reads alike sit close together. A launch is a chain of states: point at a star to see its launch, click to keep it.</p>
+      </div>
+      <div class="ustats" id="u-stats"></div>
+    </div>
+    <div class="ubar" id="u-bar" hidden>
+      <div class="useg" role="group" aria-label="Color by"><span class="eyebrow">Color</span><button type="button" data-umode="0" aria-pressed="true">Most probable action</button><button type="button" data-umode="1" aria-pressed="false">Agent's call</button></div>
+      <div class="useg" role="group" aria-label="Launches shown"><span class="eyebrow">Launches</span><button type="button" data-uset="0" aria-pressed="true">All</button><button type="button" data-uset="1" aria-pressed="false">Held out</button><button type="button" data-uset="2" aria-pressed="false">Training</button></div>
+      <label class="ucheck"><input type="checkbox" id="u-paths"> All launch paths</label>
+      <button class="btn" id="u-reset" type="button">Reset view</button>
+    </div>
+    <div class="uwrap">
+      <div class="ustage" id="u-stage">
+        <canvas id="u-canvas" tabindex="0" aria-label="3D map of every action state of every launch. Drag to turn, scroll to zoom, right-drag or Shift-drag to move, click a star to keep its launch, Escape to clear."></canvas>
+        <div class="ulabels" id="u-labels" aria-hidden="true"></div>
+        <div class="unote" id="u-note">Opening the universe…</div>
+        <div class="uhelp" aria-hidden="true">Drag to turn · scroll to zoom · right-drag to move · double-click to fly to a star · click a star to keep its launch · Esc to clear</div>
+      </div>
+      <aside class="panel ulegend" id="u-legend" aria-label="Legend"></aside>
+    </div>
+    <div class="panel card ulaunch" id="u-launch" hidden></div>
+    <div class="panel card" style="margin-top:16px">
+      <h2>How this universe is made</h2>
+      <div class="uhow" id="u-how"></div>
+    </div>
+  </section>
+</div>
+<div class="tip" id="tip" hidden></div>
+<div class="ucard" id="u-card" hidden></div>
+
+<script>
+const DATA = /*__DATA__*/null;
+const SERVER = /*__SERVER__*/null;   // set by ControlRoom/serve.py: the local analyst API
+(function () {
+  "use strict";
+  const $ = (id) => document.getElementById(id);
+  const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+  const M = DATA.meta, T0 = M.t0, T1 = M.t1, BIN = M.bin_s, NB = M.n_bins, TICK = M.tick_s;
+  const CH = DATA.channels, CLASSES = DATA.classes, ORDER = DATA.class_order, CALLS = DATA.calls;
+  const CLS = Object.fromEntries(CLASSES.map((c) => [c.mode, c]));
+  const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+  let COL = {};
+  function readColors() {
+    COL = { surface: css("--surface"), grid: css("--grid"), band: css("--band"), trace: css("--trace"),
+            ink: css("--ink"), ink2: css("--ink-2"), muted: css("--muted"), mono: css("--mono").split(",")[0],
+            sans: css("--sans").split(",")[0],
+            lv: { HOLD: css("--hold"), ABORT: css("--critical"), CRITICAL: css("--critical"), WARNING: css("--serious"), ADVISORY: css("--advisory") } };
+    const [r, g, b] = [1, 3, 5].map((i) => parseInt(css("--page").slice(i, i + 2), 16) / 255);
+    COL.dark = 0.2126 * r + 0.7152 * g + 0.0722 * b < 0.4;
+  }
+  readColors();
+
+  // ---------- decoding ----------
+  function bytes(s) { const b = atob(s); const u = new Uint8Array(b.length); for (let i = 0; i < b.length; i++) u[i] = b.charCodeAt(i); return u; }
+  function u16(s) { const u = bytes(s); return new Uint16Array(u.buffer, u.byteOffset, u.byteLength / 2); }
+  function dequant(arr, lo, hi) { const out = new Float32Array(arr.length); for (let i = 0; i < arr.length; i++) out[i] = arr[i] === 0 ? NaN : lo + (arr[i] - 1) / 65534 * (hi - lo); return out; }
+  // one base64 string holds every channel, channel after channel, NB bins each
+  const channels = (s) => { const all = u16(s); return CH.map((c, i) => dequant(all.subarray(i * NB, (i + 1) * NB), c.lo, c.hi)); };
+  const bandLo = channels(DATA.band.lo), bandHi = channels(DATA.band.hi);
+  const band = CH.map((c, i) => ({ lo: bandLo[i], hi: bandHi[i] }));
+  const LAUNCH = new Map(DATA.launches.map((L) => [L.id, L]));    // + held-out launches the server replays
+  const cache = new Map();
+  function decoded(L) {
+    if (cache.has(L.id)) return cache.get(L.id);
+    const d = {
+      min: channels(L.tel.min), max: channels(L.tel.max),
+      probs: bytes(L.agent.probs), calls: bytes(L.agent.calls), red: bytes(L.agent.redline), n: L.agent.n,
+    };
+    cache.set(L.id, d);
+    return d;
+  }
+
+  // display ranges per channel (shared across launches so traces compare); a replayed held-out
+  // launch that reaches further widens them
+  const RAW = CH.map((c, i) => {
+    let lo = Infinity, hi = -Infinity;
+    for (const L of DATA.launches) { const d = decoded(L); for (let k = 0; k < NB; k++) { const a = d.min[i][k], b = d.max[i][k]; if (a < lo) lo = a; if (b > hi) hi = b; } }
+    for (let k = 0; k < NB; k++) { if (band[i].lo[k] < lo) lo = band[i].lo[k]; if (band[i].hi[k] > hi) hi = band[i].hi[k]; }
+    if (DATA.corridor && c.id === DATA.corridor.channel) for (const v of DATA.corridor.km) if (v != null && v > hi) hi = v;
+    return [lo, hi];
+  });
+  const yr = RAW.map(() => [0, 1]);
+  function padRanges() { RAW.forEach(([lo, hi], i) => { const pad = (hi - lo) * 0.06 || 1; yr[i][0] = lo - pad; yr[i][1] = hi + pad; }); }
+  function widen(d) {
+    let grew = false;
+    RAW.forEach((r, i) => { for (let k = 0; k < NB; k++) { const a = d.min[i][k], b = d.max[i][k]; if (a < r[0]) { r[0] = a; grew = true; } if (b > r[1]) { r[1] = b; grew = true; } } });
+    if (grew) padRanges();
+  }
+  padRanges();
+
+  // ---------- formatting ----------
+  function fmtClock(t) {
+    const s = Math.abs(t), sign = t < 0 ? "−" : "+";
+    const mm = Math.floor(s / 60), ss = s - mm * 60;
+    return `H0 ${sign} ${String(mm).padStart(2, "0")}:${ss.toFixed(1).padStart(4, "0")}`;
+  }
+  function fmtT(t) { return (t < 0 ? "−" : "+") + Math.abs(t).toFixed(1) + " s"; }
+  function fmtV(v, unit) {
+    if (!isFinite(v)) return "no data";
+    if (unit === "count") return `${Math.round(v)} samples`;
+    const a = Math.abs(v); const s = a >= 100 ? v.toFixed(0) : a >= 10 ? v.toFixed(1) : a >= 1 ? v.toFixed(2) : v.toFixed(3);
+    return `${s} ${unit}`;
+  }
+  const pct = (x) => (x == null ? "–" : `${Math.round(x * 100)} %`);
+  const phaseOf = (t) => (t < 0 ? "Final countdown" : t < 7 ? "Engine start" : t < EV.BOOSTER_SEP ? "Boosted ascent" : "Core stage flight");
+
+  const CALL_STYLE = {
+    GO: ["GO", "--go"], HOLD: ["HOLD", "--hold"], ENGINE_START: ["ENGINE START", "--go"], COMMIT: ["COMMIT", "--go"],
+    ABORT: ["ABORT", "--critical"], NOMINAL: ["NOMINAL", "--go"], ADVISORY: ["ADVISORY", "--advisory"],
+    WARNING: ["WARNING", "--serious"], CRITICAL: ["CRITICAL", "--critical"],
+  };
+  const CALL_WHY = {
+    GO: "No anomaly in the countdown so far.",
+    HOLD: "Stop the countdown clock and recycle.",
+    ENGINE_START: "Core engine starting; boosters not yet committed.",
+    COMMIT: "Engine start healthy: go for booster ignition.",
+    ABORT: "Shut the core engine down before booster ignition.",
+    NOMINAL: "Flight nominal on all monitored modes.",
+    ADVISORY: "Flag for the mission director; no action on the vehicle.",
+    WARNING: "Degraded performance: inform mission director and flight safety.",
+    CRITICAL: "Critical anomaly: inform mission director and flight safety now.",
+  };
+  const ICON = {
+    ok: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M7 12.5l3.2 3.2L17 9" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    hold: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9.5 8v8M14.5 8v8" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>',
+    stop: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 2.5h8L21.5 8v8L16 21.5H8L2.5 16V8z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8.5 8.5l7 7M15.5 8.5l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>',
+    warn: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l10 18H2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M12 10v5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><circle cx="12" cy="18" r="1.3" fill="currentColor"/></svg>',
+    info: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 11v6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><circle cx="12" cy="7.5" r="1.3" fill="currentColor"/></svg>',
+  };
+  const CALL_ICON = { GO: "ok", ENGINE_START: "ok", COMMIT: "ok", NOMINAL: "ok", HOLD: "hold", ABORT: "stop", CRITICAL: "stop", WARNING: "warn", ADVISORY: "info" };
+  const RED_STYLE = [["Clear", "--go", "ok"], ["HOLD", "--hold", "hold"], ["ABORT", "--critical", "stop"], ["ALARM", "--serious", "warn"]];
+
+  // ---------- state ----------
+  const S = { L: null, d: null, t: T0, playing: false, speed: 5, hover: null, last: 0, revealed: false };
+  const REVEALED = new Set();
+  const store = {
+    get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* storage blocked: the default is fine */ } },
+  };
+
+  // ---------- picker, with a plain-language card beside the list ----------
+  const sel = $("launch-select"), card = $("laycard");
+  function layFor(L) {
+    if (L.kind === "showcase" || !REVEALED.has(L.id)) return L.lay;
+    if (!L.truth.length) return "A normal launch: no failure was injected.";
+    return L.truth.map((x) => `${x.display}. ${CLS[x.mode].lay}`).join(" ");
+  }
+  function showCard(b, kicker, title, text) {
+    card.textContent = "";
+    card.append(el("div", "k", kicker), el("b", "", title));
+    for (const t of [].concat(text)) card.appendChild(el("div", "", t));
+    // Left of the list when the free page margin holds the card, so it covers nothing; else right.
+    const pk = b.closest(".picker").getBoundingClientRect(), br = b.getBoundingClientRect();
+    const room = pk.left - 12 - 12;
+    const left = room >= 220;
+    card.classList.toggle("left", left);
+    card.style.width = left ? `${Math.min(310, room)}px` : "";
+    card.hidden = false;
+    card.style.top = `${Math.max(0, br.top - pk.top + br.height / 2 - card.offsetHeight / 2)}px`;
+  }
+  function hoverCard(b, make) {
+    const show = () => showCard(b, ...make()), hide = () => { card.hidden = true; };
+    b.addEventListener("pointerenter", show); b.addEventListener("focus", show);
+    b.addEventListener("pointerleave", hide); b.addEventListener("blur", hide);
+  }
+  function addPick(L) {
+    const b = el("button"); b.type = "button"; b.dataset.id = L.id; b.setAttribute("aria-pressed", "false");
+    b.appendChild(el("span", "", L.title));
+    $("grp-show").appendChild(b);
+    b.addEventListener("click", () => load(L.id, true));
+    hoverCard(b, () => ["Showcase story · in plain words", L.title, layFor(L)]);
+    const o = el("option", "", L.title); o.value = L.id; sel.appendChild(o);
+  }
+  DATA.launches.filter((L) => L.kind === "showcase").forEach(addPick);
+  { const o = el("option", "", "Unseen launch, picked below"); o.value = ""; o.disabled = true; sel.appendChild(o); }
+  sel.addEventListener("change", () => load(sel.value, true));
+
+  // ---------- strips ----------
+  $("strips").setAttribute("aria-label", `Telemetry, ${CH.length} channels`);
+  const SUBSYS_ORDER = ["PC_CORE", "N_LOX_TP", "T_TURB_IN", "VIB_ENG", "P_LOX_TANK", "P_LH2_TANK", "PC_SRB_L", "PC_SRB_R", "TVC_PITCH", "TVC_YAW", "ACC_AX", "BUS_28V", "TRAJ_DEV"];
+  const strips = [];
+  let lastSub = null;
+  for (const key of SUBSYS_ORDER) {
+    const i = CH.findIndex((c) => c.id === key); const c = CH[i];
+    if (c.subsystem !== lastSub) { $("strips").appendChild(el("div", "subsys", c.subsystem)); lastSub = c.subsystem; }
+    const row = el("div", "strip"); const lab = el("div", "lab");
+    const n = el("span", "n", `${c.label}`); n.title = `${c.label} [${c.unit}]`;
+    const v = el("span", "v", "–");
+    lab.append(n, v); const cv = el("canvas"); cv.setAttribute("role", "img"); cv.setAttribute("aria-label", `${c.label} trace`);
+    row.append(lab, cv); $("strips").appendChild(row);
+    strips.push({ i, c, row, v, cv });
+  }
+  const axisRow = el("div", "axis-row"); axisRow.append(el("span", "hint", "")); const axisCv = el("canvas"); axisRow.appendChild(axisCv); $("strips").appendChild(axisRow);
+
+  function sizeCanvas(cv) {
+    const r = cv.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
+    const w = Math.max(10, Math.round(r.width * dpr)), h = Math.max(10, Math.round(r.height * dpr));
+    if (cv.width !== w || cv.height !== h) { cv.width = w; cv.height = h; }
+    return [w, h, dpr];
+  }
+  const xOf = (t, w) => ((t - T0) / (T1 - T0)) * w;
+  const EV = DATA.meta.events;
+  const EVT = [[0, "H0"], [EV.BOOSTER_IGNITION, "Boosters"], [EV.MAX_Q, "Max-Q"], [EV.BOOSTER_SEP, "Sep"]];
+  const EVT_MARKS = EVT.filter(([, lab]) => lab !== "Boosters");
+
+  function drawStrip(s) {
+    const [w, h, dpr] = sizeCanvas(s.cv); const g = s.cv.getContext("2d");
+    const [ylo, yhi] = yr[s.i]; const pad = 3 * dpr;
+    const yOf = (v) => h - pad - ((v - ylo) / (yhi - ylo)) * (h - 2 * pad);
+    g.clearRect(0, 0, w, h);
+    g.fillStyle = COL.surface; g.fillRect(0, 0, w, h);
+    g.strokeStyle = COL.grid; g.lineWidth = 1 * dpr; g.beginPath();
+    for (const [t] of EVT) { const x = Math.round(xOf(t, w)) + 0.5; g.moveTo(x, 0); g.lineTo(x, h); }
+    g.stroke();
+    // nominal band
+    const b = band[s.i]; g.fillStyle = COL.band; g.beginPath(); let open = false;
+    for (let k = 0; k < NB; k++) { const x = xOf(T0 + (k + 0.5) * BIN, w); const y = yOf(b.hi[k]); if (!isFinite(y)) continue; if (!open) { g.moveTo(x, y); open = true; } else g.lineTo(x, y); }
+    for (let k = NB - 1; k >= 0; k--) { const x = xOf(T0 + (k + 0.5) * BIN, w); const y = yOf(b.lo[k]); if (isFinite(y)) g.lineTo(x, y); }
+    g.closePath(); g.fill();
+    if (DATA.corridor && s.c.id === DATA.corridor.channel) {   // the fixed flight-safety corridor, dashed
+      g.save(); g.strokeStyle = COL.lv.WARNING; g.lineWidth = 1.5 * dpr; g.setLineDash([5 * dpr, 4 * dpr]); g.beginPath();
+      let on = false;
+      DATA.corridor.km.forEach((v, k) => { if (v == null) { on = false; return; } const x = xOf(T0 + (k + 0.5) * BIN, w), y = yOf(v); if (on) g.lineTo(x, y); else { g.moveTo(x, y); on = true; } });
+      g.stroke(); g.restore();
+    }
+    if (!S.d) return;
+    // trace: envelope polygon between min and max, up to the replay time
+    const kEnd = Math.min(NB - 1, Math.floor((Math.min(S.t, S.L.t_end) - T0) / BIN));
+    const mn = S.d.min[s.i], mx = S.d.max[s.i]; const minW = 1.6 * dpr;
+    g.fillStyle = COL.trace;
+    let k = 0;
+    while (k <= kEnd) {
+      while (k <= kEnd && !isFinite(mn[k])) k++;
+      if (k > kEnd) break;
+      const start = k; while (k <= kEnd && isFinite(mn[k])) k++;
+      const stop = k - 1; g.beginPath();
+      for (let j = start; j <= stop; j++) { const x = xOf(T0 + (j + 0.5) * BIN, w); const y1 = yOf(mx[j]), y0 = yOf(mn[j]); const mid = (y0 + y1) / 2; g.lineTo(x, Math.min(y1, mid - minW / 2)); }
+      for (let j = stop; j >= start; j--) { const x = xOf(T0 + (j + 0.5) * BIN, w); const y1 = yOf(mx[j]), y0 = yOf(mn[j]); const mid = (y0 + y1) / 2; g.lineTo(x, Math.max(y0, mid + minW / 2)); }
+      g.closePath(); g.fill();
+    }
+    // cursor and hover
+    g.fillStyle = COL.ink2; g.fillRect(Math.round(xOf(S.t, w)) - dpr, 0, 2 * dpr, h);
+    if (S.hover != null) { g.fillStyle = COL.muted; g.fillRect(Math.round(xOf(S.hover, w)), 0, dpr, h); }
+  }
+  function drawAxis() {
+    const [w, h, dpr] = sizeCanvas(axisCv); const g = axisCv.getContext("2d");
+    g.clearRect(0, 0, w, h); g.fillStyle = COL.muted; g.font = `${11 * dpr}px ${COL.mono}, monospace`; g.textBaseline = "top";
+    const step = w / dpr < 520 ? 60 : 30;
+    for (let t = -60; t <= 150; t += step) { const x = xOf(t, w); g.fillRect(Math.round(x), 0, dpr, 4 * dpr); const lab = t === 0 ? "H0" : (t > 0 ? "+" : "−") + Math.abs(t); const tw = g.measureText(lab).width; g.fillText(lab, Math.min(Math.max(0, x - tw / 2), w - tw), 5 * dpr); }
+  }
+  function valueAt(i, t) {
+    if (!S.d) return NaN; const k = Math.min(NB - 1, Math.floor((t - T0) / BIN)); if (k < 0) return NaN;
+    const a = S.d.min[i][k], b = S.d.max[i][k]; return (a + b) / 2;
+  }
+
+  // hover across strips (synchronized crosshair)
+  function onHover(ev) {
+    const r = ev.currentTarget.getBoundingClientRect(); const t = T0 + ((ev.clientX - r.left) / r.width) * (T1 - T0);
+    S.hover = Math.max(T0, Math.min(T1, t)); renderStrips(); renderReadouts();
+  }
+  for (const s of strips) {
+    s.cv.addEventListener("pointermove", onHover);
+    s.cv.addEventListener("pointerleave", () => { S.hover = null; renderStrips(); renderReadouts(); });
+  }
+
+  // ---------- agent panel ----------
+  function tickIndex(t) { if (!S.d) return 0; return Math.max(0, Math.min(S.d.n - 1, Math.floor((t - T0) / TICK + 1e-6))); }
+  const probRows = {};
+  (function buildProbs() {
+    const groups = [["countdown", "Countdown"], ["engine_start", "Engine start"], ["engine_start_or_flight", "Engine start or flight"], ["flight", "Flight"]];
+    for (const [ph, name] of groups) {
+      const cs = CLASSES.filter((c) => c.phase === ph); if (!cs.length) continue;
+      $("probs").appendChild(el("div", "phase-h", name));
+      for (const c of cs) {
+        const r = el("div", "prow"); const nm = el("span", "nm", c.display); nm.title = c.display;
+        const bar = el("span", "bar"); const fill = el("i"); const thr = el("b"); thr.style.left = `calc(${(c.threshold * 100).toFixed(1)}% - 1px)`;
+        bar.append(fill, thr); const pv = el("span", "pv", "0.00");
+        r.append(nm, bar, pv); $("probs").appendChild(r); probRows[c.mode] = { r, fill, pv };
+      }
+    }
+  })();
+
+  // alerts confirmed so far (latched), from the event list
+  const alertsOf = (L, t) => L.events.filter((e) => e.kind === "alert" && e.t <= t + 1e-6);
+  const activeAlerts = (t) => alertsOf(S.L, t);
+  const LEVEL_VAR = { HOLD: "--hold", ABORT: "--critical", CRITICAL: "--critical", WARNING: "--serious", ADVISORY: "--advisory" };
+
+  function renderPanel() {
+    if (!S.d) return;
+    const t = Math.min(S.t, S.L.t_end); const i = tickIndex(t); const K = ORDER.length;
+    const alerts = activeAlerts(t); const alerted = new Set(alerts.map((a) => a.mode));
+    for (let j = 0; j < K; j++) {
+      const key = ORDER[j]; const p = S.d.probs[i * K + j] / 250; const row = probRows[key];
+      row.fill.style.width = `${(p * 100).toFixed(1)}%`;
+      const lvl = alerts.find((a) => a.mode === key);
+      row.fill.style.background = lvl ? css(LEVEL_VAR[lvl.level] || "--critical") : css("--muted");
+      row.r.classList.toggle("on", alerted.has(key)); row.pv.textContent = p.toFixed(2);
+    }
+    // boards
+    const call = CALLS[S.d.calls[i]]; const [label, v] = CALL_STYLE[call];
+    const ab = $("board-agent"); ab.style.setProperty("--state", css(v));
+    $("agent-call").innerHTML = ICON[CALL_ICON[call]]; $("agent-call").append(label);
+    let why = CALL_WHY[call];
+    if (S.L.stop.type === "hold" && t >= S.L.stop.t) why = `Countdown held at ${fmtClock(S.L.stop.t)}.`;
+    if (S.L.stop.type === "abort" && t >= S.L.stop.t) why = `Engine shutdown commanded at ${fmtClock(S.L.stop.t)}; boosters not ignited.`;
+    $("agent-why").textContent = why;
+    const rc = S.d.red[i]; const [rl, rv, ri] = RED_STYLE[rc];
+    $("board-red").style.setProperty("--state", css(rv));
+    $("red-call").innerHTML = ICON[ri]; $("red-call").append(rl);
+    const trips = S.L.events.filter((e) => e.kind === "redline" && e.t <= t + 1e-6);
+    $("red-why").textContent = trips.length ? trips[trips.length - 1].text : "No limit exceeded.";
+    // flagged channels
+    const flagged = new Map();
+    for (const a of alerts) for (const ch of channelsOf(a.mode)) flagged.set(ch, LEVEL_VAR[a.level] || "--critical");
+    for (const s of strips) { const f = flagged.get(s.c.id); s.row.classList.toggle("flag", !!f); if (f) s.row.style.setProperty("--flag", css(f)); }
+    renderFinding(t, alerts);
+    renderLog(t);
+    analystTick(alerts);
+  }
+  // The agent's own explanation: facts only, no LLM. With the analyst online it folds away.
+  let findingKey = "";
+  function evidenceText(x) {
+    const u = x.unit === "count" ? "" : x.unit;
+    return `${x.label.replace(/ \(samples\)$/, "")}: ${fmtV(x.value, x.unit)} (nominal ${fmtV(x.mean, u).trim()} ± ${fmtV(x.std, u).trim()})`;
+  }
+  function renderFinding(t, alerts) {
+    const latest = alerts[alerts.length - 1];
+    const later = latest ? S.L.events.filter((e) => e.kind === "rule" && e.mode === latest.mode && e.t <= t + 1e-6) : [];
+    const key = [S.L.id, latest ? latest.t + latest.mode : "", later.length, AN.ready].join("|");
+    if (key === findingKey) return;
+    findingKey = key;
+    const f = $("finding"), facts = $("facts-body"); f.textContent = ""; facts.textContent = "";
+    $("facts").hidden = !(AN.ready && latest);
+    if (!latest) { f.appendChild(el("p", "empty", "No anomaly detected so far. The agent checks every 0.5 s using only the telemetry received up to that moment.")); return; }
+    const meta = el("div", "hint"); const pill = el("span", "pill", latest.level); pill.style.setProperty("--state", css(LEVEL_VAR[latest.level] || "--critical"));
+    meta.append(pill, document.createTextNode(`  confirmed at ${fmtClock(latest.t)} · p = ${latest.p.toFixed(2)}`)); f.appendChild(meta);
+    f.appendChild(el("h3", "", CLS[latest.mode].display));
+    const into = AN.ready ? facts : f;
+    if (latest.evidence.length) {
+      const ul = el("ul");
+      for (const x of latest.evidence.slice(0, 3)) ul.appendChild(el("li", "", evidenceText(x)));
+      into.appendChild(ul);
+    }
+    const shown = latest.rules.slice(0, 2).map((r) => [r, null]).concat(later.map((e) => [e.rule, e.t]));
+    for (const [r, tc] of shown.slice(0, 3)) {
+      const d = el("div", "rule"); d.appendChild(el("span", "rid", r.id)); const gr = el("span", "grade", r.grade); d.appendChild(gr); d.appendChild(document.createTextNode(r.sentence));
+      if (tc != null) d.appendChild(el("div", "hint", `Confirmed later, at ${fmtClock(tc)}`));
+      into.appendChild(d);
+    }
+    if (!shown.length) into.appendChild(el("div", "rule", latest.has_rules
+      ? "No graded rule for this mode can be checked yet at this point in the window; the early call rests on the model. Rule confirmations appear here and in the log as the data arrives."
+      : "No single-feature rule reaches grade B for this mode, a Layer 4 gap the factory flags; the call rests on the multivariate model."));
+    for (const g of latest.graph.slice(0, 1)) into.appendChild(el("div", "graphnote", g + "."));
+  }
+  const chanCache = {};
+  function channelsOf(key) {
+    if (chanCache[key]) return chanCache[key];
+    const edges = DATA.factory.kg.edges.filter((e) => e.type === "SEEN_ON" && e.from === "fm:" + key).map((e) => e.to.slice(3));
+    return (chanCache[key] = edges);
+  }
+  function eventText(e) {
+    if (e.kind === "vehicle") return e.text;
+    if (e.kind === "redline") return `Fixed limit ${e.call}: ${e.text}`;
+    if (e.kind === "rule") return `Rule ${e.rule.id} (grade ${e.rule.grade}) confirms ${CLS[e.mode].display}`;
+    return `Agent ${e.level}: ${CLS[e.mode].display} (p = ${e.p.toFixed(2)})`;
+  }
+  let lastLogCount = -1;
+  function renderLog(t) {
+    const evs = S.L.events.filter((e) => e.t <= t + 1e-6 && e.kind !== "call");
+    if (evs.length === lastLogCount) return; lastLogCount = evs.length;
+    const log = $("log"); log.textContent = "";
+    for (const e of evs.slice().reverse()) {
+      const row = el("div", "e " + e.kind); row.appendChild(el("span", "t", fmtT(e.t)));
+      const x = el("span", "x");
+      if (e.kind === "vehicle") x.textContent = e.text;
+      else if (e.kind === "redline") { const b = el("b", "", `Fixed limit ${e.call}: `); x.append(b, document.createTextNode(e.text)); }
+      else if (e.kind === "rule") { const b = el("b", "", `Rule ${e.rule.id} (grade ${e.rule.grade}) confirms: `); x.append(b, document.createTextNode(CLS[e.mode].display)); }
+      else { const b = el("b", "", `Agent ${e.level}: `); x.append(b, document.createTextNode(`${CLS[e.mode].display} (p = ${e.p.toFixed(2)})`)); }
+      row.appendChild(x); log.appendChild(row);
+    }
+    if (!evs.length) log.appendChild(el("div", "hint", "Nothing yet."));
+  }
+  function renderTruth() {
+    const box = $("truth-box"); box.textContent = "";
+    const wrap = el("div", "truth");
+    if (S.L.kind === "test" && !S.revealed) {
+      const b = el("button", "btn", "Reveal ground truth"); b.type = "button";
+      b.addEventListener("click", () => { S.revealed = true; REVEALED.add(S.L.id); $("story-lay").textContent = "In plain words: " + layFor(S.L); renderTruth(); followSelector(); });
+      wrap.appendChild(b);
+    } else {
+      wrap.appendChild(el("div", "eyebrow", "Ground truth (injected by the simulator)"));
+      if (!S.L.truth.length) wrap.appendChild(el("p", "note", "Nominal launch: no failure injected."));
+      else {
+        const tb = el("table"); const hr = el("tr"); ["Failure", "Severity", "Visible from"].forEach((h) => hr.appendChild(el("th", "", h))); tb.appendChild(hr);
+        for (const x of S.L.truth) {
+          const r = el("tr"); const name = el("td"); name.append(el("div", "", x.display), el("div", "hint", CLS[x.mode].lay));
+          r.append(name, el("td", "mono", x.severity.toFixed(2)), el("td", "mono", fmtClock(x.manifest))); tb.appendChild(r);
+        }
+        wrap.appendChild(tb);
+      }
+    }
+    box.appendChild(wrap);
+  }
+
+  // ---------- vehicle scene: an illustration driven by the replayed telemetry ----------
+  const CHI = Object.fromEntries(CH.map((c, i) => [c.id, i]));
+  const STAGES = [[-45, "Pad", "On the pad"], [3, "Ignition", "Main engine start"], [9.5, "Liftoff", "Liftoff"], [EV.MAX_Q, "Max-Q", "Max-Q"], [EV.BOOSTER_SEP + 1.5, "Sep", "Booster separation"], [T1, "+150 s", "End of the window"]];
+  const REGION = {
+    LOX_TANK_UNDERPRESSURE: ["lox", "LOX tank"], LH2_PRESS_OSCILLATION: ["lh2", "LH2 tank"], BUS_VOLTAGE_SAG: ["avionics", "Avionics power"],
+    SLOW_ENGINE_START: ["engine", "Main engine"], LOX_PUMP_CAVITATION: ["engine", "LOX pump"], COMBUSTION_INSTABILITY: ["engine", "Combustion chamber"],
+    TURBINE_OVERTEMP: ["engine", "Turbine"], TEMP_SENSOR_FAULT: ["engine", "Temperature sensor"], SRB_THRUST_ASYMMETRY: ["booster", "Booster"],
+    TVC_ACTUATOR_DEGRADATION: ["tvc", "Nozzle actuator"], POGO_ONSET: ["stack", "Whole vehicle"],
+    TRAJECTORY_DEVIATION: ["avionics", "Guidance & navigation"],
+  };
+  const clamp01 = (x) => Math.max(0, Math.min(1, x));
+  const smooth = (x) => { x = clamp01(x); return x * x * (3 - 2 * x); };
+  const noise = (n) => { const s = Math.sin(n * 127.1 + 311.7) * 43758.5453; return s - Math.floor(s); };
+  const altKm = (tau) => (tau <= 0 ? 0 : 0.0032 * tau * tau * (1 + tau / 400));     // a nominal climb, for the picture only
+  const binOf = (t) => Math.max(0, Math.min(NB - 1, Math.floor((t - T0) / BIN)));
+  function chan(d, key, t) {             // [mid, half-range] of the display envelope; bridges short gaps
+    const i = CHI[key]; let k = Math.min(NB - 1, Math.floor((t - T0) / BIN));
+    for (let n = 0; n < 8 && k >= 0; n++, k--) { const a = d.min[i][k], b = d.max[i][k]; if (isFinite(a) && isFinite(b)) return [(a + b) / 2, (b - a) / 2]; }
+    return [NaN, 0];
+  }
+  function bandMid(key, t) { const b = band[CHI[key]], k = binOf(t); return (b.lo[k] + b.hi[k]) / 2; }
+  // fast oscillation within a display bin, beyond what the local slope explains
+  function ripple(d, key, t) { const [m, h] = chan(d, key, t), [m0] = chan(d, key, t - BIN); return isFinite(m) ? Math.max(0, h - 0.5 * (isFinite(m0) ? Math.abs(m - m0) : 0)) : 0; }
+  // slow oscillation: spread of the bin means over the last second
+  function spread(d, key, t) {
+    const xs = []; for (let n = 0; n < 5; n++) { const [m] = chan(d, key, t - n * BIN); if (isFinite(m)) xs.push(m); }
+    if (xs.length < 3) return 0; const mu = xs.reduce((a, b) => a + b, 0) / xs.length;
+    return Math.sqrt(xs.reduce((a, b) => a + (b - mu) ** 2, 0) / xs.length);
+  }
+  function sceneState(L, d, t) {
+    const tt = Math.max(T0, Math.min(t, L.t_end));
+    const lift = L.liftoff, flying = lift != null && tt >= lift, tau = flying ? tt - lift : 0;
+    const pc = chan(d, "PC_CORE", tt)[0], sl = chan(d, "PC_SRB_L", tt)[0], sr = chan(d, "PC_SRB_R", tt)[0], yaw = chan(d, "TVC_YAW", tt)[0];
+    const side = Math.abs(sl - bandMid("PC_SRB_L", tt)) >= Math.abs(sr - bandMid("PC_SRB_R", tt)) ? "L" : "R";
+    const separated = lift != null && tt >= EV.BOOSTER_SEP;
+    const marks = alertsOf(L, tt).map((a) => {
+      const [region, label] = REGION[a.mode] || ["stack", CLS[a.mode].display];
+      return region === "booster" ? { region: "booster" + side, label: `Booster ${side}`, level: a.level } : { region, label, level: a.level };
+    }).filter((m) => !(separated && m.region.startsWith("booster")));
+    return {
+      t: tt, lift, flying, tau, alt: altKm(tau), theta: 45 * smooth((tau - 5) / 140),
+      core: isFinite(pc) ? clamp01(pc / 118) : 0, rough: clamp01((ripple(d, "PC_CORE", tt) - 0.8) / 2.5),
+      srbL: isFinite(sl) ? clamp01((sl - 1) / 90) : 0, srbR: isFinite(sr) ? clamp01((sr - 1) / 90) : 0,
+      gimbal: Math.max(-16, Math.min(16, (isFinite(yaw) ? yaw : 0) * 10)),
+      wobble: clamp01((spread(d, "TVC_PITCH", tt) - 0.05) / 0.2), pogo: clamp01((ripple(d, "ACC_AX", tt) - 0.035) / 0.12),
+      sep: flying && tt >= EV.BOOSTER_SEP ? tt - EV.BOOSTER_SEP : -1,
+      held: L.stop.type === "hold" && tt >= L.stop.t, abortT: L.stop.type === "abort" ? L.stop.t : null,
+      marks,
+    };
+  }
+  const SKY = {
+    day: [[0, "#8dbbe6", "#d5e8f6"], [8, "#4b8ad0", "#a4cbee"], [22, "#22549c", "#6a9cd4"], [45, "#0c234d", "#2b5b9b"], [80, "#02050c", "#0e2851"]],
+    dark: [[0, "#1b3252", "#3b5a80"], [8, "#142a48", "#33537b"], [22, "#0e2042", "#294b78"], [45, "#071430", "#1d4275"], [80, "#010309", "#0a1f44"]],
+  };
+  const rgbOf = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+  const mix = (a, b, f) => { const x = rgbOf(a), y = rgbOf(b); return `rgb(${x.map((v, i) => Math.round(v + (y[i] - v) * f)).join(",")})`; };
+  function skyAt(alt) {
+    const P = COL.dark ? SKY.dark : SKY.day; let i = 0;
+    while (i < P.length - 2 && alt > P[i + 1][0]) i++;
+    const f = smooth((alt - P[i][0]) / (P[i + 1][0] - P[i][0]));
+    return [mix(P[i][1], P[i + 1][1], f), mix(P[i][2], P[i + 1][2], f)];
+  }
+  function roundRect(g, x, y, w, h, r) {
+    g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r);
+    g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath();
+  }
+  // vehicle geometry in its own frame: origin at the base of the core stage, y pointing down, R = stack length
+  const GEO = (R) => { const wc = 0.088 * R, wb = 0.058 * R; return { wc, wb, wf: 0.098 * R, bx: wc / 2 + wb / 2 - 0.004 * R }; };
+  function metal(g, x0, x1) { const m = g.createLinearGradient(x0, 0, x1, 0); m.addColorStop(0, "#3c4349"); m.addColorStop(0.4, "#a7b0b8"); m.addColorStop(1, "#353b41"); return m; }
+  function white(g, x0, x1) {
+    const w = g.createLinearGradient(x0, 0, x1, 0);
+    w.addColorStop(0, "#aeb8c2"); w.addColorStop(0.32, "#ffffff"); w.addColorStop(0.7, "#e4e9ee"); w.addColorStop(1, "#95a1ac"); return w;
+  }
+  function outline(g) { g.strokeStyle = "rgba(20, 28, 36, 0.35)"; g.lineWidth = 0.6; g.stroke(); }
+  function cylinder(g, x, y, w, h) { g.fillStyle = white(g, x, x + w); g.beginPath(); g.rect(x, y, w, h); g.fill(); outline(g); }
+  function stripe(g, x, y, w, h, c) { g.fillStyle = c; g.fillRect(x, y, w, h); }
+  function booster(g, x, R, wb) {
+    const l = x - wb / 2;
+    cylinder(g, l, -0.4 * R, wb, 0.415 * R);
+    g.fillStyle = white(g, l, l + wb); g.beginPath(); g.moveTo(l, -0.4 * R);
+    g.quadraticCurveTo(l, -0.45 * R, x, -0.476 * R); g.quadraticCurveTo(l + wb, -0.45 * R, l + wb, -0.4 * R); g.closePath(); g.fill(); outline(g);
+    stripe(g, l, -0.02 * R, wb, 0.035 * R, "#40474e");
+    g.fillStyle = metal(g, x - 0.022 * R, x + 0.022 * R); g.beginPath();
+    g.moveTo(x - 0.012 * R, 0.015 * R); g.lineTo(x + 0.012 * R, 0.015 * R); g.lineTo(x + 0.022 * R, 0.05 * R); g.lineTo(x - 0.022 * R, 0.05 * R); g.closePath(); g.fill();
+  }
+  function fairing(g, R, wc, wf) {
+    const x = wf / 2; g.fillStyle = white(g, -x, x); g.beginPath();
+    g.moveTo(-wc / 2, -0.68 * R); g.lineTo(-x, -0.71 * R); g.lineTo(-x, -0.86 * R);
+    g.bezierCurveTo(-x, -0.93 * R, -x * 0.35, -0.99 * R, 0, -R);
+    g.bezierCurveTo(x * 0.35, -0.99 * R, x, -0.93 * R, x, -0.86 * R);
+    g.lineTo(x, -0.71 * R); g.lineTo(wc / 2, -0.68 * R); g.closePath(); g.fill(); outline(g);
+  }
+  function coreFlame(g, R, p, altF, rough) {
+    const len = R * 0.42 * p * (1 + 0.9 * altF), w0 = 0.062 * R, w1 = w0 * (1.25 + 2.6 * altF), y0 = 0.07 * R;
+    const gr = g.createLinearGradient(0, y0, 0, y0 + len);
+    gr.addColorStop(0, "rgba(255,255,255,0.95)"); gr.addColorStop(0.18, "rgba(196,224,255,0.85)"); gr.addColorStop(0.6, "rgba(120,170,255,0.4)"); gr.addColorStop(1, "rgba(100,150,255,0)");
+    g.fillStyle = gr; g.beginPath(); g.moveTo(-w0 / 2, y0);
+    g.bezierCurveTo(-w1 / 2, y0 + len * 0.25, -w1 * 0.4, y0 + len * 0.7, 0, y0 + len);
+    g.bezierCurveTo(w1 * 0.4, y0 + len * 0.7, w1 / 2, y0 + len * 0.25, w0 / 2, y0); g.closePath(); g.fill();
+    const md = 0.85 * (1 - altF) * p;                    // shock diamonds low in the atmosphere
+    if (md > 0.05) { g.fillStyle = `rgba(255,236,200,${md})`; for (let k = 1; k <= 3; k++) { g.beginPath(); g.ellipse(0, y0 + k * 0.075 * R, w0 * 0.22, 0.014 * R, 0, 0, Math.PI * 2); g.fill(); } }
+    if (rough > 0.05) { g.fillStyle = `rgba(255,120,60,${0.5 * rough})`; g.beginPath(); g.ellipse(0, y0 + len * 0.3, w1 * 0.35, len * 0.3, 0, 0, Math.PI * 2); g.fill(); }
+  }
+  function boosterFlame(g, R, x, len, altF, p) {
+    const w0 = 0.046 * R, w1 = w0 * (1.9 + 2 * altF), y0 = 0.05 * R, cy = y0 + len * 0.15;
+    const glow = g.createRadialGradient(x, cy, 0, x, cy, len * 0.55);
+    glow.addColorStop(0, `rgba(255,200,110,${0.45 * p})`); glow.addColorStop(1, "rgba(255,160,60,0)");
+    g.fillStyle = glow; g.beginPath(); g.arc(x, cy, len * 0.55, 0, Math.PI * 2); g.fill();
+    const gr = g.createLinearGradient(0, y0, 0, y0 + len);
+    gr.addColorStop(0, "rgba(255,253,235,1)"); gr.addColorStop(0.25, "rgba(255,221,120,0.95)"); gr.addColorStop(0.6, "rgba(255,140,50,0.7)"); gr.addColorStop(1, "rgba(255,90,30,0)");
+    g.fillStyle = gr; g.beginPath(); g.moveTo(x - w0 / 2, y0);
+    g.bezierCurveTo(x - w1 / 2, y0 + len * 0.2, x - w1 * 0.35, y0 + len * 0.75, x, y0 + len);
+    g.bezierCurveTo(x + w1 * 0.35, y0 + len * 0.75, x + w1 / 2, y0 + len * 0.2, x + w0 / 2, y0); g.closePath(); g.fill();
+  }
+  function venting(g, R, wc, t) {                       // cold oxygen vapor on the pad
+    const col = COL.dark ? "215,224,232" : "255,255,255", dt = 0.3, life = 3.2;
+    for (let n = Math.max(0, Math.floor((t - life - T0) / dt)); n <= Math.floor((t - T0) / dt); n++) {
+      const age = t - (T0 + n * dt); if (age < 0 || age > life) continue;
+      const side = n % 3 === 0 ? -1 : 1, h = noise(n + 400);
+      const x = side * (wc / 2 + (0.02 + 0.05 * h) * R * age + 0.01 * R * age * age), y = (side > 0 ? -0.47 : -0.62) * R + 0.035 * R * age;
+      g.fillStyle = `rgba(${col},${0.5 * (1 - age / life)})`; g.beginPath(); g.arc(x, y, (0.012 + 0.02 * age) * R, 0, Math.PI * 2); g.fill();
+    }
+  }
+  function drawVehicle(g, R, st) {
+    const { wc, wb, wf, bx } = GEO(R), altF = smooth(st.alt / 60);
+    const flick = (k) => 1 + (noise(Math.floor(st.t * 30) * 7 + k) - 0.5) * (0.1 + 0.7 * st.rough);
+    if (st.sep < 0) for (const [s, p] of [[-1, st.srbL], [1, st.srbR]]) if (p > 0.03) boosterFlame(g, R, s * bx, R * 0.62 * p * flick(s + 3) * (1 + 0.5 * altF), altF, p);
+    g.save(); g.translate(0, 0.004 * R); g.rotate((st.gimbal + st.wobble * 7 * Math.sin(st.t * 2 * Math.PI * 1.6)) * Math.PI / 180);
+    if (st.core > 0.03) coreFlame(g, R, st.core * flick(1), altF, st.rough);
+    g.fillStyle = metal(g, -0.032 * R, 0.032 * R); g.beginPath();
+    g.moveTo(-0.016 * R, 0); g.lineTo(0.016 * R, 0); g.lineTo(0.032 * R, 0.07 * R); g.lineTo(-0.032 * R, 0.07 * R); g.closePath(); g.fill();
+    g.restore();
+    for (const s of [-1, 1]) {                          // boosters; after separation they drift away
+      g.save();
+      if (st.sep >= 0) { const u = st.sep; g.translate(s * (0.01 + 0.08 * u) * R, 0.1 * u * u * R); g.translate(s * bx, -0.2 * R); g.rotate(s * Math.min(1.1, 0.25 * u * (1 + u))); g.translate(-s * bx, 0.2 * R); }
+      booster(g, s * bx, R, wb);
+      g.restore();
+    }
+    cylinder(g, -wc / 2, -0.5 * R, wc, 0.5 * R);        // core stage
+    stripe(g, -wc / 2, -0.03 * R, wc, 0.03 * R, "#3b4249");
+    cylinder(g, -wc / 2, -0.68 * R, wc, 0.18 * R);      // upper stage
+    stripe(g, -wc / 2, -0.52 * R, wc, 0.02 * R, "#2f353b");
+    fairing(g, R, wc, wf);
+    const q = st.flying ? Math.exp(-(((st.t - EV.MAX_Q) / 8) ** 2)) : 0;
+    if (q > 0.02) {                                      // condensation cloud around max-Q
+      const gr = g.createLinearGradient(0, -0.72 * R, 0, -0.42 * R);
+      gr.addColorStop(0, `rgba(255,255,255,${0.7 * q})`); gr.addColorStop(1, "rgba(255,255,255,0)");
+      g.fillStyle = gr; g.beginPath(); g.moveTo(-wf * 0.55, -0.72 * R); g.lineTo(wf * 0.55, -0.72 * R);
+      g.lineTo(wf * 0.55 + 0.1 * R, -0.42 * R); g.lineTo(-wf * 0.55 - 0.1 * R, -0.42 * R); g.closePath(); g.fill();
+    }
+    if (!st.flying) venting(g, R, wc, st.t);
+  }
+  function drawClouds(g, W, H, st, by) {
+    const down = st.alt * 0.5 * smooth((st.tau - 10) / 120);
+    g.fillStyle = COL.dark ? "rgba(214,224,236,0.30)" : "rgba(255,255,255,0.88)";
+    for (let i = 0; i < 7; i++) {
+      const h = 1.2 + 6.5 * noise(i + 91), y = by - (h - st.alt) * 0.136 * H;
+      if (y < -40 || y > H + 40) continue;
+      const span = W + 180, x = ((noise(i + 7) * span - down * 26 * (0.6 + 0.4 * noise(i + 3))) % span + span) % span - 90;
+      const s = W * (0.08 + 0.1 * noise(i + 13));
+      g.beginPath();
+      g.ellipse(x, y, s, s * 0.32, 0, 0, Math.PI * 2); g.ellipse(x - s * 0.5, y + s * 0.08, s * 0.55, s * 0.24, 0, 0, Math.PI * 2);
+      g.ellipse(x + s * 0.55, y + s * 0.06, s * 0.6, s * 0.26, 0, 0, Math.PI * 2); g.ellipse(x + s * 0.1, y - s * 0.16, s * 0.45, s * 0.26, 0, 0, Math.PI * 2);
+      g.fill();
+    }
+  }
+  function drawPad(g, W, H, st, gy, cx, pxm, R, tableY) {
+    const dk = COL.dark;
+    g.fillStyle = dk ? "#1d3326" : "#3f6b3a";            // tree line and ground
+    g.beginPath(); g.moveTo(0, gy);
+    for (let x = 0; x <= W + 8; x += 8) g.lineTo(x, gy - 3 - 4 * noise(Math.floor(x / 8) + 200));
+    g.lineTo(W + 8, gy + H); g.lineTo(0, gy + H); g.closePath(); g.fill();
+    const ground = g.createLinearGradient(0, gy, 0, gy + H * 0.2);
+    ground.addColorStop(0, dk ? "#26402d" : "#5b7f45"); ground.addColorStop(1, dk ? "#1a2c20" : "#3e5c33");
+    g.fillStyle = ground; g.fillRect(0, gy, W, H);
+    g.fillStyle = dk ? "#6d6b66" : "#b9b4aa";           // pad deck
+    g.beginPath(); g.moveTo(cx - 0.44 * R, gy - 0.02 * R); g.lineTo(cx + 0.44 * R, gy - 0.02 * R); g.lineTo(cx + 0.6 * R, gy + 0.08 * R); g.lineTo(cx - 0.6 * R, gy + 0.08 * R); g.closePath(); g.fill();
+    g.fillStyle = dk ? "#1b1d20" : "#3a3c3f"; g.fillRect(cx - 0.11 * R, gy - 0.02 * R, 0.22 * R, 0.05 * R);   // flame trench
+    g.fillStyle = dk ? "#4a5057" : "#6b737b";           // launch table, open over the trench
+    g.fillRect(cx - 0.2 * R, tableY, 0.13 * R, gy - 0.02 * R - tableY); g.fillRect(cx + 0.07 * R, tableY, 0.13 * R, gy - 0.02 * R - tableY);
+    g.strokeStyle = dk ? "#7d8790" : "#8c96a0"; g.lineWidth = 1.2;       // lightning masts
+    for (const x of [W * 0.07, W * 0.93]) { g.beginPath(); g.moveTo(x, gy + 1); g.lineTo(x, gy - 105 * pxm); g.stroke(); }
+    const mx = cx - 0.23 * R, mw = 0.05 * R, mh = 68 * pxm; // umbilical mast
+    g.strokeStyle = dk ? "#9aa3ab" : "#6f7880"; g.lineWidth = 1;
+    g.strokeRect(mx - mw / 2, gy - mh, mw, mh);
+    g.beginPath(); for (let y = gy; y > gy - mh + 0.5; y -= mw) { g.moveTo(mx - mw / 2, y); g.lineTo(mx + mw / 2, y - mw); g.moveTo(mx + mw / 2, y); g.lineTo(mx - mw / 2, y - mw); } g.stroke();
+    const swing = st.held || st.abortT != null ? 0 : smooth((st.t - EV.BOOSTER_IGNITION + 0.6) / 1.0);
+    g.lineWidth = 2; g.strokeStyle = dk ? "#b0b8bf" : "#59626a";
+    for (const h of [0.3, 0.62]) {                       // umbilical arms swing back at booster ignition
+      const y = tableY - h * R, x0 = mx + mw / 2, reach = (cx - GEO(R).wc / 2) - x0;
+      const a = swing * 1.2; g.beginPath(); g.moveTo(x0, y); g.lineTo(x0 + reach * Math.cos(a), y - reach * Math.sin(a)); g.stroke();
+    }
+    const heat = Math.max(st.core, st.sep < 0 ? Math.max(st.srbL, st.srbR) * 1.4 : 0) * (st.flying ? clamp01(1 - st.tau / 6) : 1);
+    if (heat > 0.03) {                                   // flame glow in the trench
+      const gl = g.createRadialGradient(cx, gy, 0, cx, gy, 0.6 * R);
+      gl.addColorStop(0, `rgba(255,176,90,${0.55 * clamp01(heat)})`); gl.addColorStop(1, "rgba(255,150,60,0)");
+      g.fillStyle = gl; g.beginPath(); g.arc(cx, gy, 0.6 * R, 0, Math.PI * 2); g.fill();
+    }
+  }
+  function drawSteam(g, st, gy, cx, R) {                 // water-deluge steam and exhaust at the pad
+    if (st.t < 0) return;
+    const stop = st.abortT != null ? st.abortT + 0.6 : st.lift != null ? st.lift + 4 : Infinity;
+    const col = COL.dark ? "208,216,224" : "247,248,250", dt = 0.12, life = 9;
+    for (let n = Math.max(0, Math.floor((st.t - life) / dt)); n <= Math.floor(Math.min(st.t, stop) / dt); n++) {
+      const b = n * dt, age = st.t - b; if (age < 0 || age > life) continue;
+      const boost = b >= EV.BOOSTER_IGNITION, s = n % 2 ? 1 : -1, v = (0.35 + 0.5 * noise(n)) * R * (boost ? 0.55 : 0.28);
+      const x = cx + s * (0.12 * R + v * age * (1 - age / (2.2 * life))), y = gy - 0.02 * R - (0.02 + 0.04 * noise(n + 5)) * R * age;
+      g.fillStyle = `rgba(${col},${(boost ? 0.55 : 0.42) * (1 - age / life)})`;
+      g.beginPath(); g.arc(x, y, (0.03 + (boost ? 0.07 : 0.045) * age) * R, 0, Math.PI * 2); g.fill();
+    }
+  }
+  function drawScene(g, W, H, st, thumb) {
+    const R = H * 0.6, pxm = R / 62, cx = W / 2;
+    const ground0 = H * 0.9, base0 = ground0 - H * 0.03;
+    const riseM = st.flying ? 3.2 * st.tau * st.tau : 0, maxRise = base0 - H * 0.72;
+    const rise = Math.min(riseM * pxm, maxRise), gy = ground0 + riseM * pxm - rise, by = base0 - rise;
+    const [top, bottom] = skyAt(st.alt);
+    const sky = g.createLinearGradient(0, 0, 0, H); sky.addColorStop(0, top); sky.addColorStop(1, bottom);
+    g.fillStyle = sky; g.fillRect(0, 0, W, H);
+    const stars = smooth((st.alt - 28) / 35);
+    if (stars > 0) { g.fillStyle = `rgba(255,255,255,${0.9 * stars})`; for (let i = 0; i < 48; i++) { const s = noise(i + 7) < 0.15 ? 1.6 : 0.9; g.fillRect(noise(i) * W, noise(i + 60) * H * 0.85, s, s); } }
+    const limb = smooth((st.alt - 25) / 55);
+    if (limb > 0) {                                      // the Earth's rim as the rocket climbs
+      const h = limb * H * 0.22, ry = W * 1.6;
+      g.save(); g.globalAlpha = limb; g.beginPath(); g.ellipse(W / 2, H - h + ry, W * 2.4, ry, 0, 0, Math.PI * 2);
+      const eg = g.createLinearGradient(0, H - h, 0, H); eg.addColorStop(0, "#4f95da"); eg.addColorStop(0.25, "#2a64a8"); eg.addColorStop(1, "#163a66");
+      g.fillStyle = eg; g.fill(); g.lineWidth = 2.5; g.strokeStyle = "rgba(170,215,255,0.85)"; g.stroke(); g.restore();
+    }
+    drawClouds(g, W, H, st, by);
+    if (gy - 1.3 * R < H) drawPad(g, W, H, st, gy, cx, pxm, R, gy - (ground0 - base0));
+    const th = st.theta * Math.PI / 180, c = Math.cos(th), s = Math.sin(th);
+    const shake = st.pogo * 0.014 * R * Math.sin(st.t * 2 * Math.PI * 15);
+    const pt = (x, y) => { const yy = y + 0.45 * R + shake; return [cx + x * c - yy * s, by - 0.45 * R + x * s + yy * c]; };
+    const trail = st.flying && st.sep < 0 ? 0.55 * (1 - smooth((st.alt - 8) / 40)) * clamp01((st.srbL + st.srbR) * 2) : 0;
+    if (trail > 0.01) {                                  // booster smoke column below the vehicle
+      const [x1, y1] = pt(-0.08 * R, 0.1 * R), [x2, y2] = pt(0.08 * R, 0.1 * R), col = COL.dark ? "200,208,216" : "245,245,242";
+      const gr = g.createLinearGradient(0, Math.min(y1, y2), 0, H); gr.addColorStop(0, `rgba(${col},${trail})`); gr.addColorStop(1, `rgba(${col},${trail * 0.5})`);
+      g.fillStyle = gr; g.beginPath(); g.moveTo(x1, y1); g.lineTo(x2, y2); g.lineTo(x2 + 0.1 * R, H + 2); g.lineTo(x1 - 0.1 * R, H + 2); g.closePath(); g.fill();
+    }
+    g.save(); g.translate(cx, by - 0.45 * R); g.rotate(th); g.translate(0, 0.45 * R + shake);
+    drawVehicle(g, R, st);
+    g.restore();
+    drawSteam(g, st, gy, cx, R);
+    if (!thumb) drawMarks(g, W, H, st, pt, R);
+  }
+  function drawMarks(g, W, H, st, pt, R) {
+    const { wc, wb, wf, bx } = GEO(R);
+    const RECT = {
+      lox: [-wc / 2, -0.5 * R, wc / 2, -0.27 * R], lh2: [-wc / 2, -0.27 * R, wc / 2, -0.03 * R], avionics: [-wf / 2, -0.71 * R, wf / 2, -0.65 * R],
+      engine: [-0.05 * R, -0.05 * R, 0.05 * R, 0.08 * R], tvc: [-0.04 * R, 0, 0.04 * R, 0.08 * R],
+      boosterL: [-bx - wb / 2, -0.48 * R, -bx + wb / 2, 0.05 * R], boosterR: [bx - wb / 2, -0.48 * R, bx + wb / 2, 0.05 * R],
+      stack: [-bx - wb / 2, -R, bx + wb / 2, 0.08 * R],
+    };
+    const pulse = S.playing ? 0.65 + 0.35 * Math.sin(performance.now() / 240) : 1, used = [];
+    g.font = `600 11.5px ${COL.sans}, sans-serif`; g.textBaseline = "middle";
+    for (const m of st.marks) {
+      const r = RECT[m.region]; if (!r) continue;
+      const [x0, y0, x1, y1] = [r[0] - 3, r[1] - 3, r[2] + 3, r[3] + 3], color = COL.lv[m.level] || COL.lv.CRITICAL;
+      g.save(); g.strokeStyle = color; g.lineWidth = 2; g.shadowColor = color; g.shadowBlur = 8; g.globalAlpha = pulse;
+      g.beginPath(); [[x0, y0], [x1, y0], [x1, y1], [x0, y1]].forEach(([x, y], i) => { const [px, py] = pt(x, y); if (i) g.lineTo(px, py); else g.moveTo(px, py); });
+      g.closePath(); g.stroke(); g.restore();
+      const [ax, ay] = pt(x1, (y0 + y1) / 2), tw = g.measureText(m.label).width;
+      let ly = Math.max(12, Math.min(H - 12, ay)); for (const u of used) if (Math.abs(ly - u) < 20) ly = u + 20; used.push(ly);
+      const lx = Math.min(W - tw - 10, Math.max(ax + 18, W * 0.62));
+      g.strokeStyle = color; g.lineWidth = 1.2; g.beginPath(); g.moveTo(ax + 2, ay); g.lineTo(lx - 7, ly); g.stroke();
+      g.fillStyle = COL.dark ? "rgba(21,25,27,0.9)" : "rgba(252,252,251,0.94)"; roundRect(g, lx - 7, ly - 10, tw + 14, 20, 10); g.fill();
+      g.strokeStyle = color; g.lineWidth = 1.2; g.stroke();
+      g.fillStyle = COL.ink; g.fillText(m.label, lx, ly + 0.5);
+    }
+  }
+  function sceneCaption(st) {
+    const t = st.t;
+    if (st.held) return ["Countdown held.", ` The clock stopped at ${fmtClock(S.L.stop.t)}. The rocket stays safely on the pad while the team looks at the problem.`];
+    if (st.abortT != null && t >= st.abortT) return ["Engine shut down.", " The agent stopped the main engine before the boosters were lit. The rocket stays on the pad, safe."];
+    if (t < EV.POWER_TRANSFER) return ["On the pad.", " The propellant tanks are being pressurized; the white plumes are cold oxygen vapor."];
+    if (t < 0) return ["On the pad, final seconds.", " The rocket now runs on its own batteries, waiting for the go for ignition."];
+    if (t < EV.BOOSTER_IGNITION) return ["Main engine start.", " The core engine builds up to full thrust while the rocket is still clamped to the pad."];
+    if (!st.flying || st.tau < 3) return ["Booster ignition and liftoff.", " Once the two solid boosters are lit they cannot be switched off: the rocket is committed."];
+    if (t < 45) return ["Climbing.", " The rocket rises through the lower atmosphere and starts to lean over toward its orbit."];
+    if (t < 75) return ["Max-Q.", " Around H0 + 60 s the rushing air presses hardest on the structure."];
+    if (t < EV.BOOSTER_TAILOFF) return ["Boosted ascent.", " Boosters and main engine push together; the sky darkens as the air thins."];
+    if (t < EV.BOOSTER_SEP) return ["Boosters burning out.", " Their thrust tails off as the solid propellant runs out."];
+    if (t < EV.BOOSTER_SEP + 6) return ["Booster separation.", " The empty boosters are released and fall away."];
+    return ["Core stage flying on.", " The main engine keeps pushing alone, above most of the atmosphere."];
+  }
+  let capKey = "";
+  function renderScene() {
+    if (!S.d) return;
+    const cv = $("scene"), [w, h, dpr] = sizeCanvas(cv), g = cv.getContext("2d");
+    g.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const st = sceneState(S.L, S.d, S.t);
+    drawScene(g, w / dpr, h / dpr, st, false);
+    const [b, rest] = sceneCaption(st), more = st.marks.length ? " The colored ring shows where the agent sees the problem." : "";
+    if (b + rest + more !== capKey) {
+      capKey = b + rest + more; const cap = $("scene-cap"); cap.textContent = "";
+      cap.append(el("b", "", b), document.createTextNode(rest + more)); cv.setAttribute("aria-label", capKey);
+    }
+    let cur = 0; stageBtns.forEach((s, i) => { if (s.reached && st.t >= s.ts - 0.01) cur = i; });
+    stageBtns.forEach((s, i) => { if (i === cur) s.b.setAttribute("aria-current", "step"); else s.b.removeAttribute("aria-current"); });
+  }
+  const stageBtns = STAGES.map(([ts, short, name]) => {
+    const b = el("button"); b.type = "button"; const cv = el("canvas"); cv.setAttribute("aria-hidden", "true");
+    b.append(cv, el("span", "", short)); $("stages").appendChild(b);
+    const st = { b, cv, ts, name, reached: true };
+    b.addEventListener("click", () => { if (!st.reached) return; S.t = ts; S.playing = false; lastLogCount = -1; render(); });
+    return st;
+  });
+  function drawStages() {
+    if (!S.d) return;
+    for (const s of stageBtns) {
+      const [w, h, dpr] = sizeCanvas(s.cv), g = s.cv.getContext("2d"), stop = S.L.stop;
+      const reached = s === stageBtns[0] || (s.ts <= S.L.t_end + 1e-6 && (stop.type == null || s.ts <= stop.t));
+      s.reached = reached;
+      g.setTransform(dpr, 0, 0, dpr, 0, 0);
+      drawScene(g, w / dpr, h / dpr, sceneState(S.L, S.d, s.ts), true);
+      s.b.classList.toggle("unreached", !reached); s.b.disabled = !reached;
+      s.b.setAttribute("aria-label", reached ? `${s.name}: jump to ${fmtClock(s.ts)}` : `${s.name}: not reached in this launch`);
+      s.b.title = reached ? `${s.name} (${fmtClock(s.ts)})` : `${s.name}: not reached, the launch stopped earlier`;
+      if (!reached) {
+        g.fillStyle = COL.dark ? "rgba(13,16,18,0.55)" : "rgba(252,252,251,0.55)"; g.fillRect(0, 0, w / dpr, h / dpr);
+        g.fillStyle = COL.ink; g.font = `600 9.5px ${COL.sans}, sans-serif`; g.textAlign = "center"; g.textBaseline = "middle";
+        g.fillText("not", w / dpr / 2, h / dpr / 2 - 6); g.fillText("reached", w / dpr / 2, h / dpr / 2 + 6); g.textAlign = "start";
+      }
+    }
+  }
+
+  // ---------- analyst: the local LLM explains the agent's calls and answers questions ----------
+  const AN = { ready: false, label: "", short: "", turns: [], busy: null, queue: [], seen: 0, gen: 0, done: new Set(), auto: store.get("lca-auto") !== "0" };
+  const chat = $("chat");
+  const INSTRUCTIONS = [
+    "You are the flight analyst in a launch control room. You sit next to the launch director and explain, in plain and calm language, what the monitoring agent sees in the telemetry.",
+    "Rules:",
+    "1. Use only the facts in the SITUATION REPORT below. For the trajectory it has only the deviation from the planned trajectory; it has no position, altitude or payload data. If a question needs data that is not in it, say so first; you may then add the indirect evidence the report does have, and call it indirect.",
+    "2. The agent's call comes from its classifiers and graded rules. You explain the call; you never change it or make one of your own. The launch director and flight safety decide.",
+    "3. Quote numbers with their units and times as the report writes them (H0 − 12.0 s, H0 + 46.5 s). Name rules by ID and grade, for example \"rule R-34 (grade B)\".",
+    "4. Say how sure the agent is (probability against its alert threshold, rules satisfied) and what else it could be.",
+    "5. The data is synthetic, from a simulator. Never present it as real launch data.",
+    "6. Write plain text: no headings, no tables, no bold. Use \"- \" only for a short list. Keep answers under 150 words unless asked for more.",
+  ].join("\n");
+  const CHIPS = [
+    ["Explain the situation now", null],
+    ["Why this call?", "Why did the agent make its current call? Walk me through the evidence."],
+    ["What would the fixed limits do?", "What have the fixed limits (redlines) done so far, and would they catch this?"],
+    ["What should the team check next?", "What should the team check or do next, and what would change the call?"],
+    ["Could it be something else?", "Could this be a different failure or a false alarm? What speaks for and against?"],
+  ];
+  const chipBtns = CHIPS.map(([label, q], i) => {
+    const b = el("button", "chip" + (i ? "" : " primary"), label); b.type = "button";
+    b.addEventListener("click", () => (q ? ask("user", q) : ask("now")));
+    $("chips").appendChild(b); return b;
+  });
+  $("ask").addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (AN.busy) { AN.busy.ctl.abort(); return; }
+    const q = $("ask-input").value.trim(); if (!q) return;
+    $("ask-input").value = ""; ask("user", q);
+  });
+  $("auto").checked = AN.auto;
+  $("auto").addEventListener("change", (e) => { AN.auto = e.target.checked; store.set("lca-auto", AN.auto ? "1" : "0"); });
+  function syncControls() { const busy = !!AN.busy; for (const b of chipBtns) b.disabled = busy; $("ask-send").textContent = busy ? "Stop" : "Ask"; }
+  function setAnalyst(ready, label, note, where) {
+    AN.ready = ready; AN.label = label || "LLM"; AN.where = where === "hosted" ? "hosted" : "local"; AN.short = AN.label.replace(/\s+(AWQ|GPTQ|FP8|INT4|W4A16|GGUF)\b.*$/i, "");
+    const m = $("an-model"); m.textContent = ready ? `${AN.short} · ${AN.where}` : "Analyst offline"; m.title = ready ? (AN.where === "hosted" ? `${AN.label}, served by a hosted endpoint; it sees only the synthetic situation report` : `${AN.label}, served on this machine`) : "";
+    m.style.setProperty("--state", css(ready ? "--go" : "--axis"));
+    for (const id of ["chips", "ask", "auto-row"]) $(id).hidden = !ready;
+    const n = $("an-note"); n.textContent = ""; n.hidden = ready;
+    if (!ready && note) note(n);
+    findingKey = ""; if (S.L) renderPanel();
+  }
+  function offlineNote(n) {
+    n.append("The analyst chat needs the demo server and an LLM (see the README). Run ",
+      el("code", "", "python ControlRoom/serve.py"), " and open ", el("code", "", "http://localhost:8765"), ".");
+  }
+  const downNote = (detail) => (n) => {
+    n.append(detail + " ");
+    const b = el("button", "btn", "Check again"); b.type = "button"; b.addEventListener("click", probeAnalyst); n.appendChild(b);
+  };
+  async function probeAnalyst() {
+    if (!SERVER) return setAnalyst(false, "", offlineNote);
+    try {
+      const s = await (await fetch(SERVER.status, { cache: "no-store" })).json();
+      if (s.available) setAnalyst(true, s.label, null, s.where); else setAnalyst(false, s.label, downNote(s.detail || "The LLM is not reachable."));
+    } catch (e) { setAnalyst(false, "", downNote("The dashboard server did not answer.")); }
+  }
+  function analystReset() {
+    AN.gen++; if (AN.busy) AN.busy.ctl.abort();
+    AN.busy = null; AN.queue = []; AN.turns = []; AN.done = new Set(); chat.textContent = ""; syncControls();
+  }
+  function analystTick(alerts) {
+    if (alerts.length > AN.seen && S.playing && AN.ready && AN.auto) {
+      for (const a of alerts.slice(AN.seen)) { const k = a.t + a.mode; if (!AN.done.has(k)) { AN.done.add(k); ask("alert", a); } }
+    }
+    AN.seen = alerts.length;
+  }
+  function follow() { if (chat.scrollHeight - chat.scrollTop - chat.clientHeight < 90) chat.scrollTop = chat.scrollHeight; }
+  function bubble(kind, header) {
+    const m = el("div", "msg " + kind); if (header) m.appendChild(el("div", "who", header));
+    const body = el("div", "body"); m.appendChild(body); chat.appendChild(m); chat.scrollTop = chat.scrollHeight;
+    return { m, body };
+  }
+  function inline(node, s) { s.replace(/^#+\s*/, "").split(/\*\*(.+?)\*\*/g).forEach((x, i) => node.appendChild(i % 2 ? el("b", "", x) : document.createTextNode(x))); }
+  function rich(body, text) {                            // paragraphs and "- " lists; never raw HTML
+    body.textContent = ""; let ul = null, para = [];
+    const flush = () => { if (para.length) { const p = el("p"); inline(p, para.join(" ")); body.appendChild(p); para = []; } };
+    for (const raw of text.split("\n")) {
+      const x = raw.trim(), m = x.match(/^([-*•]|\d+[.)])\s+(.*)$/);
+      if (!x) { flush(); ul = null; continue; }
+      if (m) { flush(); if (!ul) { ul = el("ul"); body.appendChild(ul); } const li = el("li"); inline(li, m[2]); ul.appendChild(li); }
+      else { ul = null; para.push(x); }
+    }
+    flush();
+  }
+  const visible = (s) => s.replace(/<think>[\s\S]*?<\/think>/g, "").replace(/<think>[\s\S]*$/, "").trim();
+  async function readStream(res, onText) {               // OpenAI-style server-sent events
+    const reader = res.body.getReader(), dec = new TextDecoder(); let buf = "", raw = "";
+    for (;;) {
+      const { value, done } = await reader.read(); if (done) break;
+      buf += dec.decode(value, { stream: true }); let nl;
+      while ((nl = buf.indexOf("\n")) >= 0) {
+        const line = buf.slice(0, nl).trim(); buf = buf.slice(nl + 1);
+        if (!line.startsWith("data:")) continue;
+        const data = line.slice(5).trim(); if (!data || data === "[DONE]") continue;
+        let j; try { j = JSON.parse(data); } catch (e) { continue; }
+        if (j.error) throw new Error(j.error.message || "the model server reported an error");
+        const delta = j.choices && j.choices[0] && j.choices[0].delta && j.choices[0].delta.content;
+        if (delta) { raw += delta; const v = visible(raw); if (v) onText(v); }
+      }
+    }
+    return visible(raw);
+  }
+  async function ask(kind, arg) {
+    if (!AN.ready || !S.L) return;
+    if (AN.busy) { if (kind === "alert") AN.queue.push(arg); return; }
+    const gen = AN.gen, L = S.L, t = kind === "alert" ? arg.t : Math.min(S.t, L.t_end);
+    let prompt, header, ub = null;
+    if (kind === "alert") {
+      prompt = `The agent has just raised ${arg.level} for ${CLS[arg.mode].display} at ${hT(arg.t)}. Explain it to the launch director in at most 120 words, in three short paragraphs: what is happening, why the agent believes it (the key numbers and rules), and what to watch or do next.`;
+      header = `${arg.level} at ${hT(arg.t)} · ${AN.short}`;
+    } else if (kind === "now") {
+      prompt = activeAlerts(t).length
+        ? `Summarize the situation at ${hT(t)} for the launch director in at most 120 words: what the agent has found, how sure it is, and what to watch next.`
+        : `Give the launch director a short status at ${hT(t)} in at most 80 words: the phase, whether anything looks unusual, and what comes next.`;
+      header = `Status at ${hT(t)} · ${AN.short}`;
+    } else {
+      ub = bubble("user"); ub.body.textContent = arg; prompt = arg; header = `${hT(t)} · ${AN.short}`;
+    }
+    AN.turns.push({ role: "user", content: `[Replay time ${hT(t)}] ${prompt}` });
+    const b = bubble("bot", header); b.body.classList.add("pending"); b.body.textContent = "Thinking…"; b.m.setAttribute("aria-busy", "true");
+    const ctl = new AbortController(); AN.busy = { ctl }; syncControls();
+    const history = AN.turns.slice(-8); while (history.length && history[0].role !== "user") history.shift();
+    let text = "";
+    try {
+      const res = await fetch(SERVER.chat, {
+        method: "POST", headers: { "Content-Type": "application/json" }, signal: ctl.signal,
+        body: JSON.stringify({ messages: [{ role: "system", content: INSTRUCTIONS + "\n\n" + report(t) }, ...history] }),
+      });
+      if (!res.ok) { let msg = `HTTP ${res.status}`; try { msg = (await res.json()).error || msg; } catch (e) { /* not JSON */ } throw new Error(msg); }
+      text = await readStream(res, (x) => { text = x; if (gen !== AN.gen) return; b.body.classList.remove("pending"); rich(b.body, x); follow(); });
+      if (!text) throw new Error("the model returned no text");
+      if (gen === AN.gen) AN.turns.push({ role: "assistant", content: text });
+    } catch (e) {
+      if (gen !== AN.gen) return;                        // the chat was cleared meanwhile
+      b.body.classList.remove("pending");
+      if (e.name === "AbortError") {
+        if (text) { AN.turns.push({ role: "assistant", content: text }); b.m.appendChild(el("div", "hint", "Stopped.")); } else { AN.turns.pop(); b.m.remove(); }
+      } else {
+        AN.turns.pop(); if (!text) b.body.textContent = "";
+        const err = el("div", "err", `No answer from the local LLM: ${e.message}.`), again = el("button", "btn", "Try again"); again.type = "button";
+        again.addEventListener("click", () => { b.m.remove(); if (ub) ub.m.remove(); ask(kind, arg); });
+        err.appendChild(again); b.m.appendChild(err);
+      }
+    } finally {
+      b.m.removeAttribute("aria-busy");
+      if (gen === AN.gen) { AN.busy = null; syncControls(); if (AN.queue.length) ask("alert", AN.queue.shift()); }
+    }
+  }
+  // The situation report: everything the analyst may use, at replay time t, as plain text.
+  const hT = (t) => `H0 ${t < 0 ? "−" : "+"} ${Math.abs(t).toFixed(1)} s`;
+  const num = (v) => { if (!isFinite(v)) return "n/a"; const a = Math.abs(v); return a >= 100 ? v.toFixed(0) : a >= 10 ? v.toFixed(1) : a >= 1 ? v.toFixed(2) : v.toFixed(3); };
+  const unitTxt = (u) => (u === "count" ? " samples" : ["fraction", "ratio", "r"].includes(u) ? "" : " " + u);
+  function snapAt(t) { const sn = S.L.snap; let j = -1; sn.t.forEach((x, k) => { if (x <= t + 1e-6) j = k; }); return j < 0 ? null : { t: sn.t[j], f: sn.f[j] }; }
+  function report(t) {
+    const L = S.L, tt = Math.min(t, L.t_end), i = tickIndex(tt), FAC = DATA.factory, out = [], add = (...xs) => out.push(...xs);
+    const alerts = activeAlerts(tt), alerted = new Set(alerts.map((a) => a.mode)), revealed = L.kind === "showcase" || REVEALED.has(L.id);
+    add("SITUATION REPORT", "Synthetic simulation of a notional heavy launcher (cryogenic core stage, two solid boosters). Not data from a real vehicle; all values are illustrative.");
+    add(L.kind === "showcase" ? `Launch: showcase story "${L.title}". ${L.summary}` : `Launch: ${L.title}, one of the 500 held-out test launches the agent never saw.${revealed ? "" : " Its ground truth is hidden from you and from the viewer."}`);
+    const phase = L.stop.type === "abort" && tt >= L.stop.t ? "launch aborted, vehicle on the pad" : tt < 0 ? "final countdown"
+      : tt < EV.BOOSTER_IGNITION ? "engine start, vehicle clamped to the pad" : tt < EV.BOOSTER_SEP ? "boosted ascent" : "core stage flight after booster separation";
+    add(`Replay time: ${hT(tt)} (${phase}).`);
+    if (L.stop.type === "hold" && tt >= L.stop.t) add(`The countdown was HELD at ${hT(L.stop.t)} on the agent's call: the clock is stopped and the engine was never ignited; telemetry keeps arriving (${(tt - L.stop.t).toFixed(1)} s since the hold).`);
+    if (L.stop.type === "abort" && tt >= L.stop.t) add(`The agent called ABORT at ${hT(L.stop.t)}: the core engine was shut down and the boosters were never ignited. The vehicle is on the pad. From then on neither the agent nor the fixed limits raise new alarms: what they would see is the shutdown itself.`);
+    if (L.liftoff != null && tt >= L.liftoff) add(`Liftoff at ${hT(L.liftoff)}.`);
+    add("Timeline: tank pressurization from H0 − 58 s; switch to onboard power H0 − 30 s; last GO/HOLD gate H0 − 1 s; core engine ignition H0; last abort point H0 + 6.5 s; booster ignition and liftoff about H0 + 7 s; max-Q H0 + 60 s; booster separation H0 + 136 s; the window ends at H0 + 150 s.");
+    const call = CALLS[S.d.calls[i]], trips = L.events.filter((e) => e.kind === "redline" && e.t <= tt + 1e-6);
+    add(`Agent call now: ${CALL_STYLE[call][0]} (${CALL_WHY[call]})`);
+    add(`Fixed-limit monitor now: ${RED_STYLE[S.d.red[i]][0]}. ${trips.length ? "Limits tripped: " + trips.map((e) => `${e.text} at ${hT(e.t)} (${e.call})`).join("; ") + "." : "No limit exceeded so far."}`);
+    add("", "HOW THE AGENT DECIDES: one gradient-boosted classifier per failure mode scores " + DATA.features.length + " telemetry features every 0.5 s, using only data received so far. An alert needs the probability above that mode's threshold on 2 consecutive checks; the thresholds allow at most 0.15 % false alarms per mode on normal launches. Calls: in the countdown GO or HOLD; during engine start ENGINE START, then COMMIT at H0 + 6.5 s or ABORT (engine shutdown before the boosters light); in flight NOMINAL, ADVISORY, WARNING or CRITICAL for the mission director and flight safety (an uncrewed launcher cannot abort in flight). Rules are clear-text thresholds the factory discovered and graded A (sensitivity and specificity at least 0.80) or B (at least 0.60).");
+    add("", alerts.length ? "ALERTS CONFIRMED SO FAR:" : "ALERTS: none so far.");
+    alerts.forEach((a, n) => {
+      const c = CLS[a.mode], later = L.events.filter((e) => e.kind === "rule" && e.mode === a.mode && e.t <= tt + 1e-6);
+      add(`${n + 1}. ${a.level} at ${hT(a.t)}: ${c.display} (probability ${a.p.toFixed(2)} at confirmation; alert threshold ${c.threshold.toFixed(2)}).`);
+      for (const x of a.evidence) add(`   Evidence at the alert: ${evidenceText(x)}.`);
+      for (const r of a.rules) add(`   Rule satisfied at the alert: ${r.id} (grade ${r.grade}): ${r.sentence}.`);
+      for (const e of later) add(`   Rule satisfied later, at ${hT(e.t)}: ${e.rule.id} (grade ${e.rule.grade}): ${e.rule.sentence}.`);
+      if (!a.rules.length && !later.length) add(a.has_rules ? "   No graded rule for this mode could be checked yet; the call rests on the classifier." : "   No single-feature rule reaches grade B for this mode (a known gap); the call rests on the classifier.");
+      for (const gn of a.graph) add(`   ${gn}.`);
+    });
+    add("", "FAILURE-MODE PROBABILITIES NOW (probability / alert threshold):");
+    ORDER.forEach((key, j) => {
+      const c = CLS[key], p = S.d.probs[i * ORDER.length + j] / 250;
+      add(`- ${c.display}: ${p.toFixed(2)} / ${c.threshold.toFixed(2)}${alerted.has(key) ? " (alert confirmed)" : p >= c.threshold ? " (above threshold, not yet confirmed)" : ""}`);
+    });
+    add("", "TELEMETRY NOW (value; range of the middle 90 % of 120 normal launches at this moment):");
+    for (const s of strips) {
+      const v = valueAt(s.i, tt), k = binOf(tt), lo = band[s.i].lo[k], hi = band[s.i].hi[k];
+      const flag = isFinite(v) && isFinite(lo) ? (v > hi ? " ABOVE normal" : v < lo ? " BELOW normal" : "") : "";
+      const cor = DATA.corridor && s.c.id === DATA.corridor.channel ? DATA.corridor.km[k] : null;
+      const corNote = cor == null ? "" : `; flight-safety corridor ${num(cor)} ${s.c.unit}${isFinite(v) && v > cor ? ", BEYOND it" : ""}`;
+      add(`- ${s.c.label}: ${fmtV(v, s.c.unit)} (normal ${num(lo)} to ${num(hi)} ${s.c.unit}${corNote})${flag}`);
+    }
+    const sn = snapAt(tt), odd = sn ? sn.f.filter(([, v, mu, sd]) => Math.abs(v - mu) / sd >= 2.5) : [];
+    if (sn) {
+      add("", `MOST UNUSUAL FEATURES at ${hT(sn.t)} (value; mean ± standard deviation of normal launches at that time; z = distance in standard deviations; with ${DATA.features.length} features, |z| below 3 is ordinary scatter):`);
+      if (!odd.length) add("- none: every feature is within 2.5 standard deviations of the normal launches.");
+      for (const [fi, v, mu, sd] of odd) { const F = DATA.features[fi], u = unitTxt(F.unit); add(`- ${F.label}: ${num(v)}${u} (normal ${num(mu)} ± ${num(sd)}${u}; z = ${((v - mu) / sd).toFixed(1)})`); }
+    }
+    add("", "EVENT LOG SO FAR:");
+    for (const e of L.events.filter((x) => x.t <= tt + 1e-6 && x.kind !== "call")) add(`- ${hT(e.t)}: ${eventText(e)}`);
+    if (alerted.size) {
+      add("", "ALL GRADED RULES FOR THE ALERTED FAILURE MODES:");
+      for (const r of FAC.rules.filter((x) => alerted.has(x.mode))) add(`- ${r.id} (grade ${r.grade}; sensitivity ${r.sens.toFixed(2)}, specificity ${r.spec.toFixed(3)}): ${r.sentence}`);
+    }
+    for (const m of FAC.mutex) add("", `EXCLUSION RULE (grade ${m.grade}): ${m.sentence}.`);
+    add("", "FAILURE MODES THE AGENT WATCHES (phase: call when detected):");
+    for (const c of CLASSES) add(`- ${c.display} (${c.phase.replace(/_/g, " ")}: ${c.call}): ${c.description}`);
+    add("", "FIXED LIMITS (our own simple limit set, not real launch-commit criteria):");
+    for (const r of DATA.redlines) add(`- ${r.text}, from ${hT(r.from)} to ${hT(r.to)}: ${r.call}`);
+    if (revealed) {
+      add("", L.kind === "showcase" ? "GROUND TRUTH (this showcase story forces these failures):" : "GROUND TRUTH (revealed by the viewer):");
+      if (!L.truth.length) add("- none: a normal launch.");
+      for (const x of L.truth) add(`- ${x.display}, severity ${x.severity.toFixed(2)} on a 0-1 scale, visible in the telemetry from ${hT(x.manifest)}.`);
+    }
+    const P = DATA.performance, fc = P.false_calls_on_nominal_launches;
+    add("", `TRACK RECORD on ${P.n_launches} held-out launches (agent vs fixed limits): countdown failures held before ignition ${pct(P.countdown_failures_caught_before_ignition.agent)} vs ${pct(P.countdown_failures_caught_before_ignition.redline)}; engine-start failures stopped before booster ignition ${pct(P.start_failures_caught_before_booster_ignition.agent)} vs ${pct(P.start_failures_caught_before_booster_ignition.redline)}; false holds per 1,000 normal launches ${fc.agent_holds_per_1000.toFixed(0)} vs ${fc.redline_holds_per_1000.toFixed(0)}.`);
+    return out.join("\n");
+  }
+
+  // ---------- replay ----------
+  function renderStrips() { for (const s of strips) drawStrip(s); }
+  function renderReadouts() {
+    const t = S.hover != null ? S.hover : Math.min(S.t, S.L ? S.L.t_end : S.t);
+    for (const s of strips) s.v.textContent = (S.hover != null ? fmtT(t) + "  " : "") + fmtV(valueAt(s.i, Math.min(t, S.L.t_end)), s.c.unit);
+  }
+  function renderClock() {
+    const t = Math.min(S.t, S.L.t_end); const held = S.L.stop.type === "hold" && t >= S.L.stop.t;
+    $("clock").textContent = fmtClock(held ? S.L.stop.t : t);
+    let ph = phaseOf(t); if (held) ph = `Countdown held · clock stopped for ${(t - S.L.stop.t).toFixed(1)} s`; if (S.L.stop.type === "abort" && t >= S.L.stop.t) ph = "Launch aborted";
+    $("phase").textContent = ph; $("scrub").value = String(t);
+    $("play").textContent = S.playing ? "Pause" : S.t >= S.L.t_end ? "Replay" : "Play";
+  }
+  function render() { renderClock(); renderStrips(); renderReadouts(); renderPanel(); renderScene(); }
+  function setMarks() {
+    const m = $("marks"); m.textContent = "";
+    for (const [t, lab] of EVT_MARKS) { if (t > S.L.t_end) continue; const s = el("span", "", lab); s.style.left = `${((t - T0) / (T1 - T0)) * 100}%`; m.appendChild(s); }
+  }
+  function fromStart() { S.t = T0; lastLogCount = -1; analystReset(); AN.seen = 0; }
+  function load(id, autoplay) {
+    const L = LAUNCH.get(id); if (!L) return;
+    S.L = L; S.d = decoded(L); widen(S.d); S.revealed = REVEALED.has(id); lastLogCount = -1; findingKey = "";
+    followSelector();
+    sel.value = L.kind === "showcase" ? id : "";
+    $("story-title").textContent = L.title; $("story-summary").textContent = L.summary; $("story-lay").textContent = "In plain words: " + layFor(L);
+    $("scrub").max = String(L.t_end);
+    setMarks(); renderTruth(); analystReset();
+    S.t = autoplay ? T0 : L.t_end; S.playing = !!autoplay; S.last = performance.now();
+    AN.seen = activeAlerts(S.t).length;
+    drawStages(); render(); if (S.playing) requestAnimationFrame(loop);
+  }
+  function loop(now) {
+    if (!S.playing) return;
+    const dt = Math.min(0.1, (now - S.last) / 1000); S.last = now;
+    S.t = Math.min(S.L.t_end, S.t + dt * S.speed);
+    if (S.t >= S.L.t_end) S.playing = false;
+    render(); if (S.playing) requestAnimationFrame(loop);
+  }
+  $("play").addEventListener("click", () => {
+    if (S.t >= S.L.t_end) fromStart();
+    S.playing = !S.playing; S.last = performance.now(); render(); if (S.playing) requestAnimationFrame(loop);
+  });
+  $("restart").addEventListener("click", () => { fromStart(); S.playing = true; S.last = performance.now(); render(); requestAnimationFrame(loop); });
+  for (const b of document.querySelectorAll(".seg button")) b.addEventListener("click", () => {
+    S.speed = Number(b.dataset.speed); for (const o of document.querySelectorAll(".seg button")) o.setAttribute("aria-pressed", String(o === b));
+  });
+  $("scrub").addEventListener("input", (e) => { S.t = Number(e.target.value); S.playing = false; lastLogCount = -1; render(); });
+  window.addEventListener("resize", () => { renderStrips(); drawAxis(); renderScene(); drawStages(); });
+  const retheme = () => { readColors(); drawAxis(); drawStages(); render(); };
+  if (window.matchMedia) window.matchMedia("(prefers-color-scheme: dark)").addEventListener?.("change", retheme);
+  new MutationObserver(retheme).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+
+  // ---------- unseen launches: pick a failure type, then one of its held-out launches ----------
+  // The page carries an index of all 500 held-out launches (truth and the agent's result) and one
+  // replay per group; the demo server (serve.py) replays any other one when it is picked.
+  const HO = DATA.holdout, grpTest = $("grp-test"), selNote = el("div", "sel-note");
+  selNote.setAttribute("aria-live", "polite");
+  const REPLAYS = !!(SERVER && SERVER.launch);
+  const sevWord = (s) => (s < 0.2 ? "mild" : s < 0.5 ? "medium" : "strong");
+  const callVar = (call) => `var(${CALL_STYLE[call][1]})`;
+  const CASES = HO.seeds.map((seed, n) => {
+    const truth = HO.truth[n].map(([j, sev, vis]) => ({ mode: ORDER[j], sev, vis }));
+    const alerts = HO.alerts[n].map(([j, t, k]) => ({ mode: ORDER[j], t, call: CALLS[k] }));
+    const stop = HO.stops[n] ? { type: HO.stops[n][0], t: HO.stops[n][1] } : null;
+    const at = new Map(alerts.map((a) => [a.mode, a]));
+    // caught: the agent alerted on it; unreached: the launch was stopped before it showed
+    const fate = truth.map((x) => (at.has(x.mode) ? "caught" : stop && x.vis != null && x.vis > stop.t ? "unreached" : "missed"));
+    return {
+      seed, id: `case-${seed}`, name: `#${String(seed % 100000).padStart(4, "0")}`,
+      group: !truth.length ? "NOMINAL" : truth.length > 1 ? "MULTI" : truth[0].mode,
+      truth, alerts, stop, at, fate, sev: Math.max(0, ...truth.map((x) => x.sev)),
+      caught: fate.filter((f) => f === "caught").length, complete: fate.every((f) => f !== "missed"),
+      wrong: alerts.filter((a) => !truth.some((x) => x.mode === a.mode)),
+    };
+  });
+  const CASE = new Map(CASES.map((c) => [c.seed, c]));
+  const GROUPS = [["NOMINAL", "Normal (no failure)"], ...ORDER.map((k) => [k, CLS[k].display]), ["MULTI", "Two or more failures"]];
+  const groupName = (g) => GROUPS.find(([k]) => k === g)[1];
+  function casesOf(g) {
+    const cs = CASES.filter((c) => c.group === g);
+    if (g === "NOMINAL") return cs.sort((a, b) => (b.alerts.length > 0) - (a.alerts.length > 0) || a.seed - b.seed);   // false alarms first
+    return cs.sort((a, b) => a.sev - b.sev || a.seed - b.seed);                                                      // mild to strong
+  }
+  const SEL = { group: null };
+  const playable = (c) => REPLAYS || LAUNCH.has(c.id);
+
+  function groupFacts(g, cs) {
+    const n = cs.length;
+    if (g === "NOMINAL") { const q = cs.filter((c) => !c.alerts.length).length; return `${n} held-out launches with no failure. The agent stayed quiet on ${q}${n - q ? `; ${n - q} false alarm${n - q > 1 ? "s" : ""}` : ""}.`; }
+    if (g === "MULTI") return `${n} held-out launches with two or more failures at once. The agent caught every failure that showed before it stopped the launch in ${cs.filter((c) => c.complete).length} of them.`;
+    return `${n} held-out launches with only this failure, mild to strong. The agent caught ${cs.filter((c) => c.caught).length} of them.`;
+  }
+  function caseResult(c) {        // [text, color] for the second line of a case button
+    if (c.group === "NOMINAL") {
+      if (!c.alerts.length) return ["quiet: no alert", "var(--go)"];
+      const a = c.alerts[0];
+      return [`false ${a.call} at ${hT(a.t)}`, callVar(a.call)];
+    }
+    if (c.group === "MULTI") {
+      const first = c.alerts[0];
+      return [`caught ${c.caught} of ${c.truth.length}${first ? ` · ${first.call} at ${hT(first.t)}` : ""}`, first ? callVar(first.call) : "var(--axis)"];
+    }
+    const a = c.at.get(c.truth[0].mode), w = c.wrong[0];
+    if (a) return [`caught: ${a.call} at ${hT(a.t)}`, callVar(a.call)];
+    if (w) return [`false ${w.call}: ${CLS[w.mode].display}`, callVar(w.call)];
+    if (c.fate[0] === "unreached") return ["stopped before it showed", "var(--axis)"];
+    return ["missed: no alert", "var(--axis)"];
+  }
+  function caseCard(c) {
+    const lines = [];
+    if (!c.truth.length) lines.push("No failure injected.");
+    c.truth.forEach((x, k) => {
+      let s = `${CLS[x.mode].display}, severity ${x.sev.toFixed(2)} (${sevWord(x.sev)}), visible in the telemetry from ${x.vis == null ? "–" : hT(x.vis)}. `;
+      if (c.fate[k] === "caught") {
+        const a = c.at.get(x.mode), dt = x.vis == null ? null : a.t - x.vis;
+        s += `The agent called ${a.call} at ${hT(a.t)}${dt == null ? "" : `, ${Math.abs(dt).toFixed(1)} s ${dt >= 0 ? "after" : "before"} it became visible`}.`;
+      } else if (c.fate[k] === "unreached") s += "The launch was stopped before it showed.";
+      else s += "The agent did not alert on it.";
+      lines.push(s);
+    });
+    if (c.wrong.length) lines.push(`False alarm: ${c.wrong.map((a) => `${CLS[a.mode].display} (${a.call}) at ${hT(a.t)}`).join("; ")}.`);
+    else if (!c.truth.length) lines.push("The agent stayed quiet, as it should.");
+    if (c.stop) lines.push(c.stop.type === "hold" ? `The countdown was held at ${hT(c.stop.t)}.` : `The engine was shut down at ${hT(c.stop.t)}, before the boosters lit.`);
+    if (!playable(c)) lines.push("Opened as a file, the page cannot replay it: that needs the demo server (python ControlRoom/serve.py).");
+    return ["Held-out launch · the agent never saw it", `Unseen launch ${c.name}`, lines];
+  }
+  function twoLine(b, left1, right1, left2, right2) {
+    b.classList.add("two");
+    const r1 = el("span", "r1"), r2 = el("span", "r2");
+    r1.append(left1, right1 || ""); r2.append(left2, right2 || "");
+    b.append(r1, r2);
+  }
+  function renderSelector(focus) {
+    card.hidden = true;
+    grpTest.textContent = "";
+    grpTest.appendChild(el("div", "eyebrow", "Unseen test launches"));
+    if (!SEL.group) {
+      grpTest.appendChild(el("div", "sel-hint", `${CASES.length} launches the agent never saw. Pick a failure type, then a launch.`));
+      const box = el("div", "types");
+      for (const [g, label] of GROUPS) {
+        const cs = casesOf(g); if (!cs.length) continue;
+        const b = el("button"); b.type = "button"; b.dataset.group = g;
+        b.append(el("span", "", label), el("span", "n", String(cs.length)));
+        b.addEventListener("click", (e) => { SEL.group = g; renderSelector(e.detail === 0 ? "back" : null); });   // detail 0: keyboard
+        hoverCard(b, () => ["Failure type · in plain words", label,
+          [g === "NOMINAL" ? "The launch goes as planned: no failure was injected." : g === "MULTI" ? "Two or more of the twelve failures in the same launch." : CLS[g].lay, groupFacts(g, cs)]]);
+        box.appendChild(b);
+      }
+      const s = el("button"); s.type = "button"; s.dataset.surprise = "1";
+      twoLine(s, el("span", "", "Surprise me"), el("span", "n", "?"), el("span", "", "a random unseen launch, truth hidden"));
+      s.addEventListener("click", surprise);
+      hoverCard(s, () => ["Blind test", "Surprise me", [`A random launch from all ${REPLAYS ? CASES.length : "built-in"} held-out launches${REPLAYS ? "" : " (opened as a file, the page has one per type)"}. Its truth stays hidden: watch the agent, then reveal what really happened.`]]);
+      box.appendChild(s);
+      grpTest.appendChild(box);
+      if (focus) { const f = box.querySelector(`[data-group="${focus}"]`); if (f) f.focus({ preventScroll: true }); }
+    } else {
+      const g = SEL.group, cs = casesOf(g);
+      const back = el("button", "", "← All failure types"); back.type = "button";
+      back.addEventListener("click", (e) => { SEL.group = null; renderSelector(e.detail === 0 ? g : null); });
+      grpTest.append(back, el("div", "gname", groupName(g)), el("div", "sel-hint", groupFacts(g, cs)));
+      const box = el("div", "cases");
+      for (const c of cs) {
+        const b = el("button"); b.type = "button"; b.dataset.id = c.id; b.setAttribute("aria-pressed", "false");
+        const [res, color] = caseResult(c), rs = el("span", "res", res); rs.style.setProperty("--state", color);
+        const right = g === "NOMINAL" ? "" : el("span", "n", g === "MULTI" ? `${c.truth.length} failures` : `${sevWord(c.sev)} ${c.sev.toFixed(2)}`);
+        twoLine(b, el("span", "mono", c.name), right, rs, !REPLAYS && LAUNCH.has(c.id) ? el("span", "built", "built in") : "");
+        if (!playable(c)) b.setAttribute("aria-disabled", "true");
+        b.addEventListener("click", () => openCase(c.seed, true));
+        hoverCard(b, () => caseCard(c));
+        box.appendChild(b);
+      }
+      grpTest.appendChild(box);
+      if (focus === "back") back.focus({ preventScroll: true });
+    }
+    grpTest.appendChild(selNote);
+    markPressed();
+  }
+  function markPressed() {
+    for (const b of document.querySelectorAll(".picker button[data-id]")) {
+      const on = !!S.L && b.dataset.id === S.L.id; b.setAttribute("aria-pressed", String(on));
+      const box = b.parentElement;
+      if (on && box.classList.contains("cases") && (b.offsetTop < box.scrollTop || b.offsetTop + b.offsetHeight > box.scrollTop + box.clientHeight))
+        box.scrollTop = b.offsetTop - (box.clientHeight - b.offsetHeight) / 2;
+    }
+  }
+  // A held-out launch whose truth is shown puts the selector on its group.
+  function followSelector() {
+    const c = S.L && S.L.kind === "test" && REVEALED.has(S.L.id) ? CASE.get(S.L.seed) : null;
+    if (c && SEL.group !== c.group) { SEL.group = c.group; renderSelector(); } else markPressed();
+  }
+  let wanted = 0;
+  async function openCase(seed, reveal, autoplay = true) {
+    const c = CASE.get(seed); if (!c) return;
+    const token = ++wanted;
+    if (reveal) REVEALED.add(c.id); else REVEALED.delete(c.id);
+    selNote.textContent = "";
+    if (!LAUNCH.has(c.id)) {
+      if (!REPLAYS) { selNote.textContent = `Opened as a file, the page plays only its built-in launches. ${c.name} needs the demo server: python ControlRoom/serve.py.`; return; }
+      selNote.textContent = `Replaying unseen launch ${c.name} …`;
+      try {
+        const res = await fetch(SERVER.launch + seed, { cache: "no-store" });
+        const body = await res.json().catch(() => ({}));
+        if (!res.ok || !body.agent) throw new Error(body.error || `the server answered ${res.status}`);
+        LAUNCH.set(body.id, body);
+      } catch (e) {
+        if (token === wanted) selNote.textContent = `Could not replay ${c.name}: ${e.message}`;
+        return;
+      }
+      if (token !== wanted) return;
+      selNote.textContent = "";
+    }
+    load(c.id, autoplay);
+  }
+  function surprise() {
+    const pool = CASES.filter(playable);
+    let c = pool[Math.floor(Math.random() * pool.length)];
+    if (pool.length > 1) while (S.L && c.id === S.L.id) c = pool[Math.floor(Math.random() * pool.length)];
+    openCase(c.seed, false);
+  }
+
+  // ---------- tabs ----------
+  const TABS = [["tab-room", "view-room"], ["tab-factory", "view-factory"], ["tab-perf", "view-perf"], ["tab-universe", "view-universe"]];
+  function showTab(tid) {
+    for (const [t, v] of TABS) { const on = t === tid; $(t).setAttribute("aria-selected", String(on)); $(v).classList.toggle("on", on); }
+    if (tid === "tab-room") { renderStrips(); drawAxis(); }
+    if (tid === "tab-universe") openUniverse();
+    try { history.replaceState(null, "", "#" + tid.slice(4)); } catch (e) { /* ignore */ }
+  }
+  for (const [t] of TABS) $(t).addEventListener("click", () => showTab(t));
+
+  // ---------- factory tab ----------
+  const F = DATA.factory;
+  (function flow() {
+    const steps = [
+      ["Layer 1", "Taxonomy", `${F.taxonomy.length} classes from ${F.taxonomy_meta.launch_count.toLocaleString("en")} simulated launches, each with at least ${F.taxonomy_meta.min_positive} examples.`],
+      ["Layer 2", "Rules", `${F.rules.length} clear-text rules graded A or B, ${F.mutex.length} exclusion rule. Platform discovery code, unchanged.`],
+      ["Layer 3", "Knowledge graph", `${Object.values(F.kg.meta.node_counts).reduce((a, b) => a + b, 0)} nodes, ${F.kg.meta.edge_count} edges, including a coupling found without being told.`],
+      ["Layer 4", "Models", `${CLASSES.length} gradient-boosted classifiers, macro F1 ${F.end_macro.f1.toFixed(2)} on ${F.split.n_holdout} held-out launches.`],
+    ];
+    for (const [n, h, d] of steps) { const s = el("div", "panel step"); s.append(el("div", "n", n), el("div", "h", h), el("div", "d", d)); $("flow").appendChild(s); }
+  })();
+  (function taxonomy() {
+    $("tax-sub").textContent = `Failure modes injected into the campaign at a 6 % base rate each (oversampled on purpose). Median severity is on a 0-1 scale; most real anomalies are mild, and so are most of these.`;
+    const t = $("tax-table"); const hr = el("tr");
+    [["Failure mode"], ["Category"], ["Phase"], ["Call"], ["Launches", "num"], ["Share", "num"], ["Median severity", "num"]].forEach(([h, c]) => hr.appendChild(el("th", c || "", h)));
+    t.appendChild(hr);
+    const PH = { countdown: "Countdown", engine_start: "Engine start", flight: "Flight", engine_start_or_flight: "Start or flight", all: "–" };
+    for (const d of F.taxonomy) {
+      const r = el("tr"); const n = el("td"); n.appendChild(el("div", "", d.display)); const dd = el("div", "hint", d.description); n.appendChild(dd);
+      r.append(n, el("td", "", d.category), el("td", "", PH[d.phase] || d.phase), el("td", "", d.call), el("td", "num", d.count.toLocaleString("en")), el("td", "num", pct(d.prevalence)), el("td", "num", d.severity == null ? "–" : d.severity.toFixed(2)));
+      t.appendChild(r);
+    }
+  })();
+  (function rules() {
+    $("rules-sub").textContent = `Found by the platform's discovery code on ${F.rules_meta.source_launches.toLocaleString("en")} training launches: correlation, threshold search, evidence grading (A: sensitivity and specificity ≥ 0.80; B: ≥ 0.60), then validation on the ${F.split.n_holdout} held-out launches.`;
+    const f = $("rule-filter"); f.appendChild(Object.assign(el("option", "", "All failure modes"), { value: "" }));
+    for (const c of CLASSES) { const o = el("option", "", c.display); o.value = c.mode; f.appendChild(o); }
+    function draw() {
+      const t = $("rules-table"); t.textContent = ""; const hr = el("tr");
+      [["Rule"], ["Clear-text rule"], ["Grade"], ["Sens.", "num"], ["Spec.", "num"], ["Holdout F1", "num"]].forEach(([h, c]) => hr.appendChild(el("th", c || "", h)));
+      t.appendChild(hr);
+      for (const r of F.rules.filter((x) => !f.value || x.mode === f.value)) {
+        const tr = el("tr"); const g = el("td"); g.appendChild(el("span", "grade", r.grade));
+        tr.append(el("td", "mono", r.id), el("td", "", r.sentence), g, el("td", "num", r.sens.toFixed(2)), el("td", "num", r.spec.toFixed(3)), el("td", "num", r.holdout_f1 == null ? "–" : r.holdout_f1.toFixed(2)));
+        t.appendChild(tr);
+      }
+      for (const m of F.mutex.filter((x) => !f.value || x.members.includes(f.value))) {
+        const tr = el("tr"); const g = el("td"); g.appendChild(el("span", "grade", m.grade));
+        tr.append(el("td", "mono", "Exclusion"), el("td", "", m.sentence), g, el("td", "num", "–"), el("td", "num", "–"), el("td", "num", "–")); t.appendChild(tr);
+      }
+    }
+    f.addEventListener("change", draw); draw();
+    const gaps = F.rules_meta.layer4_gap.map((k) => CLS[k].display);
+    $("rules-gap").textContent = gaps.length ? `No single-feature rule reaches grade B for ${gaps.join(" and ")}. The factory flags these as Layer 4 gaps: only the multivariate model covers them, and that is stated in every explanation it gives.` : "";
+  })();
+  (function graph() {
+    const N = F.kg.nodes; const W = 1100, top = 40, rowH = 30;
+    const cols = [["Subsystems", N.subsystems, 16, 215], ["Channels", N.channels, 262, 190],
+                  ["Failure modes", N.failure_modes, 520, 205], ["Calls", N.actions, 1000, 80]];
+    const maxRows = Math.max(...cols.map((c) => c[1].length));
+    const H = top + maxRows * rowH + 20;
+    const pos = {}; const ns = "http://www.w3.org/2000/svg";
+    const svg = document.createElementNS(ns, "svg"); svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("role", "img");
+    svg.setAttribute("aria-label", "Knowledge graph from subsystems to channels, failure modes and calls");
+    const mk = (tag, attrs) => { const e = document.createElementNS(ns, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); return e; };
+    for (const [name, list, x, lw] of cols) {
+      const off = top + ((maxRows - list.length) * rowH) / 2;
+      const th = mk("text", { x, y: 18, class: "colh" }); th.textContent = name; svg.appendChild(th);
+      list.forEach((n, i) => { pos[n.id] = { x, y: off + i * rowH + 10, right: x + 12 + lw }; });
+    }
+    const gE = mk("g", {}); svg.appendChild(gE); const gN = mk("g", {}); svg.appendChild(gN); const gL = mk("g", {}); svg.appendChild(gL);
+    const edges = [];
+    for (const e of F.kg.edges) {
+      const a = pos[e.from], b = pos[e.to]; if (!a || !b) continue;
+      let d, cls = "edge";
+      if (e.type === "CO_OCCURS" || e.type === "EXCLUDES") {
+        const x = a.right + 4, bulge = 120;
+        d = `M${x},${a.y - 4} C${x + bulge},${a.y - 4} ${x + bulge},${b.y - 4} ${x},${b.y - 4}`;
+        cls += e.type === "CO_OCCURS" ? " co" : " ex";
+        const lab = mk("text", { x: x + bulge * 0.75 + 6, y: (a.y + b.y) / 2, class: "elabel" });
+        lab.textContent = e.type === "CO_OCCURS" ? `${Number(e.lift).toFixed(1)}× together` : "never together";
+        lab.style.fill = e.type === "CO_OCCURS" ? "var(--s1)" : "var(--critical)"; gL.appendChild(lab);
+      } else {
+        const [l, r] = a.x < b.x ? [a, b] : [b, a];
+        const x1 = l.right, y1 = l.y - 4, x2 = r.x - 8, y2 = r.y - 4, mx = (x1 + x2) / 2;
+        d = `M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}`;
+      }
+      const p = mk("path", { d, class: cls }); gE.appendChild(p); edges.push({ e, p });
+    }
+    const nodes = [];
+    for (const [, list] of cols) for (const n of list) {
+      const { x, y } = pos[n.id]; const g = mk("g", { class: "node", tabindex: "0" });
+      g.appendChild(mk("circle", { cx: x, cy: y - 4, r: 4.5 }));
+      const tx = mk("text", { x: x + 10, y }); tx.textContent = n.label; g.appendChild(tx);
+      gN.appendChild(g); nodes.push({ n, g });
+      const on = () => {
+        const linked = new Set([n.id]);
+        for (const { e, p } of edges) { const hit = e.from === n.id || e.to === n.id; if (hit) { linked.add(e.from); linked.add(e.to); } p.classList.toggle("hot", hit); p.classList.toggle("dim", !hit); }
+        for (const o of nodes) o.g.classList.toggle("hot", linked.has(o.n.id));
+      };
+      const off = () => { for (const { p } of edges) p.classList.remove("hot", "dim"); for (const o of nodes) o.g.classList.remove("hot"); };
+      g.addEventListener("pointerenter", on); g.addEventListener("pointerleave", off); g.addEventListener("focus", on); g.addEventListener("blur", off);
+    }
+    $("graph").appendChild(svg);
+  })();
+
+  // ---------- performance tab ----------
+  const P = DATA.performance;
+  (function perf() {
+    const fc = P.false_calls_on_nominal_launches, sf = P.sensor_fault_vs_overtemp;
+    $("perf-sub").textContent = `Every one of the ${P.n_launches} held-out launches replayed as in the control room: the agent sees only the telemetry received so far, every 0.5 s. The fixed-limit monitor runs on the same telemetry. Its limits are our own assumption of a simple limit checker, not real launch-commit criteria. ${fc.n_nominal_launches} of the launches are fully nominal.`;
+    const tiles = [
+      ["Engine-start failures stopped before booster ignition", pct(P.start_failures_caught_before_booster_ignition.agent), pct(P.start_failures_caught_before_booster_ignition.redline), `${P.start_failures_caught_before_booster_ignition.n_launches} launches`],
+      ["Countdown failures held before ignition", pct(P.countdown_failures_caught_before_ignition.agent), pct(P.countdown_failures_caught_before_ignition.redline), `${P.countdown_failures_caught_before_ignition.n_launches} launches`],
+      ["Sensor faults mistaken for over-temperature", pct(sf.agent_called_it_overtemp), pct(sf.redline_temperature_alarm), `${sf.n_sensor_fault_launches} launches with a failed sensor`],
+      ["False holds per 1,000 nominal launches (false aborts: agent " + fc.agent_aborts_per_1000.toFixed(0) + ", fixed limits " + fc.redline_aborts_per_1000.toFixed(0) + ")", fc.agent_holds_per_1000.toFixed(0), fc.redline_holds_per_1000.toFixed(0), `${fc.n_nominal_launches} nominal launches`],
+    ];
+    for (const [l, a, r, n] of tiles) {
+      const k = el("div", "panel kpi"); k.appendChild(el("div", "l", l));
+      const v = el("div", "vals"); const big = el("span", "big", a); v.appendChild(big);
+      const vs = el("span", "vs"); const key = el("span", "key"); key.style.background = "var(--s2)"; vs.append(key, document.createTextNode("fixed limits "), el("b", "", r)); v.appendChild(vs);
+      k.appendChild(v); const lab = el("div", "hint"); const k1 = el("span", "key"); k1.style.background = "var(--s1)"; lab.append(k1, document.createTextNode(`agent · ${n}`)); k.appendChild(lab);
+      $("kpis").appendChild(k);
+    }
+    // grouped bars
+    const rows = CLASSES.map((c) => ({ c, a: P.per_class[c.mode].agent_in_time, r: P.per_class[c.mode].redline_detection }));
+    const W = 760, lab = 230, rowH = 34, H = rows.length * rowH + 28, x0 = lab, x1 = W - 56;
+    const ns = "http://www.w3.org/2000/svg"; const svg = document.createElementNS(ns, "svg");
+    svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("role", "img"); svg.setAttribute("aria-label", "Share of failures caught in time, agent versus fixed limits");
+    svg.style.width = "100%"; svg.style.maxWidth = "860px"; svg.style.minWidth = "560px"; svg.style.height = "auto"; svg.style.display = "block";
+    const mk = (tag, attrs, text) => { const e = document.createElementNS(ns, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; return e; };
+    for (const v of [0, 0.5, 1]) { const x = x0 + v * (x1 - x0); svg.appendChild(mk("line", { x1: x, x2: x, y1: 4, y2: H - 22, style: "stroke:var(--grid);stroke-width:1" })); svg.appendChild(mk("text", { x, y: H - 6, "text-anchor": "middle", style: "fill:var(--muted);font-size:11px;font-family:var(--mono)" }, `${v * 100} %`)); }
+    const tip = $("tip");
+    rows.forEach((row, i) => {
+      const y = 8 + i * rowH;
+      svg.appendChild(mk("text", { x: lab - 10, y: y + 15, "text-anchor": "end", style: "fill:var(--ink-2);font-size:13px;font-family:var(--sans)" }, row.c.display));
+      [[row.a, "var(--s1)", "Agent", 0], [row.r, "var(--s2)", "Fixed limits", 12]].forEach(([v, col, who, dy]) => {
+        const w = Math.max(0, (v || 0) * (x1 - x0)); const h = 10;
+        const path = w > 4 ? `M${x0},${y + dy} h${w - 4} a4,4 0 0 1 4,4 v${h - 8} a4,4 0 0 1 -4,4 h${-(w - 4)} z` : `M${x0},${y + dy} h${Math.max(w, 1)} v${h} h${-Math.max(w, 1)} z`;
+        const p = mk("path", { d: path, style: `fill:${col}` }); svg.appendChild(p);
+        svg.appendChild(mk("text", { x: x0 + w + 6, y: y + dy + 9, style: "fill:var(--ink-2);font-size:11.5px;font-family:var(--mono)" }, v == null ? "–" : `${Math.round(v * 100)}`));
+        const hit = mk("rect", { x: x0, y: y + dy - 1, width: x1 - x0 + 40, height: 12, fill: "transparent" });
+        hit.addEventListener("pointermove", (ev) => { tip.hidden = false; tip.textContent = ""; tip.append(el("b", "", v == null ? "–" : `${Math.round(v * 100)} %`), document.createTextNode(` ${who} · ${row.c.display}`)); tip.style.left = `${ev.clientX + 12}px`; tip.style.top = `${ev.clientY + 12}px`; });
+        hit.addEventListener("pointerleave", () => { tip.hidden = true; });
+        svg.appendChild(hit);
+      });
+    });
+    const box = el("div", "tablewrap"); box.appendChild(svg); $("perf-chart").appendChild(box);
+    // table
+    const t = $("perf-table"); const hr = el("tr");
+    [["Failure mode"], ["Launches", "num"], ["Caught in time", "num"], ["Fixed limits", "num"], ["Median delay", "num"], ["False alerts / 1,000", "num"], ["AUROC", "num"], ["Sens. at 150 s", "num"], ["Spec. at 150 s", "num"]].forEach(([h, c]) => hr.appendChild(el("th", c || "", h)));
+    t.appendChild(hr);
+    for (const c of CLASSES) {
+      const p = P.per_class[c.mode], e = F.end[c.mode]; const r = el("tr");
+      r.append(el("td", "", c.display), el("td", "num", String(p.n)), el("td", "num", pct(p.agent_in_time)), el("td", "num", pct(p.redline_detection)),
+        el("td", "num", p.agent_latency == null ? "–" : `${p.agent_latency.toFixed(1)} s`), el("td", "num", p.agent_false_per_1000.toFixed(1)),
+        el("td", "num", e.auroc == null ? "–" : e.auroc.toFixed(3)), el("td", "num", e.sensitivity.toFixed(2)), el("td", "num", e.specificity.toFixed(3)));
+      t.appendChild(r);
+    }
+  })();
+
+  // ---------- knowledge universe ----------
+  // Every action state of every launch (ControlRoom/build_universe.py): the failure-mode
+  // probabilities (one per mode) the agent held at one 0.5 s check, placed by a 3D t-SNE of those probabilities.
+  // Hue = the call a failure mode triggers, and each mode is a step of that hue. The legend, the
+  // labels on the map and the hover card name every class, so color never carries it alone.
+  const U_HUE = { none: "#6b7785", HOLD: "#c98500", ABORT: "#e5484d", CRITICAL: "#c24fd0", WARNING: "#d95926", ADVISORY: "#8c7ff0" };
+  const U_MODE_HEX = {
+    NOMINAL: U_HUE.none, LOX_TANK_UNDERPRESSURE: "#e0a21c", LH2_PRESS_OSCILLATION: "#c98500", BUS_VOLTAGE_SAG: "#a87000",
+    SLOW_ENGINE_START: "#f07a78", LOX_PUMP_CAVITATION: "#e5484d", COMBUSTION_INSTABILITY: "#c0373b",
+    TURBINE_OVERTEMP: "#c24fd0", TEMP_SENSOR_FAULT: "#8c7ff0",
+    SRB_THRUST_ASYMMETRY: "#ee8a5a", TVC_ACTUATOR_DEGRADATION: "#d95926", POGO_ONSET: "#b44818",
+    TRAJECTORY_DEVIATION: "#e38bf2",
+  };
+  const U_GROUPS = [["none", "No alert", "GO, ENGINE START, COMMIT, NOMINAL"], ["HOLD", "HOLD", "countdown stopped"], ["ABORT", "ABORT", "engine shut down"],
+    ["CRITICAL", "CRITICAL", "in flight"], ["WARNING", "WARNING", "in flight"], ["ADVISORY", "ADVISORY", "in flight"]];
+  const U_GROUP_OF = { GO: 0, ENGINE_START: 0, COMMIT: 0, NOMINAL: 0, HOLD: 1, ABORT: 2, CRITICAL: 3, WARNING: 4, ADVISORY: 5 };
+  const UNI = { started: false, redraw: null };
+  function openUniverse() {
+    if (UNI.started) { if (UNI.redraw) UNI.redraw(); return; }
+    UNI.started = true;
+    startUniverse().catch((e) => { const n = $("u-note"); n.hidden = false; n.textContent = `The universe could not be opened: ${e.message}`; });
+  }
+  async function startUniverse() {
+    const note = $("u-note"), canvas = $("u-canvas"), stage = $("u-stage"), U = DATA.universe, fmt = (x) => x.toLocaleString("en");
+    if (!U) { note.textContent = "The knowledge universe is not built yet: run ControlRoom/build_universe.py, then build_dashboard.py."; return; }
+    const M = U.meta, L = M.launches, N = M.n_states, NL = M.n_launches, NC = M.classes.length, K = M.keys.length;
+    const gl = canvas.getContext("webgl2", { antialias: false, alpha: true, premultipliedAlpha: true });
+    if (!gl) { note.textContent = "This browser has no WebGL 2, which the 3D universe needs."; return; }
+    if (typeof DecompressionStream === "undefined") { note.textContent = "This browser cannot unpack the universe: it has no DecompressionStream."; return; }
+    note.textContent = `Unpacking ${fmt(N)} action states…`;
+    await new Promise((r) => setTimeout(r, 20));
+    const gz = Uint8Array.from(atob(U.gz), (c) => c.charCodeAt(0));
+    const buf = await new Response(new Blob([gz]).stream().pipeThrough(new DecompressionStream("gzip"))).arrayBuffer();
+    const part = (name, T) => { const s = M.layout[name]; return new T(buf, s.offset, s.bytes / T.BYTES_PER_ELEMENT); };
+    const vPos = part("vec_pos", Float32Array), vProb = part("vec_prob", Uint8Array), vCls = part("vec_class", Uint8Array);
+    const sVec = part("state_vec", M.layout.state_vec.dtype.endsWith("u2") ? Uint16Array : Uint32Array), sCall = part("state_call", Uint8Array);
+    const NV = vCls.length;
+
+    // Per state: the vector's position plus a spread that grows with the crowd on it; class, call, set.
+    const vecN = new Uint32Array(NV); for (let i = 0; i < N; i++) vecN[sVec[i]]++;
+    const launchOf = new Uint32Array(N); for (let l = 0; l < NL; l++) launchOf.fill(l, L.start[l], L.start[l] + L.count[l]);
+    const groupOfCall = Uint8Array.from(M.calls, (c) => U_GROUP_OF[c]);
+    const spread = Float32Array.from(vecN, (n) => Math.min(M.jitter.max, M.jitter.base * Math.cbrt(n)));
+    const pos = new Float32Array(N * 3), attr = new Uint8Array(N * 4);
+    let seed = 0x2f6b1d35;
+    const rnd = () => { seed = (seed + 0x6d2b79f5) | 0; let t = Math.imul(seed ^ (seed >>> 15), seed | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+    for (let i = 0; i < N; i++) {
+      const v = sVec[i];
+      for (let a = 0; a < 3; a++) pos[3 * i + a] = vPos[3 * v + a] + spread[v] * Math.sqrt(-2 * Math.log(rnd() || 1e-12)) * Math.cos(6.2831853 * rnd());
+      attr[4 * i] = vCls[v]; attr[4 * i + 1] = sCall[i]; attr[4 * i + 2] = L.holdout[launchOf[i]];
+    }
+    // Launch paths: a segment wherever a launch moves to another vector (all, held out, training).
+    const moves = (i) => launchOf[i] === launchOf[i + 1] && sVec[i] !== sVec[i + 1];
+    const segN = [0, 0, 0];
+    for (let i = 0; i + 1 < N; i++) if (moves(i)) { segN[0]++; segN[L.holdout[launchOf[i]] ? 1 : 2]++; }
+    const seg = segN.map((n) => new Uint32Array(2 * n)), fill = [0, 0, 0];
+    for (let i = 0; i + 1 < N; i++) if (moves(i)) for (const k of [0, L.holdout[launchOf[i]] ? 1 : 2]) { seg[k][fill[k]++] = i; seg[k][fill[k]++] = i + 1; }
+    // Label anchors: the most crowded vector of each class and of each call group.
+    const anchorCls = new Int32Array(NC).fill(-1), anchorGrp = new Int32Array(U_GROUPS.length).fill(-1);
+    { const best = new Uint32Array(NC); for (let v = 0; v < NV; v++) if (vecN[v] > best[vCls[v]]) { best[vCls[v]] = vecN[v]; anchorCls[vCls[v]] = v; } }
+    { const G = U_GROUPS.length, n = new Uint32Array(NV * G), best = new Uint32Array(G);
+      for (let i = 0; i < N; i++) n[sVec[i] * G + groupOfCall[sCall[i]]]++;
+      for (let v = 0; v < NV; v++) for (let g = 0; g < G; g++) if (n[v * G + g] > best[g]) { best[g] = n[v * G + g]; anchorGrp[g] = v; } }
+
+    // ---- WebGL: stars (with an ID pass for picking), launch paths, markers ----
+    const compile = (vs, fs) => {
+      const p = gl.createProgram();
+      for (const [type, src] of [[gl.VERTEX_SHADER, vs], [gl.FRAGMENT_SHADER, fs]]) {
+        const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s);
+        if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s));
+        gl.attachShader(p, s);
+      }
+      gl.linkProgram(p);
+      if (!gl.getProgramParameter(p, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(p));
+      const u = {};
+      for (let i = 0, n = gl.getProgramParameter(p, gl.ACTIVE_UNIFORMS); i < n; i++) { const name = gl.getActiveUniform(p, i).name.replace(/\[0\]$/, ""); u[name] = gl.getUniformLocation(p, name); }
+      return { p, u };
+    };
+    const STAR = compile(`#version 300 es
+layout(location = 0) in vec3 a_pos;
+layout(location = 1) in vec4 a_attr;
+uniform mat4 u_mvp;
+uniform float u_size, u_dpr, u_pick;
+uniform int u_mode, u_set;
+uniform vec4 u_ccol[16];
+uniform vec4 u_kcol[12];
+uniform float u_cshow[16];
+uniform float u_kshow[12];
+out vec4 v_col;
+void main() {
+  int c = int(a_attr.x + 0.5), k = int(a_attr.y + 0.5), h = int(a_attr.z + 0.5);
+  gl_Position = u_mvp * vec4(a_pos, 1.0);
+  bool on = u_cshow[c] > 0.5 && u_kshow[k] > 0.5 && (u_set == 0 || (u_set == 1) == (h == 1));
+  if (!on) { gl_Position = vec4(0.0, 0.0, 2.0, 1.0); gl_PointSize = 0.0; v_col = vec4(0.0); return; }
+  float s = clamp(u_size / max(gl_Position.w, 0.001), 1.3, 11.0) * u_dpr;
+  if (u_pick > 0.5) {
+    int id = gl_VertexID + 1;
+    v_col = vec4(float(id & 255), float((id >> 8) & 255), float((id >> 16) & 255), 255.0) / 255.0;
+    gl_PointSize = max(s, 6.0 * u_dpr);
+  } else {
+    v_col = u_mode == 0 ? u_ccol[c] : u_kcol[k];
+    gl_PointSize = s;
+  }
+}`, `#version 300 es
+precision highp float;
+in vec4 v_col;
+uniform float u_pick;
+out vec4 o;
+void main() {
+  vec2 d = gl_PointCoord - 0.5;
+  float r = dot(d, d);
+  if (r > 0.25) discard;
+  if (u_pick > 0.5) { o = v_col; return; }
+  float a = v_col.a * (1.0 - smoothstep(0.1, 0.25, r));
+  o = vec4(v_col.rgb * a, a);
+}`);
+    const FLAT = compile(`#version 300 es
+layout(location = 0) in vec3 a_pos;
+uniform mat4 u_mvp;
+uniform float u_psize;
+void main() { gl_Position = u_mvp * vec4(a_pos, 1.0); gl_PointSize = u_psize; }`, `#version 300 es
+precision highp float;
+uniform vec4 u_color;
+uniform int u_shape;
+out vec4 o;
+void main() {
+  if (u_shape > 0) { float r = length(gl_PointCoord - 0.5); if (r > 0.5 || (u_shape == 2 && r < 0.34)) discard; }
+  o = vec4(u_color.rgb * u_color.a, u_color.a);
+}`);
+    const bPos = gl.createBuffer(), bAttr = gl.createBuffer(), bPath = gl.createBuffer();
+    const vaoStars = gl.createVertexArray();
+    gl.bindVertexArray(vaoStars);
+    gl.bindBuffer(gl.ARRAY_BUFFER, bPos); gl.bufferData(gl.ARRAY_BUFFER, pos, gl.STATIC_DRAW);
+    gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0, 3, gl.FLOAT, false, 0, 0);
+    gl.bindBuffer(gl.ARRAY_BUFFER, bAttr); gl.bufferData(gl.ARRAY_BUFFER, attr, gl.STATIC_DRAW);
+    gl.enableVertexAttribArray(1); gl.vertexAttribPointer(1, 4, gl.UNSIGNED_BYTE, false, 0, 0);
+    const vaoSeg = seg.map((idx) => {
+      const vao = gl.createVertexArray(); gl.bindVertexArray(vao);
+      gl.bindBuffer(gl.ARRAY_BUFFER, bPos); gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0, 3, gl.FLOAT, false, 0, 0);
+      gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, gl.createBuffer()); gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, idx, gl.STATIC_DRAW);
+      return vao;
+    });
+    const vaoPath = gl.createVertexArray();
+    gl.bindVertexArray(vaoPath);
+    gl.bindBuffer(gl.ARRAY_BUFFER, bPath); gl.bufferData(gl.ARRAY_BUFFER, (M.n_ticks + 1) * 12, gl.DYNAMIC_DRAW);
+    gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0, 3, gl.FLOAT, false, 0, 0);
+    gl.bindVertexArray(null);
+    const pickFB = gl.createFramebuffer(), pickTex = gl.createTexture(), pickDepth = gl.createRenderbuffer();
+    gl.bindTexture(gl.TEXTURE_2D, pickTex);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+    const rgb = (hex) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255);
+    const cCol = new Float32Array(64), kCol = new Float32Array(48);
+    M.classes.forEach((c, i) => cCol.set([...rgb(U_MODE_HEX[c.mode] || U_HUE.none), i ? 0.9 : 0.2], 4 * i));
+    M.calls.forEach((c, k) => kCol.set([...rgb(U_HUE[U_GROUPS[groupOfCall[k]][0]]), groupOfCall[k] ? 0.9 : 0.2], 4 * k));
+
+    // ---- view state, camera ----
+    const st = { mode: 0, set: 0, paths: false, cshow: new Float32Array(16).fill(1), kshow: new Float32Array(12).fill(1), hover: -1, pinned: -1 };
+    const HOME = { yaw: 0.85, pitch: 0.32, dist: 2.5, t: [0, 0, 0] };
+    const cam = { ...HOME, t: [...HOME.t] };
+    let mvp = new Float32Array(16), axes = { r: [1, 0, 0], u: [0, 1, 0] }, dpr = 1, sized = false;
+    let dirty = true, pickDirty = true, raf = 0, mouse = null, drag = null, spin = !matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const sub3 = (a, b) => [a[0] - b[0], a[1] - b[1], a[2] - b[2]], dot3 = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+    const cross3 = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+    const unit3 = (a) => { const n = Math.hypot(a[0], a[1], a[2]) || 1; return [a[0] / n, a[1] / n, a[2] / n]; };
+    function matrices() {
+      const cp = Math.cos(cam.pitch), eye = [cam.t[0] + cam.dist * cp * Math.sin(cam.yaw), cam.t[1] + cam.dist * Math.sin(cam.pitch), cam.t[2] + cam.dist * cp * Math.cos(cam.yaw)];
+      const z = unit3(sub3(eye, cam.t)), x = unit3(cross3([0, 1, 0], z)), y = cross3(z, x);
+      const f = 1 / Math.tan(0.45), n = 0.01, fr = 60, asp = canvas.width / canvas.height;
+      const P = [f / asp, 0, 0, 0, 0, f, 0, 0, 0, 0, (fr + n) / (n - fr), -1, 0, 0, (2 * fr * n) / (n - fr), 0];
+      const V = [x[0], y[0], z[0], 0, x[1], y[1], z[1], 0, x[2], y[2], z[2], 0, -dot3(x, eye), -dot3(y, eye), -dot3(z, eye), 1];
+      for (let i = 0; i < 4; i++) for (let j = 0; j < 4; j++) { let s = 0; for (let k = 0; k < 4; k++) s += P[k * 4 + j] * V[i * 4 + k]; mvp[i * 4 + j] = s; }
+      axes = { r: x, u: y };
+    }
+    function project(p) {                        // CSS pixels in the canvas, or null behind the camera
+      const x = mvp[0] * p[0] + mvp[4] * p[1] + mvp[8] * p[2] + mvp[12], y = mvp[1] * p[0] + mvp[5] * p[1] + mvp[9] * p[2] + mvp[13];
+      const w = mvp[3] * p[0] + mvp[7] * p[1] + mvp[11] * p[2] + mvp[15];
+      if (w < 0.02) return null;
+      const sx = (x / w + 1) / 2 * canvas.clientWidth, sy = (1 - y / w) / 2 * canvas.clientHeight;
+      return sx < -40 || sy < -20 || sx > canvas.clientWidth + 40 || sy > canvas.clientHeight + 20 ? null : [sx, sy];
+    }
+    function resize() {
+      dpr = Math.min(2, window.devicePixelRatio || 1);
+      const w = Math.max(1, Math.round(stage.clientWidth * dpr)), h = Math.max(1, Math.round(stage.clientHeight * dpr));
+      if (sized && canvas.width === w && canvas.height === h) return;
+      canvas.width = w; canvas.height = h; sized = true;
+      gl.bindTexture(gl.TEXTURE_2D, pickTex); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA8, w, h, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
+      gl.bindRenderbuffer(gl.RENDERBUFFER, pickDepth); gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_COMPONENT24, w, h);
+      gl.bindFramebuffer(gl.FRAMEBUFFER, pickFB);
+      gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, pickTex, 0);
+      gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.RENDERBUFFER, pickDepth);
+      gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+      dirty = pickDirty = true;
+    }
+
+    // ---- drawing ----
+    function stars(pick, pass) {                 // pass 1: the quiet crowd (nominal / no alert); 2: the rest; 0: all
+      const S = STAR; gl.useProgram(S.p);
+      gl.uniformMatrix4fv(S.u.u_mvp, false, mvp); gl.uniform1f(S.u.u_size, 6.5); gl.uniform1f(S.u.u_dpr, dpr); gl.uniform1f(S.u.u_pick, pick ? 1 : 0);
+      gl.uniform1i(S.u.u_mode, st.mode); gl.uniform1i(S.u.u_set, st.set);
+      gl.uniform4fv(S.u.u_ccol, cCol); gl.uniform4fv(S.u.u_kcol, kCol);
+      const cs = st.cshow.slice(), ks = st.kshow.slice();
+      if (pass && st.mode === 0) for (let c = 0; c < 16; c++) { if ((c === 0) !== (pass === 1)) cs[c] = 0; }
+      if (pass && st.mode === 1) for (let k = 0; k < 12; k++) { if ((groupOfCall[k] === 0) !== (pass === 1)) ks[k] = 0; }
+      gl.uniform1fv(S.u.u_cshow, cs); gl.uniform1fv(S.u.u_kshow, ks);
+      gl.bindVertexArray(vaoStars); gl.drawArrays(gl.POINTS, 0, N);
+    }
+    function flat(vao, mode, count, color, shape, size, elements) {
+      const F = FLAT; gl.useProgram(F.p);
+      gl.uniformMatrix4fv(F.u.u_mvp, false, mvp); gl.uniform4fv(F.u.u_color, color); gl.uniform1i(F.u.u_shape, shape); gl.uniform1f(F.u.u_psize, size * dpr);
+      gl.bindVertexArray(vao);
+      if (elements) gl.drawElements(mode, count, gl.UNSIGNED_INT, 0); else gl.drawArrays(mode, 0, count);
+    }
+    const scratch = new Float32Array((M.n_ticks + 1) * 3);
+    function path(l, alpha) {                    // through the stars where the launch moves to a new vector
+      let m = 0, prev = -1;
+      for (let i = L.start[l], e = i + L.count[l]; i < e; i++) if (sVec[i] !== prev) { prev = sVec[i]; scratch.set(pos.subarray(3 * i, 3 * i + 3), 3 * m); m++; }
+      gl.bindBuffer(gl.ARRAY_BUFFER, bPath); gl.bufferSubData(gl.ARRAY_BUFFER, 0, scratch, 0, 3 * m);
+      if (m > 1) flat(vaoPath, gl.LINE_STRIP, m, [0.93, 0.96, 1, alpha], 0, 0);
+      flat(vaoPath, gl.POINTS, m, [0.93, 0.96, 1, alpha], 1, 3.5);
+    }
+    function marker(i, color) {
+      gl.bindBuffer(gl.ARRAY_BUFFER, bPath); gl.bufferSubData(gl.ARRAY_BUFFER, 0, pos, 3 * i, 3);
+      flat(vaoPath, gl.POINTS, 1, color, 2, 20);
+    }
+    function draw() {
+      matrices();
+      gl.bindFramebuffer(gl.FRAMEBUFFER, null); gl.viewport(0, 0, canvas.width, canvas.height);
+      gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.disable(gl.DEPTH_TEST); gl.enable(gl.BLEND); gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+      if (st.paths) flat(vaoSeg[st.set], gl.LINES, seg[st.set].length, [0.62, 0.74, 0.9, 0.07], 0, 0, true);
+      stars(false, 1); stars(false, 2);
+      const lp = st.pinned >= 0 ? launchOf[st.pinned] : -1, lh = st.hover >= 0 ? launchOf[st.hover] : -1;
+      if (lp >= 0) path(lp, 0.95);
+      if (lh >= 0 && lh !== lp) path(lh, 0.7);
+      if (st.pinned >= 0) marker(st.pinned, [1, 0.8, 0.3, 1]);
+      if (st.hover >= 0) marker(st.hover, [1, 1, 1, 1]);
+      labels();
+      dirty = false;
+    }
+    function pickAt(x, y) {                      // the star under (or nearest to) a CSS pixel, or -1
+      if (pickDirty) {
+        gl.bindFramebuffer(gl.FRAMEBUFFER, pickFB); gl.viewport(0, 0, canvas.width, canvas.height);
+        gl.clearColor(0, 0, 0, 0); gl.clearDepth(1); gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+        gl.enable(gl.DEPTH_TEST); gl.depthFunc(gl.LESS); gl.disable(gl.BLEND);
+        stars(true, 0);
+        pickDirty = false;
+      }
+      const R = 5, cx = Math.round(x * dpr), cy = canvas.height - 1 - Math.round(y * dpr);
+      const x0 = Math.max(0, cx - R), y0 = Math.max(0, cy - R), x1 = Math.min(canvas.width - 1, cx + R), y1 = Math.min(canvas.height - 1, cy + R);
+      if (x1 < x0 || y1 < y0) return -1;
+      const w = x1 - x0 + 1, h = y1 - y0 + 1, px = new Uint8Array(w * h * 4);
+      gl.bindFramebuffer(gl.FRAMEBUFFER, pickFB); gl.readPixels(x0, y0, w, h, gl.RGBA, gl.UNSIGNED_BYTE, px); gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+      let best = -1, bd = Infinity;
+      for (let r = 0; r < h; r++) for (let c = 0; c < w; c++) {
+        const o = 4 * (r * w + c), id = px[o] | (px[o + 1] << 8) | (px[o + 2] << 16);
+        const d = (x0 + c - cx) ** 2 + (y0 + r - cy) ** 2;
+        if (id && d < bd) { bd = d; best = id - 1; }
+      }
+      return best;
+    }
+
+    // ---- labels on the map, legend ----
+    const labelBox = $("u-labels"); let labelEls = [];
+    function buildLabels() {
+      labelBox.textContent = "";
+      const src = st.mode === 0 ? M.classes.map((c, i) => [c.display, anchorCls[i], M.counts.class[i]])
+        : U_GROUPS.map((g, i) => [g[1], anchorGrp[i], M.calls.reduce((s, c, k) => s + (groupOfCall[k] === i ? M.counts.call[k] : 0), 0)]);
+      labelEls = src.map(([text, v, n], i) => { const s = el("span", "", text); labelBox.appendChild(s); return { s, v, i, n, w: s.offsetWidth || 7 * text.length, h: s.offsetHeight || 17 }; })
+        .sort((a, b) => b.n - a.n);                // bigger classes get their place first
+    }
+    const groupShown = (g) => M.calls.some((c, k) => groupOfCall[k] === g && st.kshow[k] > 0.5);
+    function labels() {                           // above the anchor, else below, else higher; hidden if all collide
+      const placed = [];
+      for (const lab of labelEls) {
+        const { s, v, i, w, h } = lab;
+        const on = v >= 0 && (st.mode === 0 ? st.cshow[i] > 0.5 : groupShown(i));
+        const p = on ? project(vPos.subarray(3 * v, 3 * v + 3)) : null;
+        let box = null;
+        if (p) for (const dy of [-h - 8, 8, -2 * h - 12]) {
+          const b = [p[0] - w / 2, p[1] + dy, p[0] + w / 2, p[1] + dy + h];
+          if (!placed.some((o) => b[0] < o[2] + 4 && b[2] + 4 > o[0] && b[1] < o[3] && b[3] > o[1])) { box = b; break; }
+        }
+        s.hidden = !box;
+        if (box) { placed.push(box); s.style.left = `${box[0].toFixed(1)}px`; s.style.top = `${box[1].toFixed(1)}px`; }
+      }
+    }
+    let legendItems = [];
+    function legend() {
+      const box = $("u-legend"); box.textContent = "";
+      const byClass = st.mode === 0, mask = byClass ? st.cshow : st.kshow;
+      legendItems = byClass
+        ? M.classes.map((c, i) => ({ hex: U_MODE_HEX[c.mode] || U_HUE.none, name: c.display, sub: i ? `triggers ${c.call}` : `no failure mode reaches ${M.most_probable_from}`, n: M.counts.class[i], members: [i] }))
+        : U_GROUPS.map(([key, name, sub], g) => {
+          const members = M.calls.map((c, k) => (groupOfCall[k] === g ? k : -1)).filter((k) => k >= 0);
+          return { hex: U_HUE[key], name, sub, n: members.reduce((s, k) => s + M.counts.call[k], 0), members };
+        });
+      box.appendChild(el("div", "eyebrow", byClass ? "Most probable action" : "The agent's call"));
+      const isOn = (it) => it.members.some((m) => mask[m] > 0.5);
+      const refresh = () => { for (const it of legendItems) it.b.setAttribute("aria-pressed", String(isOn(it))); changed(); };
+      for (const it of legendItems) {
+        const b = el("button", "li"), t = el("span");
+        b.type = "button"; b.style.setProperty("--c", it.hex);
+        t.append(el("span", "nm", it.name), el("span", "sub", it.sub));
+        b.append(el("span", "sw"), t, el("span", "n", fmt(it.n)));
+        b.addEventListener("click", () => { const v = isOn(it) ? 0 : 1; for (const m of it.members) mask[m] = v; refresh(); });
+        b.addEventListener("dblclick", () => {
+          const solo = legendItems.every((o) => o === it || !isOn(o));
+          for (const o of legendItems) for (const m of o.members) mask[m] = solo || o === it ? 1 : 0;
+          refresh();
+        });
+        it.b = b; box.appendChild(b);
+      }
+      refresh();
+      box.appendChild(el("p", "hint", "Click to hide or show. Double-click to show only that one; double-click again for all."));
+    }
+
+    // ---- hover card, pinned launch ----
+    const cardEl = $("u-card"); let cardFor = -1;
+    const launchName = (l) => `#${String(L.seed[l] % 100000).padStart(4, "0")}`;
+    const truthText = (l) => (L.truth[l].length ? L.truth[l].map(([k, on]) => `${M.classes[k + 1].display}${on == null ? "" : `, visible from ${hT(on)}`}`).join("; ") : "nothing: a normal launch");
+    const stopText = (l) => (L.stop[l] ? `The agent ${L.stop[l] === "HOLD" ? "held the countdown" : "aborted at engine start"} at ${hT(M.t0 + (L.count[l] - 1) * M.tick_s)}; the chain ends there.` : "");
+    function fillCard(i) {
+      const l = launchOf[i], v = sVec[i], k = i - L.start[l], t = M.t0 + k * M.tick_s, c = vCls[v], cls = M.classes[c], call = M.calls[sCall[i]];
+      const p = Array.from({ length: K }, (_, j) => vProb[v * K + j] / M.prob_scale), top = p.indexOf(Math.max(...p));
+      cardEl.textContent = "";
+      const hd = el("div", "hd"), sw = el("span", "sw");
+      sw.style.setProperty("--c", U_MODE_HEX[cls.mode] || U_HUE.none);
+      hd.append(sw, el("b", "", c ? `${cls.display} · p ${p[c - 1].toFixed(2)}` : `Nominal · highest p ${p[top].toFixed(2)}`));
+      cardEl.append(hd, el("div", "hint", c ? `The most probable action. This failure triggers ${cls.call}.` : `No failure mode reaches ${M.most_probable_from}; the highest is ${M.classes[top + 1].display.toLowerCase()}.`));
+      const kv = el("dl", "kv");
+      const row = (a, b) => { const d = el("dd"); if (typeof b === "string") d.textContent = b; else d.appendChild(b); kv.append(el("dt", "", a), d); };
+      row("Launch", `${launchName(l)} · ${L.holdout[l] ? "held out: the models never saw it" : "training: scored out of fold"}`);
+      row("Time", `${hT(t)} · ${phaseOf(t)} · check ${k + 1} of ${L.count[l]}`);
+      const pill = el("span", "pill", call.replace("_", " ")); pill.style.setProperty("--state", U_HUE[U_GROUPS[groupOfCall[sCall[i]]][0]]);
+      row("Agent's call", pill);
+      row("Injected", truthText(l));
+      if (L.stop[l]) row("Stopped", stopText(l));
+      row("Same vector", vecN[v] > 2 ? `as ${fmt(vecN[v] - 1)} other states` : vecN[v] === 2 ? "as 1 other state" : "no other state");
+      const pr = el("div", "pr");
+      M.keys.forEach((key, j) => {
+        const bar = el("span", "bar"), fillEl = el("i"), tick = el("u");
+        bar.style.setProperty("--c", U_MODE_HEX[key] || U_HUE.none);
+        fillEl.style.width = `${(p[j] * 100).toFixed(1)}%`; tick.style.left = `calc(${(M.thresholds[j] * 100).toFixed(1)}% - 1px)`;
+        bar.append(fillEl, tick);
+        pr.append(el("span", p[j] >= M.thresholds[j] ? "on" : "", M.classes[j + 1].display), bar, el("span", "num", p[j].toFixed(2)));
+      });
+      cardEl.append(kv, pr, el("div", "hint", "Bar: probability. Tick: the alert threshold. Bold: at or above it."));
+    }
+    function cardAt(i, cx, cy) {
+      if (i < 0) { cardEl.hidden = true; cardFor = -1; return; }
+      if (i !== cardFor) { fillCard(i); cardFor = i; }
+      cardEl.hidden = false;
+      const w = cardEl.offsetWidth, h = cardEl.offsetHeight;
+      let x = cx + 18; if (x + w > innerWidth - 8) x = cx - 18 - w;
+      const y = Math.min(cy + 14, innerHeight - 8 - h);
+      cardEl.style.left = `${Math.max(8, x)}px`; cardEl.style.top = `${Math.max(8, y)}px`;
+    }
+    function launchPanel() {
+      const box = $("u-launch");
+      if (st.pinned < 0) { box.hidden = true; return; }
+      const l = launchOf[st.pinned], a = L.start[l], n = L.count[l];
+      box.hidden = false; box.textContent = "";
+      const top = el("div", "top"), btns = el("div");
+      const held = L.holdout[l] ? CASE.get(L.seed[l]) : null;
+      if (held && playable(held)) { const b = el("button", "btn", `Replay it in the control room (unseen launch ${held.name})`); b.type = "button"; b.addEventListener("click", () => { showTab("tab-room"); openCase(held.seed, true); }); btns.append(b, " "); }
+      const clr = el("button", "btn", "Clear"); clr.type = "button"; clr.addEventListener("click", () => pin(-1)); btns.appendChild(clr);
+      top.append(el("h2", "", `Launch ${launchName(l)}`), btns);
+      box.append(top, el("p", "note", `${L.holdout[l] ? "Held-out launch: the models never saw it." : "Training launch, scored by the fold models that did not see it."} Injected: ${truthText(l)}. ${fmt(n)} action states, ${hT(M.t0)} to ${hT(M.t0 + (n - 1) * M.tick_s)}. ${stopText(l)}`));
+      const tl = el("div", "tl");
+      const strip = (label, key, hexOf, nameOf) => {
+        const runs = el("div", "runs");
+        for (let i = a; i < a + n;) {
+          const x = key(i); let j = i + 1; while (j < a + n && key(j) === x) j++;
+          const r = el("i"); r.style.setProperty("--c", hexOf(x)); r.style.flexGrow = String(j - i);
+          r.title = `${nameOf(x)}: ${hT(M.t0 + (i - a) * M.tick_s)} to ${hT(M.t0 + (j - 1 - a) * M.tick_s)}`;
+          runs.appendChild(r); i = j;
+        }
+        tl.append(el("span", "eyebrow", label), runs);
+      };
+      strip("Most probable action", (i) => vCls[sVec[i]], (c) => U_MODE_HEX[M.classes[c].mode] || U_HUE.none, (c) => M.classes[c].display);
+      strip("Agent's call", (i) => sCall[i], (k) => U_HUE[U_GROUPS[groupOfCall[k]][0]], (k) => M.calls[k].replace("_", " "));
+      const ax = el("div", "ax"); ax.append(el("span", "", hT(M.t0)), el("span", "", hT(M.t0 + (n - 1) * M.tick_s)));
+      tl.append(el("span"), ax);
+      box.appendChild(tl);
+    }
+    function pin(i) { st.pinned = i; launchPanel(); changed(false); }
+
+    // ---- loop and input ----
+    function changed(pickToo = true) { dirty = true; if (pickToo) pickDirty = true; request(); }
+    function request() { if (!raf) raf = requestAnimationFrame(frame); }
+    function frame() {
+      raf = 0;
+      if (!$("view-universe").classList.contains("on")) return;
+      if (spin) { cam.yaw += 0.0016; dirty = pickDirty = true; }
+      matrices();
+      if (mouse && !drag) {
+        const id = pickAt(mouse.x, mouse.y);
+        if (id !== st.hover) { st.hover = id; dirty = true; }
+        cardAt(id, mouse.cx, mouse.cy);
+      }
+      if (dirty) draw();
+      if (spin) request();
+    }
+    const stopSpin = () => { spin = false; };
+    const ptrs = new Map();
+    let pinch = 0;
+    canvas.addEventListener("contextmenu", (e) => e.preventDefault());
+    canvas.addEventListener("pointerdown", (e) => {
+      stopSpin(); canvas.setPointerCapture(e.pointerId); ptrs.set(e.pointerId, [e.clientX, e.clientY]);
+      drag = { x: e.clientX, y: e.clientY, pan: e.button === 2 || e.shiftKey, moved: 0 };
+      pinch = 0; canvas.classList.add("dragging");
+    });
+    canvas.addEventListener("pointermove", (e) => {
+      const r = canvas.getBoundingClientRect();
+      if (ptrs.has(e.pointerId)) ptrs.set(e.pointerId, [e.clientX, e.clientY]);
+      if (drag && ptrs.size === 2) {                 // two fingers: pinch to zoom
+        const [a, b] = [...ptrs.values()], d = Math.hypot(a[0] - b[0], a[1] - b[1]);
+        if (pinch) cam.dist = Math.max(0.08, Math.min(12, cam.dist * pinch / d));
+        pinch = d; drag.moved += 10; cardAt(-1); changed(); return;
+      }
+      if (drag) {
+        const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+        drag.x = e.clientX; drag.y = e.clientY; drag.moved += Math.abs(dx) + Math.abs(dy);
+        if (drag.pan) { const s = cam.dist * 0.0016; for (let a = 0; a < 3; a++) cam.t[a] += (-dx * axes.r[a] + dy * axes.u[a]) * s; }
+        else { cam.yaw -= dx * 0.006; cam.pitch = Math.max(-1.45, Math.min(1.45, cam.pitch + dy * 0.006)); }
+        if (drag.moved > 4) { st.hover = -1; cardAt(-1); }
+        changed(); return;
+      }
+      mouse = { x: e.clientX - r.left, y: e.clientY - r.top, cx: e.clientX, cy: e.clientY }; request();
+    });
+    const release = (e) => {
+      ptrs.delete(e.pointerId);
+      if (drag && drag.moved < 5 && e.type === "pointerup" && e.button === 0 && ptrs.size === 0) {
+        const r = canvas.getBoundingClientRect(); matrices();
+        const id = pickAt(e.clientX - r.left, e.clientY - r.top); pin(id >= 0 ? id : -1);
+      }
+      if (ptrs.size === 0) { drag = null; canvas.classList.remove("dragging"); }
+    };
+    canvas.addEventListener("pointerup", release); canvas.addEventListener("pointercancel", release);
+    canvas.addEventListener("pointerleave", () => { mouse = null; if (!drag) { st.hover = -1; cardAt(-1); changed(false); } });
+    canvas.addEventListener("wheel", (e) => { e.preventDefault(); stopSpin(); cam.dist = Math.max(0.08, Math.min(12, cam.dist * Math.exp(e.deltaY * 0.0012))); cardAt(-1); changed(); }, { passive: false });
+    canvas.addEventListener("dblclick", () => { if (st.hover < 0) return; cam.t = Array.from(pos.subarray(3 * st.hover, 3 * st.hover + 3)); cam.dist = Math.max(0.2, cam.dist * 0.45); changed(); });
+    canvas.addEventListener("keydown", (e) => {
+      const k = e.key; let used = true;
+      if (k === "Escape") pin(-1);
+      else if (k === "ArrowLeft" || k === "ArrowRight") cam.yaw += k === "ArrowLeft" ? 0.08 : -0.08;
+      else if (k === "ArrowUp" || k === "ArrowDown") cam.pitch = Math.max(-1.45, Math.min(1.45, cam.pitch + (k === "ArrowUp" ? 0.08 : -0.08)));
+      else if (k === "+" || k === "=") cam.dist = Math.max(0.08, cam.dist / 1.15);
+      else if (k === "-" || k === "_") cam.dist = Math.min(12, cam.dist * 1.15);
+      else used = false;
+      if (used) { e.preventDefault(); stopSpin(); changed(); }
+    });
+    for (const b of document.querySelectorAll("[data-umode]")) b.addEventListener("click", () => {
+      st.mode = Number(b.dataset.umode);
+      for (const o of document.querySelectorAll("[data-umode]")) o.setAttribute("aria-pressed", String(o === b));
+      cardFor = -1; legend(); buildLabels(); changed();
+    });
+    for (const b of document.querySelectorAll("[data-uset]")) b.addEventListener("click", () => {
+      st.set = Number(b.dataset.uset);
+      for (const o of document.querySelectorAll("[data-uset]")) o.setAttribute("aria-pressed", String(o === b));
+      changed();
+    });
+    $("u-paths").addEventListener("change", (e) => { st.paths = e.target.checked; changed(false); });
+    $("u-reset").addEventListener("click", () => { Object.assign(cam, { ...HOME, t: [...HOME.t] }); changed(); });
+    new ResizeObserver(() => { if (stage.clientWidth) { resize(); changed(); } }).observe(stage);
+
+    // ---- words and numbers around the map ----
+    const nHold = L.holdout.reduce((s, h) => s + h, 0), stopped = M.counts.stopped;
+    const tile = (v, t) => { const d = el("div", "ustat"); d.append(el("b", "", v), el("span", "", t)); return d; };
+    $("u-stats").append(tile(fmt(NL), "launches"), tile(fmt(N), "action states"), tile(fmt(NV), "distinct action vectors"),
+      tile(fmt(stopped.HOLD + stopped.ABORT), `chains end early (${stopped.HOLD} holds, ${stopped.ABORT} aborts)`));
+    const crowd = Math.max(...vecN);
+    $("u-how").append(
+      el("p", "", `Every 0.5 s the agent's ${K} classifiers give each failure mode a probability. Those ${K} numbers are one action state. The map holds all of them for all ${fmt(NL)} simulated launches: the ${fmt(NL - nHold)} training launches, each scored by the fold models that never saw it (out of fold), and the ${fmt(nHold)} held-out launches, scored by the final models. The calls come from the agent's own rules.`),
+      el("p", "", `A launch's chain runs from ${hT(M.t0)} to ${hT(M.t0 + (M.n_ticks - 1) * M.tick_s)}, or until the agent held the countdown (${fmt(stopped.HOLD)} launches) or aborted at engine start (${fmt(stopped.ABORT)}). That makes ${fmt(N)} action states; without those stops it would be ${fmt(NL * M.n_ticks)}.`),
+      el("p", "", `Positions are a 3D t-SNE of the ${fmt(NV)} distinct probability vectors (perplexity ${M.tsne.perplexity}): the space is the agent's action probabilities, never the raw telemetry. Stars close together are moments the agent read alike. The axes have no units.`),
+      el("p", "", `States with the same vector are spread in a small ball that grows with their number, so a crowd stays visible; the spread means nothing. The biggest crowd is ${fmt(crowd)} states (${Math.round((100 * crowd) / N)} %) on one vector with every probability near zero. Color: the most probable action, the failure mode with the highest probability when it reaches ${M.most_probable_from}, else nominal. Each failure mode is a shade of the call it triggers: amber HOLD, red ABORT, purple CRITICAL, orange WARNING, violet ADVISORY.`),
+    );
+
+    note.hidden = true; $("u-bar").hidden = false;
+    buildLabels(); legend(); resize(); changed();
+    UNI.redraw = () => { resize(); changed(); };
+  }
+
+  // ---------- start ----------
+  drawAxis();
+  renderSelector();
+  const [hash, hashLaunch] = (location.hash || "").slice(1).split("/");      // e.g. #room/trajectory-drift, #room/case-202601459
+  const linked = CASE.get(Number((/^case-(\d+)$/.exec(hashLaunch || "") || [])[1]));
+  if (linked) REVEALED.add(linked.id);
+  const startId = (LAUNCH.get(hashLaunch) || LAUNCH.get("sensor-fault") || DATA.launches[0]).id;
+  load(startId, false);
+  if (linked && !LAUNCH.has(linked.id)) openCase(linked.seed, true, false);
+  probeAnalyst();
+  if (["factory", "perf", "universe", "room"].includes(hash)) showTab("tab-" + hash);
+})();
+</script>

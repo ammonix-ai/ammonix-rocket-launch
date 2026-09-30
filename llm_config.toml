@@ -1,0 +1,21 @@
+# The control-room analyst in the dashboard (ControlRoom/serve.py).
+# The analyst explains the agent's calls; it never makes one.
+#
+# base_url: any OpenAI-compatible chat server. The default is a llama.cpp llama-server on this
+#   machine, started as the README shows. vLLM and Ollama work the same way.
+#   127.0.0.1, not localhost: on Windows, localhost tries IPv6 (::1) first and every call then
+#   waits about 2 s for the refusal before it falls back.
+# model: the name that server answers to (llama-server: its --alias).
+# label: how the page names the model.
+#
+# Environment variables override these: ANALYST_BASE_URL, ANALYST_MODEL, ANALYST_LABEL,
+# ANALYST_API_KEY (sent as a bearer token), ANALYST_EXTRA_BODY (a JSON object merged into
+# every request, for example a hosted provider's own switches).
+
+[analyst]
+base_url = "http://127.0.0.1:8001/v1"
+model = "qwen3.8-27b"
+label = "Qwen3.8 27B"
+temperature = 0.3
+max_tokens = 450
+enable_thinking = false

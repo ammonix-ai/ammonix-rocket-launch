@@ -1,0 +1,3287 @@
+{
+  "meta": {
+    "domain": "launch-vehicle",
+    "version": "0.1.0",
+    "created_by": "run_factory.py",
+    "created_at": "2026-09-30T08:08:17+00:00",
+    "source_artifacts": {
+      "taxonomy": "layer-1/taxonomy.json",
+      "rules": "layer-2/rules.json",
+      "model": "layer-4/model.pkl",
+      "thresholds": "layer-4/thresholds.json"
+    },
+    "launch_count": 3000,
+    "node_counts": {
+      "subsystems": 7,
+      "channels": 13,
+      "failure_modes": 12,
+      "features": 60,
+      "rules": 43,
+      "actions": 5,
+      "phases": 3
+    },
+    "edge_count": 285,
+    "edge_types": {
+      "MEASURED_ON": 66,
+      "PART_OF": 13,
+      "LOCATED_IN": 12,
+      "SEEN_ON": 22,
+      "DISCRIMINATED_BY": 60,
+      "TRIGGERS": 13,
+      "OCCURS_IN": 13,
+      "SUPPORTS": 42,
+      "USES": 42,
+      "EXCLUDES": 1,
+      "CO_OCCURS": 1
+    }
+  },
+  "nodes": {
+    "subsystems": [
+      {
+        "id": "sub:core_engine",
+        "label": "Core engine"
+      },
+      {
+        "id": "sub:tanks",
+        "label": "Propellant tanks & pressurization"
+      },
+      {
+        "id": "sub:boosters",
+        "label": "Solid boosters"
+      },
+      {
+        "id": "sub:flight_control",
+        "label": "Flight control (TVC)"
+      },
+      {
+        "id": "sub:structure",
+        "label": "Structure & dynamics"
+      },
+      {
+        "id": "sub:avionics_power",
+        "label": "Avionics power"
+      },
+      {
+        "id": "sub:guidance",
+        "label": "Guidance & trajectory"
+      }
+    ],
+    "channels": [
+      {
+        "id": "ch:PC_CORE",
+        "label": "Core chamber pressure",
+        "unit": "bar",
+        "subsystem": "core_engine"
+      },
+      {
+        "id": "ch:N_LOX_TP",
+        "label": "LOX turbopump speed",
+        "unit": "%",
+        "subsystem": "core_engine"
+      },
+      {
+        "id": "ch:T_TURB_IN",
+        "label": "Turbine inlet temperature",
+        "unit": "K",
+        "subsystem": "core_engine"
+      },
+      {
+        "id": "ch:P_LOX_TANK",
+        "label": "LOX tank pressure",
+        "unit": "bar",
+        "subsystem": "tanks"
+      },
+      {
+        "id": "ch:P_LH2_TANK",
+        "label": "LH2 tank pressure",
+        "unit": "bar",
+        "subsystem": "tanks"
+      },
+      {
+        "id": "ch:PC_SRB_L",
+        "label": "Booster L chamber pressure",
+        "unit": "bar",
+        "subsystem": "boosters"
+      },
+      {
+        "id": "ch:PC_SRB_R",
+        "label": "Booster R chamber pressure",
+        "unit": "bar",
+        "subsystem": "boosters"
+      },
+      {
+        "id": "ch:TVC_PITCH",
+        "label": "TVC pitch deflection",
+        "unit": "deg",
+        "subsystem": "flight_control"
+      },
+      {
+        "id": "ch:TVC_YAW",
+        "label": "TVC yaw deflection",
+        "unit": "deg",
+        "subsystem": "flight_control"
+      },
+      {
+        "id": "ch:ACC_AX",
+        "label": "Axial acceleration",
+        "unit": "g",
+        "subsystem": "structure"
+      },
+      {
+        "id": "ch:VIB_ENG",
+        "label": "Engine-bay vibration",
+        "unit": "g rms",
+        "subsystem": "core_engine"
+      },
+      {
+        "id": "ch:BUS_28V",
+        "label": "Avionics bus voltage",
+        "unit": "V",
+        "subsystem": "avionics_power"
+      },
+      {
+        "id": "ch:TRAJ_DEV",
+        "label": "Trajectory deviation",
+        "unit": "km",
+        "subsystem": "guidance"
+      }
+    ],
+    "failure_modes": [
+      {
+        "id": "fm:LOX_TANK_UNDERPRESSURE",
+        "label": "LOX tank under-pressure",
+        "canonical": "LOX_TANK_UNDERPRESSURE",
+        "category": "pressurization",
+        "phase": "countdown",
+        "call": "HOLD",
+        "severity": "high",
+        "subsystem": "tanks",
+        "base_rate": 0.0692,
+        "threshold": 0.935446,
+        "top_features": [
+          {
+            "feature_id": "f:CD__P_LOX_TANK__mean",
+            "r": -0.8085,
+            "cohens_d": -5.4135
+          },
+          {
+            "feature_id": "f:CD__P_LOX_TANK__ramp_deficit",
+            "r": 0.8077,
+            "cohens_d": 5.3989
+          },
+          {
+            "feature_id": "f:CD__P_LOX_TANK__t_ready",
+            "r": 0.7609,
+            "cohens_d": 4.6203
+          },
+          {
+            "feature_id": "f:CD__P_LOX_TANK__max",
+            "r": -0.7515,
+            "cohens_d": -4.4887
+          },
+          {
+            "feature_id": "f:ASC__P_LOX_TANK__mean",
+            "r": -0.7497,
+            "cohens_d": -4.4636
+          }
+        ]
+      },
+      {
+        "id": "fm:LH2_PRESS_OSCILLATION",
+        "label": "LH2 pressure regulator oscillation",
+        "canonical": "LH2_PRESS_OSCILLATION",
+        "category": "pressurization",
+        "phase": "countdown",
+        "call": "HOLD",
+        "severity": "medium",
+        "subsystem": "tanks",
+        "base_rate": 0.0612,
+        "threshold": 0.882439,
+        "top_features": [
+          {
+            "feature_id": "f:CD__P_LH2_TANK__osc_rms_max5",
+            "r": 0.7939,
+            "cohens_d": 5.4483
+          },
+          {
+            "feature_id": "f:ASC__P_LH2_TANK__osc_rms",
+            "r": 0.7937,
+            "cohens_d": 5.4449
+          },
+          {
+            "feature_id": "f:ASC__P_LH2_TANK__std",
+            "r": 0.7747,
+            "cohens_d": 5.1118
+          },
+          {
+            "feature_id": "f:CD__P_LH2_TANK__osc_rms",
+            "r": 0.7692,
+            "cohens_d": 5.023
+          },
+          {
+            "feature_id": "f:ASC__P_LH2_TANK__min",
+            "r": -0.4674,
+            "cohens_d": -2.2056
+          }
+        ]
+      },
+      {
+        "id": "fm:BUS_VOLTAGE_SAG",
+        "label": "Bus voltage sag at power transfer",
+        "canonical": "BUS_VOLTAGE_SAG",
+        "category": "electrical",
+        "phase": "countdown",
+        "call": "HOLD",
+        "severity": "medium",
+        "subsystem": "avionics_power",
+        "base_rate": 0.064,
+        "threshold": 0.963014,
+        "top_features": [
+          {
+            "feature_id": "f:CD__BUS_28V__min",
+            "r": -0.7797,
+            "cohens_d": -5.0885
+          },
+          {
+            "feature_id": "f:CD__BUS_28V__transfer_dip",
+            "r": 0.7644,
+            "cohens_d": 4.8442
+          },
+          {
+            "feature_id": "f:CD__BUS_28V__min_post",
+            "r": -0.7527,
+            "cohens_d": -4.6717
+          },
+          {
+            "feature_id": "f:CD__BUS_28V__mean",
+            "r": -0.6559,
+            "cohens_d": -3.5504
+          },
+          {
+            "feature_id": "f:CD__BUS_28V__post_transfer",
+            "r": -0.5954,
+            "cohens_d": -3.0274
+          }
+        ]
+      },
+      {
+        "id": "fm:SLOW_ENGINE_START",
+        "label": "Slow core engine start",
+        "canonical": "SLOW_ENGINE_START",
+        "category": "core_engine",
+        "phase": "engine_start",
+        "call": "ABORT",
+        "severity": "critical",
+        "subsystem": "core_engine",
+        "base_rate": 0.0572,
+        "threshold": 0.995,
+        "top_features": [
+          {
+            "feature_id": "f:IGN__PC_CORE__at2p5",
+            "r": -0.7775,
+            "cohens_d": -5.3242
+          },
+          {
+            "feature_id": "f:IGN__PC_CORE__t90",
+            "r": 0.7772,
+            "cohens_d": 5.32
+          },
+          {
+            "feature_id": "f:IGN__PC_CORE__t50",
+            "r": 0.7771,
+            "cohens_d": 5.3179
+          },
+          {
+            "feature_id": "f:IGN__N_LOX_TP__mean",
+            "r": -0.7715,
+            "cohens_d": -5.2228
+          },
+          {
+            "feature_id": "f:IGN__PC_CORE__mean",
+            "r": -0.7631,
+            "cohens_d": -5.085
+          }
+        ]
+      },
+      {
+        "id": "fm:LOX_PUMP_CAVITATION",
+        "label": "LOX turbopump cavitation",
+        "canonical": "LOX_PUMP_CAVITATION",
+        "category": "core_engine",
+        "phase": "engine_start",
+        "call": "ABORT",
+        "severity": "critical",
+        "subsystem": "core_engine",
+        "base_rate": 0.0488,
+        "threshold": 0.840004,
+        "top_features": [
+          {
+            "feature_id": "f:IGN__N_LOX_TP__max",
+            "r": 0.57,
+            "cohens_d": 3.2194
+          },
+          {
+            "feature_id": "f:IGN__N_LOX_TP__spike_count",
+            "r": 0.4601,
+            "cohens_d": 2.4051
+          },
+          {
+            "feature_id": "f:ASC__N_LOX_TP__spike_count",
+            "r": 0.4409,
+            "cohens_d": 2.2794
+          },
+          {
+            "feature_id": "f:ASC__N_LOX_TP__max",
+            "r": 0.4139,
+            "cohens_d": 2.11
+          },
+          {
+            "feature_id": "f:ASC__PC_CORE__min",
+            "r": -0.2983,
+            "cohens_d": -1.4501
+          }
+        ]
+      },
+      {
+        "id": "fm:COMBUSTION_INSTABILITY",
+        "label": "Combustion instability",
+        "canonical": "COMBUSTION_INSTABILITY",
+        "category": "core_engine",
+        "phase": "engine_start_or_flight",
+        "call": "ABORT",
+        "severity": "critical",
+        "subsystem": "core_engine",
+        "base_rate": 0.0672,
+        "threshold": 0.377112,
+        "top_features": [
+          {
+            "feature_id": "f:ASC__VIB_ENG__excess_max",
+            "r": 0.8194,
+            "cohens_d": 5.7111
+          },
+          {
+            "feature_id": "f:ASC__VIB_ENG__min",
+            "r": 0.7939,
+            "cohens_d": 5.2165
+          },
+          {
+            "feature_id": "f:ASC__PC_CORE__rough",
+            "r": 0.7828,
+            "cohens_d": 5.0249
+          },
+          {
+            "feature_id": "f:ASC__VIB_ENG__excess_mean",
+            "r": 0.7605,
+            "cohens_d": 4.6779
+          },
+          {
+            "feature_id": "f:ASC__VIB_ENG__mean",
+            "r": 0.7469,
+            "cohens_d": 4.4872
+          }
+        ]
+      },
+      {
+        "id": "fm:TURBINE_OVERTEMP",
+        "label": "Turbine over-temperature",
+        "canonical": "TURBINE_OVERTEMP",
+        "category": "core_engine",
+        "phase": "flight",
+        "call": "CRITICAL",
+        "severity": "critical",
+        "subsystem": "core_engine",
+        "base_rate": 0.0632,
+        "threshold": 0.752899,
+        "top_features": [
+          {
+            "feature_id": "f:XC__T_corroborated_max",
+            "r": 0.8058,
+            "cohens_d": 5.5935
+          },
+          {
+            "feature_id": "f:ASC__N_LOX_TP__rise_max",
+            "r": 0.7898,
+            "cohens_d": 5.293
+          },
+          {
+            "feature_id": "f:ASC__N_LOX_TP__std",
+            "r": 0.7896,
+            "cohens_d": 5.2886
+          },
+          {
+            "feature_id": "f:ASC__PC_CORE__rise_max",
+            "r": 0.7745,
+            "cohens_d": 5.032
+          },
+          {
+            "feature_id": "f:ASC__ACC_AX__min",
+            "r": 0.4833,
+            "cohens_d": 2.2684
+          }
+        ]
+      },
+      {
+        "id": "fm:TEMP_SENSOR_FAULT",
+        "label": "Turbine temperature sensor fault",
+        "canonical": "TEMP_SENSOR_FAULT",
+        "category": "instrumentation",
+        "phase": "flight",
+        "call": "ADVISORY",
+        "severity": "medium",
+        "subsystem": "core_engine",
+        "base_rate": 0.0564,
+        "threshold": 0.05,
+        "top_features": [
+          {
+            "feature_id": "f:ASC__T_TURB_IN__step_max",
+            "r": 0.7814,
+            "cohens_d": 5.4283
+          },
+          {
+            "feature_id": "f:XC__T_unexplained_max",
+            "r": 0.7351,
+            "cohens_d": 4.7004
+          },
+          {
+            "feature_id": "f:ASC__T_TURB_IN__max",
+            "r": 0.7315,
+            "cohens_d": 4.6508
+          },
+          {
+            "feature_id": "f:ASC__T_TURB_IN__rise_max",
+            "r": 0.6887,
+            "cohens_d": 4.1174
+          },
+          {
+            "feature_id": "f:ASC__T_TURB_IN__std",
+            "r": 0.676,
+            "cohens_d": 3.9766
+          }
+        ]
+      },
+      {
+        "id": "fm:SRB_THRUST_ASYMMETRY",
+        "label": "Booster thrust imbalance",
+        "canonical": "SRB_THRUST_ASYMMETRY",
+        "category": "boosters",
+        "phase": "flight",
+        "call": "WARNING",
+        "severity": "high",
+        "subsystem": "boosters",
+        "base_rate": 0.0584,
+        "threshold": 0.966593,
+        "top_features": [
+          {
+            "feature_id": "f:XC__yaw_imbalance_corr",
+            "r": 0.7379,
+            "cohens_d": 4.6627
+          },
+          {
+            "feature_id": "f:ASC__SRB__imbalance_max",
+            "r": 0.7166,
+            "cohens_d": 4.3808
+          },
+          {
+            "feature_id": "f:ASC__SRB__imbalance_mean",
+            "r": 0.5347,
+            "cohens_d": 2.6981
+          },
+          {
+            "feature_id": "f:ASC__ACC_AX__std",
+            "r": -0.2176,
+            "cohens_d": -0.9507
+          },
+          {
+            "feature_id": "f:ASC__TVC_YAW__bias_absmax",
+            "r": 0.1475,
+            "cohens_d": 0.6358
+          }
+        ]
+      },
+      {
+        "id": "fm:TVC_ACTUATOR_DEGRADATION",
+        "label": "TVC actuator degradation",
+        "canonical": "TVC_ACTUATOR_DEGRADATION",
+        "category": "flight_control",
+        "phase": "flight",
+        "call": "WARNING",
+        "severity": "high",
+        "subsystem": "flight_control",
+        "base_rate": 0.0676,
+        "threshold": 0.766985,
+        "top_features": [
+          {
+            "feature_id": "f:ASC__TVC_PITCH__lc_rms",
+            "r": 0.4833,
+            "cohens_d": 2.1984
+          },
+          {
+            "feature_id": "f:ASC__TVC_PITCH__lc_rms_max10",
+            "r": 0.2294,
+            "cohens_d": 0.9384
+          },
+          {
+            "feature_id": "f:ASC__TVC_PITCH__std",
+            "r": 0.0528,
+            "cohens_d": 0.2106
+          },
+          {
+            "feature_id": "f:CD__P_LH2_TANK__max",
+            "r": -0.0466,
+            "cohens_d": -0.1859
+          },
+          {
+            "feature_id": "f:IGN__VIB_ENG__min",
+            "r": -0.0463,
+            "cohens_d": -0.1845
+          }
+        ]
+      },
+      {
+        "id": "fm:POGO_ONSET",
+        "label": "POGO onset",
+        "canonical": "POGO_ONSET",
+        "category": "structural_dynamics",
+        "phase": "flight",
+        "call": "WARNING",
+        "severity": "high",
+        "subsystem": "structure",
+        "base_rate": 0.0612,
+        "threshold": 0.493235,
+        "top_features": [
+          {
+            "feature_id": "f:ASC__ACC_AX__pogo_rms_max5",
+            "r": 0.8201,
+            "cohens_d": 5.9799
+          },
+          {
+            "feature_id": "f:LATE__ACC_AX__pogo_rms",
+            "r": 0.8052,
+            "cohens_d": 5.6649
+          },
+          {
+            "feature_id": "f:ASC__PC_CORE__pogo_rms_max5",
+            "r": 0.534,
+            "cohens_d": 2.635
+          },
+          {
+            "feature_id": "f:ASC__ACC_AX__max",
+            "r": 0.4636,
+            "cohens_d": 2.1822
+          },
+          {
+            "feature_id": "f:ASC__PC_CORE__rough_max5",
+            "r": 0.3751,
+            "cohens_d": 1.6879
+          }
+        ]
+      },
+      {
+        "id": "fm:TRAJECTORY_DEVIATION",
+        "label": "Trajectory deviation",
+        "canonical": "TRAJECTORY_DEVIATION",
+        "category": "guidance",
+        "phase": "flight",
+        "call": "CRITICAL",
+        "severity": "critical",
+        "subsystem": "guidance",
+        "base_rate": 0.0628,
+        "threshold": 0.256468,
+        "top_features": [
+          {
+            "feature_id": "f:FLT__TRAJ_DEV__band_rise_max",
+            "r": 0.7998,
+            "cohens_d": 5.4934
+          },
+          {
+            "feature_id": "f:FLT__TRAJ_DEV__band_rise_now",
+            "r": 0.791,
+            "cohens_d": 5.3295
+          },
+          {
+            "feature_id": "f:FLT__TRAJ_DEV__rate_now",
+            "r": 0.7737,
+            "cohens_d": 5.0351
+          },
+          {
+            "feature_id": "f:FLT__TRAJ_DEV__rate_max",
+            "r": 0.773,
+            "cohens_d": 5.0235
+          },
+          {
+            "feature_id": "f:FLT__TRAJ_DEV__now",
+            "r": 0.735,
+            "cohens_d": 4.4682
+          }
+        ]
+      }
+    ],
+    "features": [
+      {
+        "id": "f:ASC__ACC_AX__max",
+        "label": "Axial acceleration, maximum over the boosted ascent",
+        "unit": "g",
+        "phase": "ASC",
+        "channels": [
+          "ACC_AX"
+        ]
+      },
+      {
+        "id": "f:ASC__ACC_AX__min",
+        "label": "Axial acceleration, minimum over the boosted ascent",
+        "unit": "g",
+        "phase": "ASC",
+        "channels": [
+          "ACC_AX"
+        ]
+      },
+      {
+        "id": "f:ASC__ACC_AX__pogo_rms_max5",
+        "label": "Axial acceleration oscillation 10-20 Hz, worst 5 s",
+        "unit": "g",
+        "phase": "ASC",
+        "channels": [
+          "ACC_AX"
+        ]
+      },
+      {
+        "id": "f:ASC__ACC_AX__std",
+        "label": "Axial acceleration, standard deviation over the boosted ascent",
+        "unit": "g",
+        "phase": "ASC",
+        "channels": [
+          "ACC_AX"
+        ]
+      },
+      {
+        "id": "f:ASC__N_LOX_TP__max",
+        "label": "LOX turbopump speed, maximum over the boosted ascent",
+        "unit": "%",
+        "phase": "ASC",
+        "channels": [
+          "N_LOX_TP"
+        ]
+      },
+      {
+        "id": "f:ASC__N_LOX_TP__rise_max",
+        "label": "LOX pump speed rise above the pad plateau (max)",
+        "unit": "%",
+        "phase": "ASC",
+        "channels": [
+          "N_LOX_TP"
+        ]
+      },
+      {
+        "id": "f:ASC__N_LOX_TP__spike_count",
+        "label": "LOX pump speed spikes above 1 % in ascent (samples)",
+        "unit": "count",
+        "phase": "ASC",
+        "channels": [
+          "N_LOX_TP"
+        ]
+      },
+      {
+        "id": "f:ASC__N_LOX_TP__std",
+        "label": "LOX turbopump speed, standard deviation over the boosted ascent",
+        "unit": "%",
+        "phase": "ASC",
+        "channels": [
+          "N_LOX_TP"
+        ]
+      },
+      {
+        "id": "f:ASC__PC_CORE__min",
+        "label": "Core chamber pressure, minimum over the boosted ascent",
+        "unit": "bar",
+        "phase": "ASC",
+        "channels": [
+          "PC_CORE"
+        ]
+      },
+      {
+        "id": "f:ASC__PC_CORE__pogo_rms_max5",
+        "label": "Chamber pressure oscillation 10-20 Hz, worst 5 s",
+        "unit": "bar",
+        "phase": "ASC",
+        "channels": [
+          "PC_CORE"
+        ]
+      },
+      {
+        "id": "f:ASC__PC_CORE__rise_max",
+        "label": "Chamber pressure rise above the pad plateau (max)",
+        "unit": "bar",
+        "phase": "ASC",
+        "channels": [
+          "PC_CORE"
+        ]
+      },
+      {
+        "id": "f:ASC__PC_CORE__rough",
+        "label": "Chamber pressure roughness (>1.5 Hz RMS) in ascent",
+        "unit": "bar",
+        "phase": "ASC",
+        "channels": [
+          "PC_CORE"
+        ]
+      },
+      {
+        "id": "f:ASC__PC_CORE__rough_max5",
+        "label": "Chamber pressure roughness, worst 5 s of ascent",
+        "unit": "bar",
+        "phase": "ASC",
+        "channels": [
+          "PC_CORE"
+        ]
+      },
+      {
+        "id": "f:ASC__P_LH2_TANK__min",
+        "label": "LH2 tank pressure, minimum over the boosted ascent",
+        "unit": "bar",
+        "phase": "ASC",
+        "channels": [
+          "P_LH2_TANK"
+        ]
+      },
+      {
+        "id": "f:ASC__P_LH2_TANK__osc_rms",
+        "label": "LH2 tank pressure oscillation in ascent (RMS)",
+        "unit": "bar",
+        "phase": "ASC",
+        "channels": [
+          "P_LH2_TANK"
+        ]
+      },
+      {
+        "id": "f:ASC__P_LH2_TANK__std",
+        "label": "LH2 tank pressure, standard deviation over the boosted ascent",
+        "unit": "bar",
+        "phase": "ASC",
+        "channels": [
+          "P_LH2_TANK"
+        ]
+      },
+      {
+        "id": "f:ASC__P_LOX_TANK__mean",
+        "label": "LOX tank pressure, mean over the boosted ascent",
+        "unit": "bar",
+        "phase": "ASC",
+        "channels": [
+          "P_LOX_TANK"
+        ]
+      },
+      {
+        "id": "f:ASC__SRB__imbalance_max",
+        "label": "Booster chamber pressure imbalance, worst 2 s",
+        "unit": "%",
+        "phase": "ASC",
+        "channels": [
+          "PC_SRB_L",
+          "PC_SRB_R"
+        ]
+      },
+      {
+        "id": "f:ASC__SRB__imbalance_mean",
+        "label": "Booster chamber pressure imbalance, mean",
+        "unit": "%",
+        "phase": "ASC",
+        "channels": [
+          "PC_SRB_L",
+          "PC_SRB_R"
+        ]
+      },
+      {
+        "id": "f:ASC__TVC_PITCH__lc_rms",
+        "label": "TVC pitch oscillation 0.9-2.4 Hz (RMS)",
+        "unit": "deg",
+        "phase": "ASC",
+        "channels": [
+          "TVC_PITCH"
+        ]
+      },
+      {
+        "id": "f:ASC__TVC_PITCH__lc_rms_max10",
+        "label": "TVC pitch oscillation 0.9-2.4 Hz, worst 10 s",
+        "unit": "deg",
+        "phase": "ASC",
+        "channels": [
+          "TVC_PITCH"
+        ]
+      },
+      {
+        "id": "f:ASC__TVC_PITCH__std",
+        "label": "TVC pitch deflection, standard deviation over the boosted ascent",
+        "unit": "deg",
+        "phase": "ASC",
+        "channels": [
+          "TVC_PITCH"
+        ]
+      },
+      {
+        "id": "f:ASC__TVC_YAW__bias_absmax",
+        "label": "TVC yaw offset (3 s mean), largest magnitude",
+        "unit": "deg",
+        "phase": "ASC",
+        "channels": [
+          "TVC_YAW"
+        ]
+      },
+      {
+        "id": "f:ASC__T_TURB_IN__max",
+        "label": "Turbine inlet temperature, maximum over the boosted ascent",
+        "unit": "K",
+        "phase": "ASC",
+        "channels": [
+          "T_TURB_IN"
+        ]
+      },
+      {
+        "id": "f:ASC__T_TURB_IN__rise_max",
+        "label": "Turbine temperature rise above the pad plateau (max)",
+        "unit": "K",
+        "phase": "ASC",
+        "channels": [
+          "T_TURB_IN"
+        ]
+      },
+      {
+        "id": "f:ASC__T_TURB_IN__std",
+        "label": "Turbine inlet temperature, standard deviation over the boosted ascent",
+        "unit": "K",
+        "phase": "ASC",
+        "channels": [
+          "T_TURB_IN"
+        ]
+      },
+      {
+        "id": "f:ASC__T_TURB_IN__step_max",
+        "label": "Largest turbine temperature jump within 0.2 s",
+        "unit": "K",
+        "phase": "ASC",
+        "channels": [
+          "T_TURB_IN"
+        ]
+      },
+      {
+        "id": "f:ASC__VIB_ENG__excess_max",
+        "label": "Engine-bay vibration vs the nominal profile, worst 1 s",
+        "unit": "ratio",
+        "phase": "ASC",
+        "channels": [
+          "VIB_ENG"
+        ]
+      },
+      {
+        "id": "f:ASC__VIB_ENG__excess_mean",
+        "label": "Engine-bay vibration vs the nominal profile, mean",
+        "unit": "ratio",
+        "phase": "ASC",
+        "channels": [
+          "VIB_ENG"
+        ]
+      },
+      {
+        "id": "f:ASC__VIB_ENG__mean",
+        "label": "Engine-bay vibration, mean over the boosted ascent",
+        "unit": "g rms",
+        "phase": "ASC",
+        "channels": [
+          "VIB_ENG"
+        ]
+      },
+      {
+        "id": "f:ASC__VIB_ENG__min",
+        "label": "Engine-bay vibration, minimum over the boosted ascent",
+        "unit": "g rms",
+        "phase": "ASC",
+        "channels": [
+          "VIB_ENG"
+        ]
+      },
+      {
+        "id": "f:CD__BUS_28V__mean",
+        "label": "Avionics bus voltage, mean over the countdown",
+        "unit": "V",
+        "phase": "CD",
+        "channels": [
+          "BUS_28V"
+        ]
+      },
+      {
+        "id": "f:CD__BUS_28V__min",
+        "label": "Avionics bus voltage, minimum over the countdown",
+        "unit": "V",
+        "phase": "CD",
+        "channels": [
+          "BUS_28V"
+        ]
+      },
+      {
+        "id": "f:CD__BUS_28V__min_post",
+        "label": "Lowest bus voltage from 2 s after the transfer",
+        "unit": "V",
+        "phase": "CD",
+        "channels": [
+          "BUS_28V"
+        ]
+      },
+      {
+        "id": "f:CD__BUS_28V__post_transfer",
+        "label": "Bus voltage after the power transfer (mean from -25 s)",
+        "unit": "V",
+        "phase": "CD",
+        "channels": [
+          "BUS_28V"
+        ]
+      },
+      {
+        "id": "f:CD__BUS_28V__transfer_dip",
+        "label": "Bus voltage dip at the switch to onboard power",
+        "unit": "V",
+        "phase": "CD",
+        "channels": [
+          "BUS_28V"
+        ]
+      },
+      {
+        "id": "f:CD__P_LH2_TANK__max",
+        "label": "LH2 tank pressure, maximum over the countdown",
+        "unit": "bar",
+        "phase": "CD",
+        "channels": [
+          "P_LH2_TANK"
+        ]
+      },
+      {
+        "id": "f:CD__P_LH2_TANK__osc_rms",
+        "label": "LH2 tank pressure oscillation (0.15-0.5 Hz RMS)",
+        "unit": "bar",
+        "phase": "CD",
+        "channels": [
+          "P_LH2_TANK"
+        ]
+      },
+      {
+        "id": "f:CD__P_LH2_TANK__osc_rms_max5",
+        "label": "LH2 pressure oscillation, strongest 5 s",
+        "unit": "bar",
+        "phase": "CD",
+        "channels": [
+          "P_LH2_TANK"
+        ]
+      },
+      {
+        "id": "f:CD__P_LOX_TANK__max",
+        "label": "LOX tank pressure, maximum over the countdown",
+        "unit": "bar",
+        "phase": "CD",
+        "channels": [
+          "P_LOX_TANK"
+        ]
+      },
+      {
+        "id": "f:CD__P_LOX_TANK__mean",
+        "label": "LOX tank pressure, mean over the countdown",
+        "unit": "bar",
+        "phase": "CD",
+        "channels": [
+          "P_LOX_TANK"
+        ]
+      },
+      {
+        "id": "f:CD__P_LOX_TANK__ramp_deficit",
+        "label": "LOX tank pressure shortfall vs the reference ramp",
+        "unit": "bar",
+        "phase": "CD",
+        "channels": [
+          "P_LOX_TANK"
+        ]
+      },
+      {
+        "id": "f:CD__P_LOX_TANK__t_ready",
+        "label": "Time for LOX tank pressure to reach 3.3 bar",
+        "unit": "s",
+        "phase": "CD",
+        "channels": [
+          "P_LOX_TANK"
+        ]
+      },
+      {
+        "id": "f:FLT__TRAJ_DEV__band_rise_max",
+        "label": "Rise of the trajectory deviation against the normal spread over 20 s, largest so far",
+        "unit": "ratio",
+        "phase": "FLT",
+        "channels": [
+          "TRAJ_DEV"
+        ]
+      },
+      {
+        "id": "f:FLT__TRAJ_DEV__band_rise_now",
+        "label": "Rise of the trajectory deviation against the normal spread over the last 20 s",
+        "unit": "ratio",
+        "phase": "FLT",
+        "channels": [
+          "TRAJ_DEV"
+        ]
+      },
+      {
+        "id": "f:FLT__TRAJ_DEV__now",
+        "label": "Trajectory deviation, last 1 s",
+        "unit": "km",
+        "phase": "FLT",
+        "channels": [
+          "TRAJ_DEV"
+        ]
+      },
+      {
+        "id": "f:FLT__TRAJ_DEV__rate_max",
+        "label": "Trajectory deviation growth, fastest 5 s so far",
+        "unit": "km/s",
+        "phase": "FLT",
+        "channels": [
+          "TRAJ_DEV"
+        ]
+      },
+      {
+        "id": "f:FLT__TRAJ_DEV__rate_now",
+        "label": "Trajectory deviation growth over the last 5 s",
+        "unit": "km/s",
+        "phase": "FLT",
+        "channels": [
+          "TRAJ_DEV"
+        ]
+      },
+      {
+        "id": "f:IGN__N_LOX_TP__max",
+        "label": "LOX turbopump speed, maximum over the engine start",
+        "unit": "%",
+        "phase": "IGN",
+        "channels": [
+          "N_LOX_TP"
+        ]
+      },
+      {
+        "id": "f:IGN__N_LOX_TP__mean",
+        "label": "LOX turbopump speed, mean over the engine start",
+        "unit": "%",
+        "phase": "IGN",
+        "channels": [
+          "N_LOX_TP"
+        ]
+      },
+      {
+        "id": "f:IGN__N_LOX_TP__spike_count",
+        "label": "LOX pump speed spikes above 1 % (samples)",
+        "unit": "count",
+        "phase": "IGN",
+        "channels": [
+          "N_LOX_TP"
+        ]
+      },
+      {
+        "id": "f:IGN__PC_CORE__at2p5",
+        "label": "Chamber pressure at H0 + 2.5 s",
+        "unit": "bar",
+        "phase": "IGN",
+        "channels": [
+          "PC_CORE"
+        ]
+      },
+      {
+        "id": "f:IGN__PC_CORE__mean",
+        "label": "Core chamber pressure, mean over the engine start",
+        "unit": "bar",
+        "phase": "IGN",
+        "channels": [
+          "PC_CORE"
+        ]
+      },
+      {
+        "id": "f:IGN__PC_CORE__t50",
+        "label": "Time for chamber pressure to reach 50 % of nominal",
+        "unit": "s",
+        "phase": "IGN",
+        "channels": [
+          "PC_CORE"
+        ]
+      },
+      {
+        "id": "f:IGN__PC_CORE__t90",
+        "label": "Time for chamber pressure to reach 90 % of nominal",
+        "unit": "s",
+        "phase": "IGN",
+        "channels": [
+          "PC_CORE"
+        ]
+      },
+      {
+        "id": "f:IGN__VIB_ENG__min",
+        "label": "Engine-bay vibration, minimum over the engine start",
+        "unit": "g rms",
+        "phase": "IGN",
+        "channels": [
+          "VIB_ENG"
+        ]
+      },
+      {
+        "id": "f:LATE__ACC_AX__pogo_rms",
+        "label": "Axial acceleration oscillation 10-20 Hz, late ascent",
+        "unit": "g",
+        "phase": "LATE",
+        "channels": [
+          "ACC_AX"
+        ]
+      },
+      {
+        "id": "f:XC__T_corroborated_max",
+        "label": "Temperature rise confirmed by a pump speed rise, max",
+        "unit": "K",
+        "phase": "XC",
+        "channels": [
+          "T_TURB_IN",
+          "N_LOX_TP"
+        ]
+      },
+      {
+        "id": "f:XC__T_unexplained_max",
+        "label": "Temperature rise not explained by pump speed (40 K per %), max",
+        "unit": "K",
+        "phase": "XC",
+        "channels": [
+          "T_TURB_IN",
+          "N_LOX_TP"
+        ]
+      },
+      {
+        "id": "f:XC__yaw_imbalance_corr",
+        "label": "Correlation of TVC yaw offset with booster imbalance",
+        "unit": "r",
+        "phase": "XC",
+        "channels": [
+          "TVC_YAW",
+          "PC_SRB_L",
+          "PC_SRB_R"
+        ]
+      }
+    ],
+    "rules": [
+      {
+        "id": "disc:thr_LOX_TANK_UNDERPRESSURE_3",
+        "short_id": "R-01",
+        "type": "THRESHOLD",
+        "text": "IF Time for LOX tank pressure to reach 3.3 bar > 12 s THEN LOX tank under-pressure",
+        "evidence_grade": "A",
+        "sensitivity": 0.8844,
+        "specificity": 0.9983
+      },
+      {
+        "id": "disc:thr_LOX_TANK_UNDERPRESSURE_1",
+        "short_id": "R-02",
+        "type": "THRESHOLD",
+        "text": "IF LOX tank pressure, mean over the countdown < 3.19 bar THEN LOX tank under-pressure",
+        "evidence_grade": "A",
+        "sensitivity": 0.8439,
+        "specificity": 0.9979
+      },
+      {
+        "id": "disc:thr_LOX_TANK_UNDERPRESSURE_2",
+        "short_id": "R-03",
+        "type": "THRESHOLD",
+        "text": "IF LOX tank pressure shortfall vs the reference ramp > 0.095 bar THEN LOX tank under-pressure",
+        "evidence_grade": "A",
+        "sensitivity": 0.8439,
+        "specificity": 0.9979
+      },
+      {
+        "id": "disc:thr_LOX_TANK_UNDERPRESSURE_4",
+        "short_id": "R-04",
+        "type": "THRESHOLD",
+        "text": "IF LOX tank pressure, maximum over the countdown < 3.44 bar THEN LOX tank under-pressure",
+        "evidence_grade": "B",
+        "sensitivity": 0.7861,
+        "specificity": 0.9961
+      },
+      {
+        "id": "disc:thr_LOX_TANK_UNDERPRESSURE_5",
+        "short_id": "R-05",
+        "type": "THRESHOLD",
+        "text": "IF LOX tank pressure, mean over the boosted ascent < 3.41 bar THEN LOX tank under-pressure",
+        "evidence_grade": "B",
+        "sensitivity": 0.7861,
+        "specificity": 0.9961
+      },
+      {
+        "id": "disc:thr_LH2_PRESS_OSCILLATION_8",
+        "short_id": "R-06",
+        "type": "THRESHOLD",
+        "text": "IF LH2 tank pressure, standard deviation over the boosted ascent > 0.0141 bar THEN LH2 pressure regulator oscillation",
+        "evidence_grade": "A",
+        "sensitivity": 0.8301,
+        "specificity": 1.0
+      },
+      {
+        "id": "disc:thr_LH2_PRESS_OSCILLATION_6",
+        "short_id": "R-07",
+        "type": "THRESHOLD",
+        "text": "IF LH2 pressure oscillation, strongest 5 s > 0.0146 bar THEN LH2 pressure regulator oscillation",
+        "evidence_grade": "A",
+        "sensitivity": 0.8431,
+        "specificity": 0.9983
+      },
+      {
+        "id": "disc:thr_LH2_PRESS_OSCILLATION_7",
+        "short_id": "R-08",
+        "type": "THRESHOLD",
+        "text": "IF LH2 tank pressure oscillation in ascent (RMS) > 0.0109 bar THEN LH2 pressure regulator oscillation",
+        "evidence_grade": "A",
+        "sensitivity": 0.8431,
+        "specificity": 0.9979
+      },
+      {
+        "id": "disc:thr_LH2_PRESS_OSCILLATION_9",
+        "short_id": "R-09",
+        "type": "THRESHOLD",
+        "text": "IF LH2 tank pressure oscillation (0.15-0.5 Hz RMS) > 0.0107 bar THEN LH2 pressure regulator oscillation",
+        "evidence_grade": "B",
+        "sensitivity": 0.7974,
+        "specificity": 0.9991
+      },
+      {
+        "id": "disc:thr_BUS_VOLTAGE_SAG_13",
+        "short_id": "R-10",
+        "type": "THRESHOLD",
+        "text": "IF Lowest bus voltage from 2 s after the transfer < 28.1 V THEN Bus voltage sag at power transfer",
+        "evidence_grade": "A",
+        "sensitivity": 0.8063,
+        "specificity": 0.9966
+      },
+      {
+        "id": "disc:thr_BUS_VOLTAGE_SAG_12",
+        "short_id": "R-11",
+        "type": "THRESHOLD",
+        "text": "IF Bus voltage dip at the switch to onboard power > 0.787 V THEN Bus voltage sag at power transfer",
+        "evidence_grade": "B",
+        "sensitivity": 0.7063,
+        "specificity": 0.9983
+      },
+      {
+        "id": "disc:thr_BUS_VOLTAGE_SAG_11",
+        "short_id": "R-12",
+        "type": "THRESHOLD",
+        "text": "IF Avionics bus voltage, minimum over the countdown < 27.3 V THEN Bus voltage sag at power transfer",
+        "evidence_grade": "B",
+        "sensitivity": 0.775,
+        "specificity": 0.9915
+      },
+      {
+        "id": "disc:thr_BUS_VOLTAGE_SAG_14",
+        "short_id": "R-13",
+        "type": "THRESHOLD",
+        "text": "IF Avionics bus voltage, mean over the countdown < 28.1 V THEN Bus voltage sag at power transfer",
+        "evidence_grade": "B",
+        "sensitivity": 0.6937,
+        "specificity": 0.9944
+      },
+      {
+        "id": "disc:thr_SLOW_ENGINE_START_16",
+        "short_id": "R-14",
+        "type": "THRESHOLD",
+        "text": "IF Chamber pressure at H0 + 2.5 s < 102 bar THEN Slow core engine start",
+        "evidence_grade": "A",
+        "sensitivity": 0.8462,
+        "specificity": 0.9924
+      },
+      {
+        "id": "disc:thr_SLOW_ENGINE_START_18",
+        "short_id": "R-15",
+        "type": "THRESHOLD",
+        "text": "IF Time for chamber pressure to reach 50 % of nominal > 1.88 s THEN Slow core engine start",
+        "evidence_grade": "A",
+        "sensitivity": 0.8182,
+        "specificity": 0.9941
+      },
+      {
+        "id": "disc:thr_SLOW_ENGINE_START_17",
+        "short_id": "R-16",
+        "type": "THRESHOLD",
+        "text": "IF Time for chamber pressure to reach 90 % of nominal > 2.58 s THEN Slow core engine start",
+        "evidence_grade": "B",
+        "sensitivity": 0.7762,
+        "specificity": 0.997
+      },
+      {
+        "id": "disc:thr_SLOW_ENGINE_START_19",
+        "short_id": "R-17",
+        "type": "THRESHOLD",
+        "text": "IF LOX turbopump speed, mean over the engine start < 72.1 % THEN Slow core engine start",
+        "evidence_grade": "B",
+        "sensitivity": 0.7483,
+        "specificity": 0.9992
+      },
+      {
+        "id": "disc:thr_SLOW_ENGINE_START_20",
+        "short_id": "R-18",
+        "type": "THRESHOLD",
+        "text": "IF Core chamber pressure, mean over the engine start < 82.2 bar THEN Slow core engine start",
+        "evidence_grade": "B",
+        "sensitivity": 0.7972,
+        "specificity": 0.9936
+      },
+      {
+        "id": "disc:thr_COMBUSTION_INSTABILITY_27",
+        "short_id": "R-19",
+        "type": "THRESHOLD",
+        "text": "IF Engine-bay vibration, minimum over the boosted ascent > 1.01 g rms THEN Combustion instability",
+        "evidence_grade": "A",
+        "sensitivity": 0.8869,
+        "specificity": 1.0
+      },
+      {
+        "id": "disc:thr_COMBUSTION_INSTABILITY_26",
+        "short_id": "R-20",
+        "type": "THRESHOLD",
+        "text": "IF Engine-bay vibration vs the nominal profile, worst 1 s > 1.32 ratio THEN Combustion instability",
+        "evidence_grade": "A",
+        "sensitivity": 0.869,
+        "specificity": 0.9987
+      },
+      {
+        "id": "disc:thr_COMBUSTION_INSTABILITY_29",
+        "short_id": "R-21",
+        "type": "THRESHOLD",
+        "text": "IF Engine-bay vibration vs the nominal profile, mean > 1.23 ratio THEN Combustion instability",
+        "evidence_grade": "B",
+        "sensitivity": 0.7262,
+        "specificity": 1.0
+      },
+      {
+        "id": "disc:thr_COMBUSTION_INSTABILITY_30",
+        "short_id": "R-22",
+        "type": "THRESHOLD",
+        "text": "IF Engine-bay vibration, mean over the boosted ascent > 2.02 g rms THEN Combustion instability",
+        "evidence_grade": "B",
+        "sensitivity": 0.7083,
+        "specificity": 1.0
+      },
+      {
+        "id": "disc:thr_COMBUSTION_INSTABILITY_28",
+        "short_id": "R-23",
+        "type": "THRESHOLD",
+        "text": "IF Chamber pressure roughness (>1.5 Hz RMS) in ascent > 0.46 bar THEN Combustion instability",
+        "evidence_grade": "A",
+        "sensitivity": 0.8274,
+        "specificity": 0.9837
+      },
+      {
+        "id": "disc:thr_TURBINE_OVERTEMP_31",
+        "short_id": "R-24",
+        "type": "THRESHOLD",
+        "text": "IF Temperature rise confirmed by a pump speed rise, max > 26.9 K THEN Turbine over-temperature",
+        "evidence_grade": "B",
+        "sensitivity": 0.7911,
+        "specificity": 0.9996
+      },
+      {
+        "id": "disc:thr_TURBINE_OVERTEMP_33",
+        "short_id": "R-25",
+        "type": "THRESHOLD",
+        "text": "IF LOX turbopump speed, standard deviation over the boosted ascent > 0.323 % THEN Turbine over-temperature",
+        "evidence_grade": "B",
+        "sensitivity": 0.7911,
+        "specificity": 0.9974
+      },
+      {
+        "id": "disc:thr_TURBINE_OVERTEMP_32",
+        "short_id": "R-26",
+        "type": "THRESHOLD",
+        "text": "IF LOX pump speed rise above the pad plateau (max) > 0.686 % THEN Turbine over-temperature",
+        "evidence_grade": "B",
+        "sensitivity": 0.7975,
+        "specificity": 0.9923
+      },
+      {
+        "id": "disc:thr_TURBINE_OVERTEMP_34",
+        "short_id": "R-27",
+        "type": "THRESHOLD",
+        "text": "IF Chamber pressure rise above the pad plateau (max) > 0.819 bar THEN Turbine over-temperature",
+        "evidence_grade": "A",
+        "sensitivity": 0.8418,
+        "specificity": 0.9816
+      },
+      {
+        "id": "disc:thr_TEMP_SENSOR_FAULT_36",
+        "short_id": "R-28",
+        "type": "THRESHOLD",
+        "text": "IF Largest turbine temperature jump within 0.2 s > 18.9 K THEN Turbine temperature sensor fault",
+        "evidence_grade": "A",
+        "sensitivity": 0.9858,
+        "specificity": 1.0
+      },
+      {
+        "id": "disc:thr_TEMP_SENSOR_FAULT_37",
+        "short_id": "R-29",
+        "type": "THRESHOLD",
+        "text": "IF Temperature rise not explained by pump speed (40 K per %), max > 39.9 K THEN Turbine temperature sensor fault",
+        "evidence_grade": "B",
+        "sensitivity": 0.7801,
+        "specificity": 0.9966
+      },
+      {
+        "id": "disc:thr_TEMP_SENSOR_FAULT_38",
+        "short_id": "R-30",
+        "type": "THRESHOLD",
+        "text": "IF Turbine inlet temperature, maximum over the boosted ascent > 1032 K THEN Turbine temperature sensor fault",
+        "evidence_grade": "B",
+        "sensitivity": 0.617,
+        "specificity": 0.997
+      },
+      {
+        "id": "disc:thr_TEMP_SENSOR_FAULT_40",
+        "short_id": "R-31",
+        "type": "THRESHOLD",
+        "text": "IF Turbine inlet temperature, standard deviation over the boosted ascent > 13.6 K THEN Turbine temperature sensor fault",
+        "evidence_grade": "A",
+        "sensitivity": 0.8652,
+        "specificity": 0.9496
+      },
+      {
+        "id": "disc:thr_SRB_THRUST_ASYMMETRY_41",
+        "short_id": "R-32",
+        "type": "THRESHOLD",
+        "text": "IF Correlation of TVC yaw offset with booster imbalance > 0.389 r THEN Booster thrust imbalance",
+        "evidence_grade": "A",
+        "sensitivity": 0.9315,
+        "specificity": 0.9975
+      },
+      {
+        "id": "disc:thr_SRB_THRUST_ASYMMETRY_42",
+        "short_id": "R-33",
+        "type": "THRESHOLD",
+        "text": "IF Booster chamber pressure imbalance, worst 2 s > 2.64 % THEN Booster thrust imbalance",
+        "evidence_grade": "B",
+        "sensitivity": 0.7192,
+        "specificity": 0.986
+      },
+      {
+        "id": "disc:thr_POGO_ONSET_51",
+        "short_id": "R-34",
+        "type": "THRESHOLD",
+        "text": "IF Axial acceleration oscillation 10-20 Hz, worst 5 s > 0.0172 g THEN POGO onset",
+        "evidence_grade": "A",
+        "sensitivity": 0.8693,
+        "specificity": 1.0
+      },
+      {
+        "id": "disc:thr_POGO_ONSET_52",
+        "short_id": "R-35",
+        "type": "THRESHOLD",
+        "text": "IF Axial acceleration oscillation 10-20 Hz, late ascent > 0.0135 g THEN POGO onset",
+        "evidence_grade": "A",
+        "sensitivity": 0.8497,
+        "specificity": 1.0
+      },
+      {
+        "id": "disc:thr_POGO_ONSET_53",
+        "short_id": "R-36",
+        "type": "THRESHOLD",
+        "text": "IF Chamber pressure oscillation 10-20 Hz, worst 5 s > 0.245 bar THEN POGO onset",
+        "evidence_grade": "A",
+        "sensitivity": 0.915,
+        "specificity": 0.9305
+      },
+      {
+        "id": "disc:thr_POGO_ONSET_55",
+        "short_id": "R-37",
+        "type": "THRESHOLD",
+        "text": "IF Chamber pressure roughness, worst 5 s of ascent > 0.359 bar THEN POGO onset",
+        "evidence_grade": "A",
+        "sensitivity": 0.8497,
+        "specificity": 0.9046
+      },
+      {
+        "id": "disc:thr_TRAJECTORY_DEVIATION_57",
+        "short_id": "R-38",
+        "type": "THRESHOLD",
+        "text": "IF Rise of the trajectory deviation against the normal spread over the last 20 s > 0.0465 ratio THEN Trajectory deviation",
+        "evidence_grade": "A",
+        "sensitivity": 1.0,
+        "specificity": 1.0
+      },
+      {
+        "id": "disc:thr_TRAJECTORY_DEVIATION_58",
+        "short_id": "R-39",
+        "type": "THRESHOLD",
+        "text": "IF Trajectory deviation growth over the last 5 s > 0.0578 km/s THEN Trajectory deviation",
+        "evidence_grade": "A",
+        "sensitivity": 0.9745,
+        "specificity": 1.0
+      },
+      {
+        "id": "disc:thr_TRAJECTORY_DEVIATION_59",
+        "short_id": "R-40",
+        "type": "THRESHOLD",
+        "text": "IF Trajectory deviation growth, fastest 5 s so far > 0.0596 km/s THEN Trajectory deviation",
+        "evidence_grade": "A",
+        "sensitivity": 0.9745,
+        "specificity": 1.0
+      },
+      {
+        "id": "disc:thr_TRAJECTORY_DEVIATION_56",
+        "short_id": "R-41",
+        "type": "THRESHOLD",
+        "text": "IF Rise of the trajectory deviation against the normal spread over 20 s, largest so far > 0.34 ratio THEN Trajectory deviation",
+        "evidence_grade": "A",
+        "sensitivity": 0.9363,
+        "specificity": 1.0
+      },
+      {
+        "id": "disc:thr_TRAJECTORY_DEVIATION_60",
+        "short_id": "R-42",
+        "type": "THRESHOLD",
+        "text": "IF Trajectory deviation, last 1 s > 3.32 km THEN Trajectory deviation",
+        "evidence_grade": "A",
+        "sensitivity": 0.9299,
+        "specificity": 1.0
+      },
+      {
+        "id": "rule:mutex_mutex_discovered_0",
+        "type": "MUTEX",
+        "text": "Turbine temperature sensor fault and Turbine over-temperature were never seen together",
+        "evidence_grade": "A"
+      }
+    ],
+    "actions": [
+      {
+        "id": "act:HOLD",
+        "label": "HOLD",
+        "description": "Stop the countdown clock (hold) and recycle"
+      },
+      {
+        "id": "act:ABORT",
+        "label": "ABORT",
+        "description": "Shut the core engine down before booster ignition"
+      },
+      {
+        "id": "act:CRITICAL",
+        "label": "CRITICAL",
+        "description": "Alert mission director and flight safety: critical in-flight anomaly"
+      },
+      {
+        "id": "act:WARNING",
+        "label": "WARNING",
+        "description": "Alert mission director: degraded in-flight performance"
+      },
+      {
+        "id": "act:ADVISORY",
+        "label": "ADVISORY",
+        "description": "Flag the sensor as failed; do not act on its redline without corroboration"
+      }
+    ],
+    "phases": [
+      {
+        "id": "phase:countdown",
+        "label": "Final countdown",
+        "window": [
+          -60,
+          0
+        ]
+      },
+      {
+        "id": "phase:engine_start",
+        "label": "Engine start",
+        "window": [
+          0,
+          7
+        ]
+      },
+      {
+        "id": "phase:flight",
+        "label": "Boosted ascent",
+        "window": [
+          7,
+          150
+        ]
+      }
+    ]
+  },
+  "edges": [
+    {
+      "type": "MEASURED_ON",
+      "from": "f:ASC__ACC_AX__max",
+      "to": "ch:ACC_AX"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:ASC__ACC_AX__min",
+      "to": "ch:ACC_AX"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:ASC__ACC_AX__pogo_rms_max5",
+      "to": "ch:ACC_AX"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:ASC__ACC_AX__std",
+      "to": "ch:ACC_AX"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:ASC__N_LOX_TP__max",
+      "to": "ch:N_LOX_TP"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:ASC__N_LOX_TP__rise_max",
+      "to": "ch:N_LOX_TP"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:ASC__N_LOX_TP__spike_count",
+      "to": "ch:N_LOX_TP"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:ASC__N_LOX_TP__std",
+      "to": "ch:N_LOX_TP"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:ASC__PC_CORE__min",
+      "to": "ch:PC_CORE"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:ASC__PC_CORE__pogo_rms_max5",
+      "to": "ch:PC_CORE"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:ASC__PC_CORE__rise_max",
+      "to": "ch:PC_CORE"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:ASC__PC_CORE__rough",
+      "to": "ch:PC_CORE"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:ASC__PC_CORE__rough_max5",
+      "to": "ch:PC_CORE"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:ASC__P_LH2_TANK__min",
+      "to": "ch:P_LH2_TANK"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:ASC__P_LH2_TANK__osc_rms",
+      "to": "ch:P_LH2_TANK"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:ASC__P_LH2_TANK__std",
+      "to": "ch:P_LH2_TANK"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:ASC__P_LOX_TANK__mean",
+      "to": "ch:P_LOX_TANK"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:ASC__SRB__imbalance_max",
+      "to": "ch:PC_SRB_L"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:ASC__SRB__imbalance_max",
+      "to": "ch:PC_SRB_R"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:ASC__SRB__imbalance_mean",
+      "to": "ch:PC_SRB_L"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:ASC__SRB__imbalance_mean",
+      "to": "ch:PC_SRB_R"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:ASC__TVC_PITCH__lc_rms",
+      "to": "ch:TVC_PITCH"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:ASC__TVC_PITCH__lc_rms_max10",
+      "to": "ch:TVC_PITCH"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:ASC__TVC_PITCH__std",
+      "to": "ch:TVC_PITCH"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:ASC__TVC_YAW__bias_absmax",
+      "to": "ch:TVC_YAW"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:ASC__T_TURB_IN__max",
+      "to": "ch:T_TURB_IN"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:ASC__T_TURB_IN__rise_max",
+      "to": "ch:T_TURB_IN"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:ASC__T_TURB_IN__std",
+      "to": "ch:T_TURB_IN"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:ASC__T_TURB_IN__step_max",
+      "to": "ch:T_TURB_IN"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:ASC__VIB_ENG__excess_max",
+      "to": "ch:VIB_ENG"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:ASC__VIB_ENG__excess_mean",
+      "to": "ch:VIB_ENG"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:ASC__VIB_ENG__mean",
+      "to": "ch:VIB_ENG"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:ASC__VIB_ENG__min",
+      "to": "ch:VIB_ENG"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:CD__BUS_28V__mean",
+      "to": "ch:BUS_28V"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:CD__BUS_28V__min",
+      "to": "ch:BUS_28V"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:CD__BUS_28V__min_post",
+      "to": "ch:BUS_28V"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:CD__BUS_28V__post_transfer",
+      "to": "ch:BUS_28V"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:CD__BUS_28V__transfer_dip",
+      "to": "ch:BUS_28V"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:CD__P_LH2_TANK__max",
+      "to": "ch:P_LH2_TANK"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:CD__P_LH2_TANK__osc_rms",
+      "to": "ch:P_LH2_TANK"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:CD__P_LH2_TANK__osc_rms_max5",
+      "to": "ch:P_LH2_TANK"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:CD__P_LOX_TANK__max",
+      "to": "ch:P_LOX_TANK"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:CD__P_LOX_TANK__mean",
+      "to": "ch:P_LOX_TANK"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:CD__P_LOX_TANK__ramp_deficit",
+      "to": "ch:P_LOX_TANK"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:CD__P_LOX_TANK__t_ready",
+      "to": "ch:P_LOX_TANK"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:FLT__TRAJ_DEV__band_rise_max",
+      "to": "ch:TRAJ_DEV"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:FLT__TRAJ_DEV__band_rise_now",
+      "to": "ch:TRAJ_DEV"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:FLT__TRAJ_DEV__now",
+      "to": "ch:TRAJ_DEV"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:FLT__TRAJ_DEV__rate_max",
+      "to": "ch:TRAJ_DEV"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:FLT__TRAJ_DEV__rate_now",
+      "to": "ch:TRAJ_DEV"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:IGN__N_LOX_TP__max",
+      "to": "ch:N_LOX_TP"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:IGN__N_LOX_TP__mean",
+      "to": "ch:N_LOX_TP"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:IGN__N_LOX_TP__spike_count",
+      "to": "ch:N_LOX_TP"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:IGN__PC_CORE__at2p5",
+      "to": "ch:PC_CORE"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:IGN__PC_CORE__mean",
+      "to": "ch:PC_CORE"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:IGN__PC_CORE__t50",
+      "to": "ch:PC_CORE"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:IGN__PC_CORE__t90",
+      "to": "ch:PC_CORE"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:IGN__VIB_ENG__min",
+      "to": "ch:VIB_ENG"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:LATE__ACC_AX__pogo_rms",
+      "to": "ch:ACC_AX"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:XC__T_corroborated_max",
+      "to": "ch:T_TURB_IN"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:XC__T_corroborated_max",
+      "to": "ch:N_LOX_TP"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:XC__T_unexplained_max",
+      "to": "ch:T_TURB_IN"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:XC__T_unexplained_max",
+      "to": "ch:N_LOX_TP"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:XC__yaw_imbalance_corr",
+      "to": "ch:TVC_YAW"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:XC__yaw_imbalance_corr",
+      "to": "ch:PC_SRB_L"
+    },
+    {
+      "type": "MEASURED_ON",
+      "from": "f:XC__yaw_imbalance_corr",
+      "to": "ch:PC_SRB_R"
+    },
+    {
+      "type": "PART_OF",
+      "from": "ch:PC_CORE",
+      "to": "sub:core_engine"
+    },
+    {
+      "type": "PART_OF",
+      "from": "ch:N_LOX_TP",
+      "to": "sub:core_engine"
+    },
+    {
+      "type": "PART_OF",
+      "from": "ch:T_TURB_IN",
+      "to": "sub:core_engine"
+    },
+    {
+      "type": "PART_OF",
+      "from": "ch:P_LOX_TANK",
+      "to": "sub:tanks"
+    },
+    {
+      "type": "PART_OF",
+      "from": "ch:P_LH2_TANK",
+      "to": "sub:tanks"
+    },
+    {
+      "type": "PART_OF",
+      "from": "ch:PC_SRB_L",
+      "to": "sub:boosters"
+    },
+    {
+      "type": "PART_OF",
+      "from": "ch:PC_SRB_R",
+      "to": "sub:boosters"
+    },
+    {
+      "type": "PART_OF",
+      "from": "ch:TVC_PITCH",
+      "to": "sub:flight_control"
+    },
+    {
+      "type": "PART_OF",
+      "from": "ch:TVC_YAW",
+      "to": "sub:flight_control"
+    },
+    {
+      "type": "PART_OF",
+      "from": "ch:ACC_AX",
+      "to": "sub:structure"
+    },
+    {
+      "type": "PART_OF",
+      "from": "ch:VIB_ENG",
+      "to": "sub:core_engine"
+    },
+    {
+      "type": "PART_OF",
+      "from": "ch:BUS_28V",
+      "to": "sub:avionics_power"
+    },
+    {
+      "type": "PART_OF",
+      "from": "ch:TRAJ_DEV",
+      "to": "sub:guidance"
+    },
+    {
+      "type": "LOCATED_IN",
+      "from": "fm:LOX_TANK_UNDERPRESSURE",
+      "to": "sub:tanks"
+    },
+    {
+      "type": "SEEN_ON",
+      "from": "fm:LOX_TANK_UNDERPRESSURE",
+      "to": "ch:P_LOX_TANK"
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:LOX_TANK_UNDERPRESSURE",
+      "to": "f:CD__P_LOX_TANK__mean",
+      "r": -0.8085,
+      "cohens_d": -5.4135
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:LOX_TANK_UNDERPRESSURE",
+      "to": "f:CD__P_LOX_TANK__ramp_deficit",
+      "r": 0.8077,
+      "cohens_d": 5.3989
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:LOX_TANK_UNDERPRESSURE",
+      "to": "f:CD__P_LOX_TANK__t_ready",
+      "r": 0.7609,
+      "cohens_d": 4.6203
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:LOX_TANK_UNDERPRESSURE",
+      "to": "f:CD__P_LOX_TANK__max",
+      "r": -0.7515,
+      "cohens_d": -4.4887
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:LOX_TANK_UNDERPRESSURE",
+      "to": "f:ASC__P_LOX_TANK__mean",
+      "r": -0.7497,
+      "cohens_d": -4.4636
+    },
+    {
+      "type": "TRIGGERS",
+      "from": "fm:LOX_TANK_UNDERPRESSURE",
+      "to": "act:HOLD"
+    },
+    {
+      "type": "OCCURS_IN",
+      "from": "fm:LOX_TANK_UNDERPRESSURE",
+      "to": "phase:countdown"
+    },
+    {
+      "type": "LOCATED_IN",
+      "from": "fm:LH2_PRESS_OSCILLATION",
+      "to": "sub:tanks"
+    },
+    {
+      "type": "SEEN_ON",
+      "from": "fm:LH2_PRESS_OSCILLATION",
+      "to": "ch:P_LH2_TANK"
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:LH2_PRESS_OSCILLATION",
+      "to": "f:CD__P_LH2_TANK__osc_rms_max5",
+      "r": 0.7939,
+      "cohens_d": 5.4483
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:LH2_PRESS_OSCILLATION",
+      "to": "f:ASC__P_LH2_TANK__osc_rms",
+      "r": 0.7937,
+      "cohens_d": 5.4449
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:LH2_PRESS_OSCILLATION",
+      "to": "f:ASC__P_LH2_TANK__std",
+      "r": 0.7747,
+      "cohens_d": 5.1118
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:LH2_PRESS_OSCILLATION",
+      "to": "f:CD__P_LH2_TANK__osc_rms",
+      "r": 0.7692,
+      "cohens_d": 5.023
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:LH2_PRESS_OSCILLATION",
+      "to": "f:ASC__P_LH2_TANK__min",
+      "r": -0.4674,
+      "cohens_d": -2.2056
+    },
+    {
+      "type": "TRIGGERS",
+      "from": "fm:LH2_PRESS_OSCILLATION",
+      "to": "act:HOLD"
+    },
+    {
+      "type": "OCCURS_IN",
+      "from": "fm:LH2_PRESS_OSCILLATION",
+      "to": "phase:countdown"
+    },
+    {
+      "type": "LOCATED_IN",
+      "from": "fm:BUS_VOLTAGE_SAG",
+      "to": "sub:avionics_power"
+    },
+    {
+      "type": "SEEN_ON",
+      "from": "fm:BUS_VOLTAGE_SAG",
+      "to": "ch:BUS_28V"
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:BUS_VOLTAGE_SAG",
+      "to": "f:CD__BUS_28V__min",
+      "r": -0.7797,
+      "cohens_d": -5.0885
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:BUS_VOLTAGE_SAG",
+      "to": "f:CD__BUS_28V__transfer_dip",
+      "r": 0.7644,
+      "cohens_d": 4.8442
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:BUS_VOLTAGE_SAG",
+      "to": "f:CD__BUS_28V__min_post",
+      "r": -0.7527,
+      "cohens_d": -4.6717
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:BUS_VOLTAGE_SAG",
+      "to": "f:CD__BUS_28V__mean",
+      "r": -0.6559,
+      "cohens_d": -3.5504
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:BUS_VOLTAGE_SAG",
+      "to": "f:CD__BUS_28V__post_transfer",
+      "r": -0.5954,
+      "cohens_d": -3.0274
+    },
+    {
+      "type": "TRIGGERS",
+      "from": "fm:BUS_VOLTAGE_SAG",
+      "to": "act:HOLD"
+    },
+    {
+      "type": "OCCURS_IN",
+      "from": "fm:BUS_VOLTAGE_SAG",
+      "to": "phase:countdown"
+    },
+    {
+      "type": "LOCATED_IN",
+      "from": "fm:SLOW_ENGINE_START",
+      "to": "sub:core_engine"
+    },
+    {
+      "type": "SEEN_ON",
+      "from": "fm:SLOW_ENGINE_START",
+      "to": "ch:PC_CORE"
+    },
+    {
+      "type": "SEEN_ON",
+      "from": "fm:SLOW_ENGINE_START",
+      "to": "ch:N_LOX_TP"
+    },
+    {
+      "type": "SEEN_ON",
+      "from": "fm:SLOW_ENGINE_START",
+      "to": "ch:T_TURB_IN"
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:SLOW_ENGINE_START",
+      "to": "f:IGN__PC_CORE__at2p5",
+      "r": -0.7775,
+      "cohens_d": -5.3242
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:SLOW_ENGINE_START",
+      "to": "f:IGN__PC_CORE__t90",
+      "r": 0.7772,
+      "cohens_d": 5.32
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:SLOW_ENGINE_START",
+      "to": "f:IGN__PC_CORE__t50",
+      "r": 0.7771,
+      "cohens_d": 5.3179
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:SLOW_ENGINE_START",
+      "to": "f:IGN__N_LOX_TP__mean",
+      "r": -0.7715,
+      "cohens_d": -5.2228
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:SLOW_ENGINE_START",
+      "to": "f:IGN__PC_CORE__mean",
+      "r": -0.7631,
+      "cohens_d": -5.085
+    },
+    {
+      "type": "TRIGGERS",
+      "from": "fm:SLOW_ENGINE_START",
+      "to": "act:ABORT"
+    },
+    {
+      "type": "OCCURS_IN",
+      "from": "fm:SLOW_ENGINE_START",
+      "to": "phase:engine_start"
+    },
+    {
+      "type": "LOCATED_IN",
+      "from": "fm:LOX_PUMP_CAVITATION",
+      "to": "sub:core_engine"
+    },
+    {
+      "type": "SEEN_ON",
+      "from": "fm:LOX_PUMP_CAVITATION",
+      "to": "ch:N_LOX_TP"
+    },
+    {
+      "type": "SEEN_ON",
+      "from": "fm:LOX_PUMP_CAVITATION",
+      "to": "ch:PC_CORE"
+    },
+    {
+      "type": "SEEN_ON",
+      "from": "fm:LOX_PUMP_CAVITATION",
+      "to": "ch:VIB_ENG"
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:LOX_PUMP_CAVITATION",
+      "to": "f:IGN__N_LOX_TP__max",
+      "r": 0.57,
+      "cohens_d": 3.2194
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:LOX_PUMP_CAVITATION",
+      "to": "f:IGN__N_LOX_TP__spike_count",
+      "r": 0.4601,
+      "cohens_d": 2.4051
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:LOX_PUMP_CAVITATION",
+      "to": "f:ASC__N_LOX_TP__spike_count",
+      "r": 0.4409,
+      "cohens_d": 2.2794
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:LOX_PUMP_CAVITATION",
+      "to": "f:ASC__N_LOX_TP__max",
+      "r": 0.4139,
+      "cohens_d": 2.11
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:LOX_PUMP_CAVITATION",
+      "to": "f:ASC__PC_CORE__min",
+      "r": -0.2983,
+      "cohens_d": -1.4501
+    },
+    {
+      "type": "TRIGGERS",
+      "from": "fm:LOX_PUMP_CAVITATION",
+      "to": "act:ABORT"
+    },
+    {
+      "type": "OCCURS_IN",
+      "from": "fm:LOX_PUMP_CAVITATION",
+      "to": "phase:engine_start"
+    },
+    {
+      "type": "LOCATED_IN",
+      "from": "fm:COMBUSTION_INSTABILITY",
+      "to": "sub:core_engine"
+    },
+    {
+      "type": "SEEN_ON",
+      "from": "fm:COMBUSTION_INSTABILITY",
+      "to": "ch:PC_CORE"
+    },
+    {
+      "type": "SEEN_ON",
+      "from": "fm:COMBUSTION_INSTABILITY",
+      "to": "ch:VIB_ENG"
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:COMBUSTION_INSTABILITY",
+      "to": "f:ASC__VIB_ENG__excess_max",
+      "r": 0.8194,
+      "cohens_d": 5.7111
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:COMBUSTION_INSTABILITY",
+      "to": "f:ASC__VIB_ENG__min",
+      "r": 0.7939,
+      "cohens_d": 5.2165
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:COMBUSTION_INSTABILITY",
+      "to": "f:ASC__PC_CORE__rough",
+      "r": 0.7828,
+      "cohens_d": 5.0249
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:COMBUSTION_INSTABILITY",
+      "to": "f:ASC__VIB_ENG__excess_mean",
+      "r": 0.7605,
+      "cohens_d": 4.6779
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:COMBUSTION_INSTABILITY",
+      "to": "f:ASC__VIB_ENG__mean",
+      "r": 0.7469,
+      "cohens_d": 4.4872
+    },
+    {
+      "type": "TRIGGERS",
+      "from": "fm:COMBUSTION_INSTABILITY",
+      "to": "act:ABORT"
+    },
+    {
+      "type": "TRIGGERS",
+      "from": "fm:COMBUSTION_INSTABILITY",
+      "to": "act:CRITICAL"
+    },
+    {
+      "type": "OCCURS_IN",
+      "from": "fm:COMBUSTION_INSTABILITY",
+      "to": "phase:engine_start"
+    },
+    {
+      "type": "OCCURS_IN",
+      "from": "fm:COMBUSTION_INSTABILITY",
+      "to": "phase:flight"
+    },
+    {
+      "type": "LOCATED_IN",
+      "from": "fm:TURBINE_OVERTEMP",
+      "to": "sub:core_engine"
+    },
+    {
+      "type": "SEEN_ON",
+      "from": "fm:TURBINE_OVERTEMP",
+      "to": "ch:T_TURB_IN"
+    },
+    {
+      "type": "SEEN_ON",
+      "from": "fm:TURBINE_OVERTEMP",
+      "to": "ch:N_LOX_TP"
+    },
+    {
+      "type": "SEEN_ON",
+      "from": "fm:TURBINE_OVERTEMP",
+      "to": "ch:PC_CORE"
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:TURBINE_OVERTEMP",
+      "to": "f:XC__T_corroborated_max",
+      "r": 0.8058,
+      "cohens_d": 5.5935
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:TURBINE_OVERTEMP",
+      "to": "f:ASC__N_LOX_TP__rise_max",
+      "r": 0.7898,
+      "cohens_d": 5.293
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:TURBINE_OVERTEMP",
+      "to": "f:ASC__N_LOX_TP__std",
+      "r": 0.7896,
+      "cohens_d": 5.2886
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:TURBINE_OVERTEMP",
+      "to": "f:ASC__PC_CORE__rise_max",
+      "r": 0.7745,
+      "cohens_d": 5.032
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:TURBINE_OVERTEMP",
+      "to": "f:ASC__ACC_AX__min",
+      "r": 0.4833,
+      "cohens_d": 2.2684
+    },
+    {
+      "type": "TRIGGERS",
+      "from": "fm:TURBINE_OVERTEMP",
+      "to": "act:CRITICAL"
+    },
+    {
+      "type": "OCCURS_IN",
+      "from": "fm:TURBINE_OVERTEMP",
+      "to": "phase:flight"
+    },
+    {
+      "type": "LOCATED_IN",
+      "from": "fm:TEMP_SENSOR_FAULT",
+      "to": "sub:core_engine"
+    },
+    {
+      "type": "SEEN_ON",
+      "from": "fm:TEMP_SENSOR_FAULT",
+      "to": "ch:T_TURB_IN"
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:TEMP_SENSOR_FAULT",
+      "to": "f:ASC__T_TURB_IN__step_max",
+      "r": 0.7814,
+      "cohens_d": 5.4283
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:TEMP_SENSOR_FAULT",
+      "to": "f:XC__T_unexplained_max",
+      "r": 0.7351,
+      "cohens_d": 4.7004
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:TEMP_SENSOR_FAULT",
+      "to": "f:ASC__T_TURB_IN__max",
+      "r": 0.7315,
+      "cohens_d": 4.6508
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:TEMP_SENSOR_FAULT",
+      "to": "f:ASC__T_TURB_IN__rise_max",
+      "r": 0.6887,
+      "cohens_d": 4.1174
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:TEMP_SENSOR_FAULT",
+      "to": "f:ASC__T_TURB_IN__std",
+      "r": 0.676,
+      "cohens_d": 3.9766
+    },
+    {
+      "type": "TRIGGERS",
+      "from": "fm:TEMP_SENSOR_FAULT",
+      "to": "act:ADVISORY"
+    },
+    {
+      "type": "OCCURS_IN",
+      "from": "fm:TEMP_SENSOR_FAULT",
+      "to": "phase:flight"
+    },
+    {
+      "type": "LOCATED_IN",
+      "from": "fm:SRB_THRUST_ASYMMETRY",
+      "to": "sub:boosters"
+    },
+    {
+      "type": "SEEN_ON",
+      "from": "fm:SRB_THRUST_ASYMMETRY",
+      "to": "ch:PC_SRB_L"
+    },
+    {
+      "type": "SEEN_ON",
+      "from": "fm:SRB_THRUST_ASYMMETRY",
+      "to": "ch:PC_SRB_R"
+    },
+    {
+      "type": "SEEN_ON",
+      "from": "fm:SRB_THRUST_ASYMMETRY",
+      "to": "ch:TVC_YAW"
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:SRB_THRUST_ASYMMETRY",
+      "to": "f:XC__yaw_imbalance_corr",
+      "r": 0.7379,
+      "cohens_d": 4.6627
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:SRB_THRUST_ASYMMETRY",
+      "to": "f:ASC__SRB__imbalance_max",
+      "r": 0.7166,
+      "cohens_d": 4.3808
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:SRB_THRUST_ASYMMETRY",
+      "to": "f:ASC__SRB__imbalance_mean",
+      "r": 0.5347,
+      "cohens_d": 2.6981
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:SRB_THRUST_ASYMMETRY",
+      "to": "f:ASC__ACC_AX__std",
+      "r": -0.2176,
+      "cohens_d": -0.9507
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:SRB_THRUST_ASYMMETRY",
+      "to": "f:ASC__TVC_YAW__bias_absmax",
+      "r": 0.1475,
+      "cohens_d": 0.6358
+    },
+    {
+      "type": "TRIGGERS",
+      "from": "fm:SRB_THRUST_ASYMMETRY",
+      "to": "act:WARNING"
+    },
+    {
+      "type": "OCCURS_IN",
+      "from": "fm:SRB_THRUST_ASYMMETRY",
+      "to": "phase:flight"
+    },
+    {
+      "type": "LOCATED_IN",
+      "from": "fm:TVC_ACTUATOR_DEGRADATION",
+      "to": "sub:flight_control"
+    },
+    {
+      "type": "SEEN_ON",
+      "from": "fm:TVC_ACTUATOR_DEGRADATION",
+      "to": "ch:TVC_PITCH"
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:TVC_ACTUATOR_DEGRADATION",
+      "to": "f:ASC__TVC_PITCH__lc_rms",
+      "r": 0.4833,
+      "cohens_d": 2.1984
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:TVC_ACTUATOR_DEGRADATION",
+      "to": "f:ASC__TVC_PITCH__lc_rms_max10",
+      "r": 0.2294,
+      "cohens_d": 0.9384
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:TVC_ACTUATOR_DEGRADATION",
+      "to": "f:ASC__TVC_PITCH__std",
+      "r": 0.0528,
+      "cohens_d": 0.2106
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:TVC_ACTUATOR_DEGRADATION",
+      "to": "f:CD__P_LH2_TANK__max",
+      "r": -0.0466,
+      "cohens_d": -0.1859
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:TVC_ACTUATOR_DEGRADATION",
+      "to": "f:IGN__VIB_ENG__min",
+      "r": -0.0463,
+      "cohens_d": -0.1845
+    },
+    {
+      "type": "TRIGGERS",
+      "from": "fm:TVC_ACTUATOR_DEGRADATION",
+      "to": "act:WARNING"
+    },
+    {
+      "type": "OCCURS_IN",
+      "from": "fm:TVC_ACTUATOR_DEGRADATION",
+      "to": "phase:flight"
+    },
+    {
+      "type": "LOCATED_IN",
+      "from": "fm:POGO_ONSET",
+      "to": "sub:structure"
+    },
+    {
+      "type": "SEEN_ON",
+      "from": "fm:POGO_ONSET",
+      "to": "ch:ACC_AX"
+    },
+    {
+      "type": "SEEN_ON",
+      "from": "fm:POGO_ONSET",
+      "to": "ch:PC_CORE"
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:POGO_ONSET",
+      "to": "f:ASC__ACC_AX__pogo_rms_max5",
+      "r": 0.8201,
+      "cohens_d": 5.9799
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:POGO_ONSET",
+      "to": "f:LATE__ACC_AX__pogo_rms",
+      "r": 0.8052,
+      "cohens_d": 5.6649
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:POGO_ONSET",
+      "to": "f:ASC__PC_CORE__pogo_rms_max5",
+      "r": 0.534,
+      "cohens_d": 2.635
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:POGO_ONSET",
+      "to": "f:ASC__ACC_AX__max",
+      "r": 0.4636,
+      "cohens_d": 2.1822
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:POGO_ONSET",
+      "to": "f:ASC__PC_CORE__rough_max5",
+      "r": 0.3751,
+      "cohens_d": 1.6879
+    },
+    {
+      "type": "TRIGGERS",
+      "from": "fm:POGO_ONSET",
+      "to": "act:WARNING"
+    },
+    {
+      "type": "OCCURS_IN",
+      "from": "fm:POGO_ONSET",
+      "to": "phase:flight"
+    },
+    {
+      "type": "LOCATED_IN",
+      "from": "fm:TRAJECTORY_DEVIATION",
+      "to": "sub:guidance"
+    },
+    {
+      "type": "SEEN_ON",
+      "from": "fm:TRAJECTORY_DEVIATION",
+      "to": "ch:TRAJ_DEV"
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:TRAJECTORY_DEVIATION",
+      "to": "f:FLT__TRAJ_DEV__band_rise_max",
+      "r": 0.7998,
+      "cohens_d": 5.4934
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:TRAJECTORY_DEVIATION",
+      "to": "f:FLT__TRAJ_DEV__band_rise_now",
+      "r": 0.791,
+      "cohens_d": 5.3295
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:TRAJECTORY_DEVIATION",
+      "to": "f:FLT__TRAJ_DEV__rate_now",
+      "r": 0.7737,
+      "cohens_d": 5.0351
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:TRAJECTORY_DEVIATION",
+      "to": "f:FLT__TRAJ_DEV__rate_max",
+      "r": 0.773,
+      "cohens_d": 5.0235
+    },
+    {
+      "type": "DISCRIMINATED_BY",
+      "from": "fm:TRAJECTORY_DEVIATION",
+      "to": "f:FLT__TRAJ_DEV__now",
+      "r": 0.735,
+      "cohens_d": 4.4682
+    },
+    {
+      "type": "TRIGGERS",
+      "from": "fm:TRAJECTORY_DEVIATION",
+      "to": "act:CRITICAL"
+    },
+    {
+      "type": "OCCURS_IN",
+      "from": "fm:TRAJECTORY_DEVIATION",
+      "to": "phase:flight"
+    },
+    {
+      "type": "SUPPORTS",
+      "from": "disc:thr_LOX_TANK_UNDERPRESSURE_3",
+      "to": "fm:LOX_TANK_UNDERPRESSURE",
+      "sensitivity": 0.8844,
+      "specificity": 0.9983,
+      "evidence_grade": "A"
+    },
+    {
+      "type": "USES",
+      "from": "disc:thr_LOX_TANK_UNDERPRESSURE_3",
+      "to": "f:CD__P_LOX_TANK__t_ready"
+    },
+    {
+      "type": "SUPPORTS",
+      "from": "disc:thr_LOX_TANK_UNDERPRESSURE_1",
+      "to": "fm:LOX_TANK_UNDERPRESSURE",
+      "sensitivity": 0.8439,
+      "specificity": 0.9979,
+      "evidence_grade": "A"
+    },
+    {
+      "type": "USES",
+      "from": "disc:thr_LOX_TANK_UNDERPRESSURE_1",
+      "to": "f:CD__P_LOX_TANK__mean"
+    },
+    {
+      "type": "SUPPORTS",
+      "from": "disc:thr_LOX_TANK_UNDERPRESSURE_2",
+      "to": "fm:LOX_TANK_UNDERPRESSURE",
+      "sensitivity": 0.8439,
+      "specificity": 0.9979,
+      "evidence_grade": "A"
+    },
+    {
+      "type": "USES",
+      "from": "disc:thr_LOX_TANK_UNDERPRESSURE_2",
+      "to": "f:CD__P_LOX_TANK__ramp_deficit"
+    },
+    {
+      "type": "SUPPORTS",
+      "from": "disc:thr_LOX_TANK_UNDERPRESSURE_4",
+      "to": "fm:LOX_TANK_UNDERPRESSURE",
+      "sensitivity": 0.7861,
+      "specificity": 0.9961,
+      "evidence_grade": "B"
+    },
+    {
+      "type": "USES",
+      "from": "disc:thr_LOX_TANK_UNDERPRESSURE_4",
+      "to": "f:CD__P_LOX_TANK__max"
+    },
+    {
+      "type": "SUPPORTS",
+      "from": "disc:thr_LOX_TANK_UNDERPRESSURE_5",
+      "to": "fm:LOX_TANK_UNDERPRESSURE",
+      "sensitivity": 0.7861,
+      "specificity": 0.9961,
+      "evidence_grade": "B"
+    },
+    {
+      "type": "USES",
+      "from": "disc:thr_LOX_TANK_UNDERPRESSURE_5",
+      "to": "f:ASC__P_LOX_TANK__mean"
+    },
+    {
+      "type": "SUPPORTS",
+      "from": "disc:thr_LH2_PRESS_OSCILLATION_8",
+      "to": "fm:LH2_PRESS_OSCILLATION",
+      "sensitivity": 0.8301,
+      "specificity": 1.0,
+      "evidence_grade": "A"
+    },
+    {
+      "type": "USES",
+      "from": "disc:thr_LH2_PRESS_OSCILLATION_8",
+      "to": "f:ASC__P_LH2_TANK__std"
+    },
+    {
+      "type": "SUPPORTS",
+      "from": "disc:thr_LH2_PRESS_OSCILLATION_6",
+      "to": "fm:LH2_PRESS_OSCILLATION",
+      "sensitivity": 0.8431,
+      "specificity": 0.9983,
+      "evidence_grade": "A"
+    },
+    {
+      "type": "USES",
+      "from": "disc:thr_LH2_PRESS_OSCILLATION_6",
+      "to": "f:CD__P_LH2_TANK__osc_rms_max5"
+    },
+    {
+      "type": "SUPPORTS",
+      "from": "disc:thr_LH2_PRESS_OSCILLATION_7",
+      "to": "fm:LH2_PRESS_OSCILLATION",
+      "sensitivity": 0.8431,
+      "specificity": 0.9979,
+      "evidence_grade": "A"
+    },
+    {
+      "type": "USES",
+      "from": "disc:thr_LH2_PRESS_OSCILLATION_7",
+      "to": "f:ASC__P_LH2_TANK__osc_rms"
+    },
+    {
+      "type": "SUPPORTS",
+      "from": "disc:thr_LH2_PRESS_OSCILLATION_9",
+      "to": "fm:LH2_PRESS_OSCILLATION",
+      "sensitivity": 0.7974,
+      "specificity": 0.9991,
+      "evidence_grade": "B"
+    },
+    {
+      "type": "USES",
+      "from": "disc:thr_LH2_PRESS_OSCILLATION_9",
+      "to": "f:CD__P_LH2_TANK__osc_rms"
+    },
+    {
+      "type": "SUPPORTS",
+      "from": "disc:thr_BUS_VOLTAGE_SAG_13",
+      "to": "fm:BUS_VOLTAGE_SAG",
+      "sensitivity": 0.8063,
+      "specificity": 0.9966,
+      "evidence_grade": "A"
+    },
+    {
+      "type": "USES",
+      "from": "disc:thr_BUS_VOLTAGE_SAG_13",
+      "to": "f:CD__BUS_28V__min_post"
+    },
+    {
+      "type": "SUPPORTS",
+      "from": "disc:thr_BUS_VOLTAGE_SAG_12",
+      "to": "fm:BUS_VOLTAGE_SAG",
+      "sensitivity": 0.7063,
+      "specificity": 0.9983,
+      "evidence_grade": "B"
+    },
+    {
+      "type": "USES",
+      "from": "disc:thr_BUS_VOLTAGE_SAG_12",
+      "to": "f:CD__BUS_28V__transfer_dip"
+    },
+    {
+      "type": "SUPPORTS",
+      "from": "disc:thr_BUS_VOLTAGE_SAG_11",
+      "to": "fm:BUS_VOLTAGE_SAG",
+      "sensitivity": 0.775,
+      "specificity": 0.9915,
+      "evidence_grade": "B"
+    },
+    {
+      "type": "USES",
+      "from": "disc:thr_BUS_VOLTAGE_SAG_11",
+      "to": "f:CD__BUS_28V__min"
+    },
+    {
+      "type": "SUPPORTS",
+      "from": "disc:thr_BUS_VOLTAGE_SAG_14",
+      "to": "fm:BUS_VOLTAGE_SAG",
+      "sensitivity": 0.6937,
+      "specificity": 0.9944,
+      "evidence_grade": "B"
+    },
+    {
+      "type": "USES",
+      "from": "disc:thr_BUS_VOLTAGE_SAG_14",
+      "to": "f:CD__BUS_28V__mean"
+    },
+    {
+      "type": "SUPPORTS",
+      "from": "disc:thr_SLOW_ENGINE_START_16",
+      "to": "fm:SLOW_ENGINE_START",
+      "sensitivity": 0.8462,
+      "specificity": 0.9924,
+      "evidence_grade": "A"
+    },
+    {
+      "type": "USES",
+      "from": "disc:thr_SLOW_ENGINE_START_16",
+      "to": "f:IGN__PC_CORE__at2p5"
+    },
+    {
+      "type": "SUPPORTS",
+      "from": "disc:thr_SLOW_ENGINE_START_18",
+      "to": "fm:SLOW_ENGINE_START",
+      "sensitivity": 0.8182,
+      "specificity": 0.9941,
+      "evidence_grade": "A"
+    },
+    {
+      "type": "USES",
+      "from": "disc:thr_SLOW_ENGINE_START_18",
+      "to": "f:IGN__PC_CORE__t50"
+    },
+    {
+      "type": "SUPPORTS",
+      "from": "disc:thr_SLOW_ENGINE_START_17",
+      "to": "fm:SLOW_ENGINE_START",
+      "sensitivity": 0.7762,
+      "specificity": 0.997,
+      "evidence_grade": "B"
+    },
+    {
+      "type": "USES",
+      "from": "disc:thr_SLOW_ENGINE_START_17",
+      "to": "f:IGN__PC_CORE__t90"
+    },
+    {
+      "type": "SUPPORTS",
+      "from": "disc:thr_SLOW_ENGINE_START_19",
+      "to": "fm:SLOW_ENGINE_START",
+      "sensitivity": 0.7483,
+      "specificity": 0.9992,
+      "evidence_grade": "B"
+    },
+    {
+      "type": "USES",
+      "from": "disc:thr_SLOW_ENGINE_START_19",
+      "to": "f:IGN__N_LOX_TP__mean"
+    },
+    {
+      "type": "SUPPORTS",
+      "from": "disc:thr_SLOW_ENGINE_START_20",
+      "to": "fm:SLOW_ENGINE_START",
+      "sensitivity": 0.7972,
+      "specificity": 0.9936,
+      "evidence_grade": "B"
+    },
+    {
+      "type": "USES",
+      "from": "disc:thr_SLOW_ENGINE_START_20",
+      "to": "f:IGN__PC_CORE__mean"
+    },
+    {
+      "type": "SUPPORTS",
+      "from": "disc:thr_COMBUSTION_INSTABILITY_27",
+      "to": "fm:COMBUSTION_INSTABILITY",
+      "sensitivity": 0.8869,
+      "specificity": 1.0,
+      "evidence_grade": "A"
+    },
+    {
+      "type": "USES",
+      "from": "disc:thr_COMBUSTION_INSTABILITY_27",
+      "to": "f:ASC__VIB_ENG__min"
+    },
+    {
+      "type": "SUPPORTS",
+      "from": "disc:thr_COMBUSTION_INSTABILITY_26",
+      "to": "fm:COMBUSTION_INSTABILITY",
+      "sensitivity": 0.869,
+      "specificity": 0.9987,
+      "evidence_grade": "A"
+    },
+    {
+      "type": "USES",
+      "from": "disc:thr_COMBUSTION_INSTABILITY_26",
+      "to": "f:ASC__VIB_ENG__excess_max"
+    },
+    {
+      "type": "SUPPORTS",
+      "from": "disc:thr_COMBUSTION_INSTABILITY_29",
+      "to": "fm:COMBUSTION_INSTABILITY",
+      "sensitivity": 0.7262,
+      "specificity": 1.0,
+      "evidence_grade": "B"
+    },
+    {
+      "type": "USES",
+      "from": "disc:thr_COMBUSTION_INSTABILITY_29",
+      "to": "f:ASC__VIB_ENG__excess_mean"
+    },
+    {
+      "type": "SUPPORTS",
+      "from": "disc:thr_COMBUSTION_INSTABILITY_30",
+      "to": "fm:COMBUSTION_INSTABILITY",
+      "sensitivity": 0.7083,
+      "specificity": 1.0,
+      "evidence_grade": "B"
+    },
+    {
+      "type": "USES",
+      "from": "disc:thr_COMBUSTION_INSTABILITY_30",
+      "to": "f:ASC__VIB_ENG__mean"
+    },
+    {
+      "type": "SUPPORTS",
+      "from": "disc:thr_COMBUSTION_INSTABILITY_28",
+      "to": "fm:COMBUSTION_INSTABILITY",
+      "sensitivity": 0.8274,
+      "specificity": 0.9837,
+      "evidence_grade": "A"
+    },
+    {
+      "type": "USES",
+      "from": "disc:thr_COMBUSTION_INSTABILITY_28",
+      "to": "f:ASC__PC_CORE__rough"
+    },
+    {
+      "type": "SUPPORTS",
+      "from": "disc:thr_TURBINE_OVERTEMP_31",
+      "to": "fm:TURBINE_OVERTEMP",
+      "sensitivity": 0.7911,
+      "specificity": 0.9996,
+      "evidence_grade": "B"
+    },
+    {
+      "type": "USES",
+      "from": "disc:thr_TURBINE_OVERTEMP_31",
+      "to": "f:XC__T_corroborated_max"
+    },
+    {
+      "type": "SUPPORTS",
+      "from": "disc:thr_TURBINE_OVERTEMP_33",
+      "to": "fm:TURBINE_OVERTEMP",
+      "sensitivity": 0.7911,
+      "specificity": 0.9974,
+      "evidence_grade": "B"
+    },
+    {
+      "type": "USES",
+      "from": "disc:thr_TURBINE_OVERTEMP_33",
+      "to": "f:ASC__N_LOX_TP__std"
+    },
+    {
+      "type": "SUPPORTS",
+      "from": "disc:thr_TURBINE_OVERTEMP_32",
+      "to": "fm:TURBINE_OVERTEMP",
+      "sensitivity": 0.7975,
+      "specificity": 0.9923,
+      "evidence_grade": "B"
+    },
+    {
+      "type": "USES",
+      "from": "disc:thr_TURBINE_OVERTEMP_32",
+      "to": "f:ASC__N_LOX_TP__rise_max"
+    },
+    {
+      "type": "SUPPORTS",
+      "from": "disc:thr_TURBINE_OVERTEMP_34",
+      "to": "fm:TURBINE_OVERTEMP",
+      "sensitivity": 0.8418,
+      "specificity": 0.9816,
+      "evidence_grade": "A"
+    },
+    {
+      "type": "USES",
+      "from": "disc:thr_TURBINE_OVERTEMP_34",
+      "to": "f:ASC__PC_CORE__rise_max"
+    },
+    {
+      "type": "SUPPORTS",
+      "from": "disc:thr_TEMP_SENSOR_FAULT_36",
+      "to": "fm:TEMP_SENSOR_FAULT",
+      "sensitivity": 0.9858,
+      "specificity": 1.0,
+      "evidence_grade": "A"
+    },
+    {
+      "type": "USES",
+      "from": "disc:thr_TEMP_SENSOR_FAULT_36",
+      "to": "f:ASC__T_TURB_IN__step_max"
+    },
+    {
+      "type": "SUPPORTS",
+      "from": "disc:thr_TEMP_SENSOR_FAULT_37",
+      "to": "fm:TEMP_SENSOR_FAULT",
+      "sensitivity": 0.7801,
+      "specificity": 0.9966,
+      "evidence_grade": "B"
+    },
+    {
+      "type": "USES",
+      "from": "disc:thr_TEMP_SENSOR_FAULT_37",
+      "to": "f:XC__T_unexplained_max"
+    },
+    {
+      "type": "SUPPORTS",
+      "from": "disc:thr_TEMP_SENSOR_FAULT_38",
+      "to": "fm:TEMP_SENSOR_FAULT",
+      "sensitivity": 0.617,
+      "specificity": 0.997,
+      "evidence_grade": "B"
+    },
+    {
+      "type": "USES",
+      "from": "disc:thr_TEMP_SENSOR_FAULT_38",
+      "to": "f:ASC__T_TURB_IN__max"
+    },
+    {
+      "type": "SUPPORTS",
+      "from": "disc:thr_TEMP_SENSOR_FAULT_40",
+      "to": "fm:TEMP_SENSOR_FAULT",
+      "sensitivity": 0.8652,
+      "specificity": 0.9496,
+      "evidence_grade": "A"
+    },
+    {
+      "type": "USES",
+      "from": "disc:thr_TEMP_SENSOR_FAULT_40",
+      "to": "f:ASC__T_TURB_IN__std"
+    },
+    {
+      "type": "SUPPORTS",
+      "from": "disc:thr_SRB_THRUST_ASYMMETRY_41",
+      "to": "fm:SRB_THRUST_ASYMMETRY",
+      "sensitivity": 0.9315,
+      "specificity": 0.9975,
+      "evidence_grade": "A"
+    },
+    {
+      "type": "USES",
+      "from": "disc:thr_SRB_THRUST_ASYMMETRY_41",
+      "to": "f:XC__yaw_imbalance_corr"
+    },
+    {
+      "type": "SUPPORTS",
+      "from": "disc:thr_SRB_THRUST_ASYMMETRY_42",
+      "to": "fm:SRB_THRUST_ASYMMETRY",
+      "sensitivity": 0.7192,
+      "specificity": 0.986,
+      "evidence_grade": "B"
+    },
+    {
+      "type": "USES",
+      "from": "disc:thr_SRB_THRUST_ASYMMETRY_42",
+      "to": "f:ASC__SRB__imbalance_max"
+    },
+    {
+      "type": "SUPPORTS",
+      "from": "disc:thr_POGO_ONSET_51",
+      "to": "fm:POGO_ONSET",
+      "sensitivity": 0.8693,
+      "specificity": 1.0,
+      "evidence_grade": "A"
+    },
+    {
+      "type": "USES",
+      "from": "disc:thr_POGO_ONSET_51",
+      "to": "f:ASC__ACC_AX__pogo_rms_max5"
+    },
+    {
+      "type": "SUPPORTS",
+      "from": "disc:thr_POGO_ONSET_52",
+      "to": "fm:POGO_ONSET",
+      "sensitivity": 0.8497,
+      "specificity": 1.0,
+      "evidence_grade": "A"
+    },
+    {
+      "type": "USES",
+      "from": "disc:thr_POGO_ONSET_52",
+      "to": "f:LATE__ACC_AX__pogo_rms"
+    },
+    {
+      "type": "SUPPORTS",
+      "from": "disc:thr_POGO_ONSET_53",
+      "to": "fm:POGO_ONSET",
+      "sensitivity": 0.915,
+      "specificity": 0.9305,
+      "evidence_grade": "A"
+    },
+    {
+      "type": "USES",
+      "from": "disc:thr_POGO_ONSET_53",
+      "to": "f:ASC__PC_CORE__pogo_rms_max5"
+    },
+    {
+      "type": "SUPPORTS",
+      "from": "disc:thr_POGO_ONSET_55",
+      "to": "fm:POGO_ONSET",
+      "sensitivity": 0.8497,
+      "specificity": 0.9046,
+      "evidence_grade": "A"
+    },
+    {
+      "type": "USES",
+      "from": "disc:thr_POGO_ONSET_55",
+      "to": "f:ASC__PC_CORE__rough_max5"
+    },
+    {
+      "type": "SUPPORTS",
+      "from": "disc:thr_TRAJECTORY_DEVIATION_57",
+      "to": "fm:TRAJECTORY_DEVIATION",
+      "sensitivity": 1.0,
+      "specificity": 1.0,
+      "evidence_grade": "A"
+    },
+    {
+      "type": "USES",
+      "from": "disc:thr_TRAJECTORY_DEVIATION_57",
+      "to": "f:FLT__TRAJ_DEV__band_rise_now"
+    },
+    {
+      "type": "SUPPORTS",
+      "from": "disc:thr_TRAJECTORY_DEVIATION_58",
+      "to": "fm:TRAJECTORY_DEVIATION",
+      "sensitivity": 0.9745,
+      "specificity": 1.0,
+      "evidence_grade": "A"
+    },
+    {
+      "type": "USES",
+      "from": "disc:thr_TRAJECTORY_DEVIATION_58",
+      "to": "f:FLT__TRAJ_DEV__rate_now"
+    },
+    {
+      "type": "SUPPORTS",
+      "from": "disc:thr_TRAJECTORY_DEVIATION_59",
+      "to": "fm:TRAJECTORY_DEVIATION",
+      "sensitivity": 0.9745,
+      "specificity": 1.0,
+      "evidence_grade": "A"
+    },
+    {
+      "type": "USES",
+      "from": "disc:thr_TRAJECTORY_DEVIATION_59",
+      "to": "f:FLT__TRAJ_DEV__rate_max"
+    },
+    {
+      "type": "SUPPORTS",
+      "from": "disc:thr_TRAJECTORY_DEVIATION_56",
+      "to": "fm:TRAJECTORY_DEVIATION",
+      "sensitivity": 0.9363,
+      "specificity": 1.0,
+      "evidence_grade": "A"
+    },
+    {
+      "type": "USES",
+      "from": "disc:thr_TRAJECTORY_DEVIATION_56",
+      "to": "f:FLT__TRAJ_DEV__band_rise_max"
+    },
+    {
+      "type": "SUPPORTS",
+      "from": "disc:thr_TRAJECTORY_DEVIATION_60",
+      "to": "fm:TRAJECTORY_DEVIATION",
+      "sensitivity": 0.9299,
+      "specificity": 1.0,
+      "evidence_grade": "A"
+    },
+    {
+      "type": "USES",
+      "from": "disc:thr_TRAJECTORY_DEVIATION_60",
+      "to": "f:FLT__TRAJ_DEV__now"
+    },
+    {
+      "type": "EXCLUDES",
+      "from": "fm:TEMP_SENSOR_FAULT",
+      "to": "fm:TURBINE_OVERTEMP",
+      "rule_id": "rule:mutex_mutex_discovered_0"
+    },
+    {
+      "type": "CO_OCCURS",
+      "from": "fm:LOX_TANK_UNDERPRESSURE",
+      "to": "fm:LOX_PUMP_CAVITATION",
+      "count": 34,
+      "expected": 8.4424,
+      "lift": 4.02729,
+      "p_value": 3.03317e-11,
+      "p_given_from": 0.196532,
+      "p_given_to": 0.278689
+    }
+  ]
+}

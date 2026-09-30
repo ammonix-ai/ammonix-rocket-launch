@@ -1,0 +1,1198 @@
+{
+  "meta": {
+    "domain": "launch-vehicle",
+    "layer": 2,
+    "created_by": "factory/discovery",
+    "created_at": "2026-09-30T08:05:37.004473+00:00",
+    "grade_cutoff": "B",
+    "counts": {
+      "threshold_rules": 42,
+      "mutex_rules": 1,
+      "equivalence_rules": 0
+    },
+    "source_launches": 2500,
+    "feature_count": 136,
+    "mutex_max_cooccurrence": 0.005,
+    "classes_with_b_plus_rule": [
+      "BUS_VOLTAGE_SAG",
+      "COMBUSTION_INSTABILITY",
+      "LH2_PRESS_OSCILLATION",
+      "LOX_TANK_UNDERPRESSURE",
+      "POGO_ONSET",
+      "SLOW_ENGINE_START",
+      "SRB_THRUST_ASYMMETRY",
+      "TEMP_SENSOR_FAULT",
+      "TRAJECTORY_DEVIATION",
+      "TURBINE_OVERTEMP"
+    ],
+    "layer4_gap": [
+      "LOX_PUMP_CAVITATION",
+      "TVC_ACTUATOR_DEGRADATION"
+    ],
+    "acceptance_pass": false,
+    "consistency_warnings": [],
+    "handoff_counts": {
+      "production": 42,
+      "rlvr_candidate": 13,
+      "layer4_gap": 5
+    }
+  },
+  "threshold_rules": [
+    {
+      "id": "disc:thr_LOX_TANK_UNDERPRESSURE_3",
+      "type": "THRESHOLD",
+      "diagnosis": "LOX_TANK_UNDERPRESSURE",
+      "threshold": 11.989,
+      "feature": "CD__P_LOX_TANK__t_ready",
+      "operator": ">",
+      "description": "IF CD__P_LOX_TANK__t_ready > 11.9890 THEN LOX_TANK_UNDERPRESSURE",
+      "sensitivity": 0.8844,
+      "specificity": 0.9983,
+      "f1": 0.9273,
+      "evidence_grade": "A",
+      "source": "discovery",
+      "short_id": "R-01",
+      "sentence": "IF Time for LOX tank pressure to reach 3.3 bar > 12 s THEN LOX tank under-pressure",
+      "feature_unit": "s",
+      "feature_valid_from": -57.0,
+      "channels": [
+        "P_LOX_TANK"
+      ],
+      "holdout": {
+        "validation_f1": 0.9143,
+        "val_sensitivity": 0.9143,
+        "val_specificity": 0.9935,
+        "overfitting_flag": false
+      }
+    },
+    {
+      "id": "disc:thr_LOX_TANK_UNDERPRESSURE_1",
+      "type": "THRESHOLD",
+      "diagnosis": "LOX_TANK_UNDERPRESSURE",
+      "threshold": 3.1902,
+      "feature": "CD__P_LOX_TANK__mean",
+      "operator": "<",
+      "description": "IF CD__P_LOX_TANK__mean < 3.1902 THEN LOX_TANK_UNDERPRESSURE",
+      "sensitivity": 0.8439,
+      "specificity": 0.9979,
+      "f1": 0.9012,
+      "evidence_grade": "A",
+      "source": "discovery",
+      "short_id": "R-02",
+      "sentence": "IF LOX tank pressure, mean over the countdown < 3.19 bar THEN LOX tank under-pressure",
+      "feature_unit": "bar",
+      "feature_valid_from": -1.0,
+      "channels": [
+        "P_LOX_TANK"
+      ],
+      "holdout": {
+        "validation_f1": 0.8696,
+        "val_sensitivity": 0.8571,
+        "val_specificity": 0.9914,
+        "overfitting_flag": false
+      }
+    },
+    {
+      "id": "disc:thr_LOX_TANK_UNDERPRESSURE_2",
+      "type": "THRESHOLD",
+      "diagnosis": "LOX_TANK_UNDERPRESSURE",
+      "threshold": 0.095,
+      "feature": "CD__P_LOX_TANK__ramp_deficit",
+      "operator": ">",
+      "description": "IF CD__P_LOX_TANK__ramp_deficit > 0.0950 THEN LOX_TANK_UNDERPRESSURE",
+      "sensitivity": 0.8439,
+      "specificity": 0.9979,
+      "f1": 0.9012,
+      "evidence_grade": "A",
+      "source": "discovery",
+      "short_id": "R-03",
+      "sentence": "IF LOX tank pressure shortfall vs the reference ramp > 0.095 bar THEN LOX tank under-pressure",
+      "feature_unit": "bar",
+      "feature_valid_from": -54.0,
+      "channels": [
+        "P_LOX_TANK"
+      ],
+      "holdout": {
+        "validation_f1": 0.8696,
+        "val_sensitivity": 0.8571,
+        "val_specificity": 0.9914,
+        "overfitting_flag": false
+      }
+    },
+    {
+      "id": "disc:thr_LOX_TANK_UNDERPRESSURE_4",
+      "type": "THRESHOLD",
+      "diagnosis": "LOX_TANK_UNDERPRESSURE",
+      "threshold": 3.4417,
+      "feature": "CD__P_LOX_TANK__max",
+      "operator": "<",
+      "description": "IF CD__P_LOX_TANK__max < 3.4417 THEN LOX_TANK_UNDERPRESSURE",
+      "sensitivity": 0.7861,
+      "specificity": 0.9961,
+      "f1": 0.8553,
+      "evidence_grade": "B",
+      "source": "discovery",
+      "short_id": "R-04",
+      "sentence": "IF LOX tank pressure, maximum over the countdown < 3.44 bar THEN LOX tank under-pressure",
+      "feature_unit": "bar",
+      "feature_valid_from": -1.0,
+      "channels": [
+        "P_LOX_TANK"
+      ],
+      "holdout": {
+        "validation_f1": 0.8571,
+        "val_sensitivity": 0.8571,
+        "val_specificity": 0.9892,
+        "overfitting_flag": false
+      }
+    },
+    {
+      "id": "disc:thr_LOX_TANK_UNDERPRESSURE_5",
+      "type": "THRESHOLD",
+      "diagnosis": "LOX_TANK_UNDERPRESSURE",
+      "threshold": 3.4069,
+      "feature": "ASC__P_LOX_TANK__mean",
+      "operator": "<",
+      "description": "IF ASC__P_LOX_TANK__mean < 3.4069 THEN LOX_TANK_UNDERPRESSURE",
+      "sensitivity": 0.7861,
+      "specificity": 0.9961,
+      "f1": 0.8553,
+      "evidence_grade": "B",
+      "source": "discovery",
+      "short_id": "R-05",
+      "sentence": "IF LOX tank pressure, mean over the boosted ascent < 3.41 bar THEN LOX tank under-pressure",
+      "feature_unit": "bar",
+      "feature_valid_from": 136.0,
+      "channels": [
+        "P_LOX_TANK"
+      ],
+      "holdout": {
+        "validation_f1": 0.8571,
+        "val_sensitivity": 0.8571,
+        "val_specificity": 0.9892,
+        "overfitting_flag": false
+      }
+    },
+    {
+      "id": "disc:thr_LH2_PRESS_OSCILLATION_8",
+      "type": "THRESHOLD",
+      "diagnosis": "LH2_PRESS_OSCILLATION",
+      "threshold": 0.0141,
+      "feature": "ASC__P_LH2_TANK__std",
+      "operator": ">",
+      "description": "IF ASC__P_LH2_TANK__std > 0.0141 THEN LH2_PRESS_OSCILLATION",
+      "sensitivity": 0.8301,
+      "specificity": 1.0,
+      "f1": 0.9071,
+      "evidence_grade": "A",
+      "source": "discovery",
+      "short_id": "R-06",
+      "sentence": "IF LH2 tank pressure, standard deviation over the boosted ascent > 0.0141 bar THEN LH2 pressure regulator oscillation",
+      "feature_unit": "bar",
+      "feature_valid_from": 136.0,
+      "channels": [
+        "P_LH2_TANK"
+      ],
+      "holdout": {
+        "validation_f1": 0.8462,
+        "val_sensitivity": 0.7333,
+        "val_specificity": 1.0,
+        "overfitting_flag": true
+      }
+    },
+    {
+      "id": "disc:thr_LH2_PRESS_OSCILLATION_6",
+      "type": "THRESHOLD",
+      "diagnosis": "LH2_PRESS_OSCILLATION",
+      "threshold": 0.0146,
+      "feature": "CD__P_LH2_TANK__osc_rms_max5",
+      "operator": ">",
+      "description": "IF CD__P_LH2_TANK__osc_rms_max5 > 0.0146 THEN LH2_PRESS_OSCILLATION",
+      "sensitivity": 0.8431,
+      "specificity": 0.9983,
+      "f1": 0.9021,
+      "evidence_grade": "A",
+      "source": "discovery",
+      "short_id": "R-07",
+      "sentence": "IF LH2 pressure oscillation, strongest 5 s > 0.0146 bar THEN LH2 pressure regulator oscillation",
+      "feature_unit": "bar",
+      "feature_valid_from": -32.0,
+      "channels": [
+        "P_LH2_TANK"
+      ],
+      "holdout": {
+        "validation_f1": 0.8462,
+        "val_sensitivity": 0.7333,
+        "val_specificity": 1.0,
+        "overfitting_flag": true
+      }
+    },
+    {
+      "id": "disc:thr_LH2_PRESS_OSCILLATION_7",
+      "type": "THRESHOLD",
+      "diagnosis": "LH2_PRESS_OSCILLATION",
+      "threshold": 0.0109,
+      "feature": "ASC__P_LH2_TANK__osc_rms",
+      "operator": ">",
+      "description": "IF ASC__P_LH2_TANK__osc_rms > 0.0109 THEN LH2_PRESS_OSCILLATION",
+      "sensitivity": 0.8431,
+      "specificity": 0.9979,
+      "f1": 0.899,
+      "evidence_grade": "A",
+      "source": "discovery",
+      "short_id": "R-08",
+      "sentence": "IF LH2 tank pressure oscillation in ascent (RMS) > 0.0109 bar THEN LH2 pressure regulator oscillation",
+      "feature_unit": "bar",
+      "feature_valid_from": 136.0,
+      "channels": [
+        "P_LH2_TANK"
+      ],
+      "holdout": {
+        "validation_f1": 0.8462,
+        "val_sensitivity": 0.7333,
+        "val_specificity": 1.0,
+        "overfitting_flag": true
+      }
+    },
+    {
+      "id": "disc:thr_LH2_PRESS_OSCILLATION_9",
+      "type": "THRESHOLD",
+      "diagnosis": "LH2_PRESS_OSCILLATION",
+      "threshold": 0.0107,
+      "feature": "CD__P_LH2_TANK__osc_rms",
+      "operator": ">",
+      "description": "IF CD__P_LH2_TANK__osc_rms > 0.0107 THEN LH2_PRESS_OSCILLATION",
+      "sensitivity": 0.7974,
+      "specificity": 0.9991,
+      "f1": 0.8809,
+      "evidence_grade": "B",
+      "source": "discovery",
+      "short_id": "R-09",
+      "sentence": "IF LH2 tank pressure oscillation (0.15-0.5 Hz RMS) > 0.0107 bar THEN LH2 pressure regulator oscillation",
+      "feature_unit": "bar",
+      "feature_valid_from": -25.0,
+      "channels": [
+        "P_LH2_TANK"
+      ],
+      "holdout": {
+        "validation_f1": 0.8462,
+        "val_sensitivity": 0.7333,
+        "val_specificity": 1.0,
+        "overfitting_flag": false
+      }
+    },
+    {
+      "id": "disc:thr_BUS_VOLTAGE_SAG_13",
+      "type": "THRESHOLD",
+      "diagnosis": "BUS_VOLTAGE_SAG",
+      "threshold": 28.148,
+      "feature": "CD__BUS_28V__min_post",
+      "operator": "<",
+      "description": "IF CD__BUS_28V__min_post < 28.1480 THEN BUS_VOLTAGE_SAG",
+      "sensitivity": 0.8063,
+      "specificity": 0.9966,
+      "f1": 0.8687,
+      "evidence_grade": "A",
+      "source": "discovery",
+      "short_id": "R-10",
+      "sentence": "IF Lowest bus voltage from 2 s after the transfer < 28.1 V THEN Bus voltage sag at power transfer",
+      "feature_unit": "V",
+      "feature_valid_from": -27.0,
+      "channels": [
+        "BUS_28V"
+      ],
+      "holdout": {
+        "validation_f1": 0.8525,
+        "val_sensitivity": 0.8125,
+        "val_specificity": 0.9936,
+        "overfitting_flag": false
+      }
+    },
+    {
+      "id": "disc:thr_BUS_VOLTAGE_SAG_12",
+      "type": "THRESHOLD",
+      "diagnosis": "BUS_VOLTAGE_SAG",
+      "threshold": 0.787,
+      "feature": "CD__BUS_28V__transfer_dip",
+      "operator": ">",
+      "description": "IF CD__BUS_28V__transfer_dip > 0.7870 THEN BUS_VOLTAGE_SAG",
+      "sensitivity": 0.7063,
+      "specificity": 0.9983,
+      "f1": 0.8159,
+      "evidence_grade": "B",
+      "source": "discovery",
+      "short_id": "R-11",
+      "sentence": "IF Bus voltage dip at the switch to onboard power > 0.787 V THEN Bus voltage sag at power transfer",
+      "feature_unit": "V",
+      "feature_valid_from": -29.5,
+      "channels": [
+        "BUS_28V"
+      ],
+      "holdout": {
+        "validation_f1": 0.8571,
+        "val_sensitivity": 0.75,
+        "val_specificity": 1.0,
+        "overfitting_flag": false
+      }
+    },
+    {
+      "id": "disc:thr_BUS_VOLTAGE_SAG_11",
+      "type": "THRESHOLD",
+      "diagnosis": "BUS_VOLTAGE_SAG",
+      "threshold": 27.3334,
+      "feature": "CD__BUS_28V__min",
+      "operator": "<",
+      "description": "IF CD__BUS_28V__min < 27.3334 THEN BUS_VOLTAGE_SAG",
+      "sensitivity": 0.775,
+      "specificity": 0.9915,
+      "f1": 0.8158,
+      "evidence_grade": "B",
+      "source": "discovery",
+      "short_id": "R-12",
+      "sentence": "IF Avionics bus voltage, minimum over the countdown < 27.3 V THEN Bus voltage sag at power transfer",
+      "feature_unit": "V",
+      "feature_valid_from": -1.0,
+      "channels": [
+        "BUS_28V"
+      ],
+      "holdout": {
+        "validation_f1": 0.7742,
+        "val_sensitivity": 0.75,
+        "val_specificity": 0.9872,
+        "overfitting_flag": false
+      }
+    },
+    {
+      "id": "disc:thr_BUS_VOLTAGE_SAG_14",
+      "type": "THRESHOLD",
+      "diagnosis": "BUS_VOLTAGE_SAG",
+      "threshold": 28.1288,
+      "feature": "CD__BUS_28V__mean",
+      "operator": "<",
+      "description": "IF CD__BUS_28V__mean < 28.1288 THEN BUS_VOLTAGE_SAG",
+      "sensitivity": 0.6937,
+      "specificity": 0.9944,
+      "f1": 0.7817,
+      "evidence_grade": "B",
+      "source": "discovery",
+      "short_id": "R-13",
+      "sentence": "IF Avionics bus voltage, mean over the countdown < 28.1 V THEN Bus voltage sag at power transfer",
+      "feature_unit": "V",
+      "feature_valid_from": -1.0,
+      "channels": [
+        "BUS_28V"
+      ],
+      "holdout": {
+        "validation_f1": 0.7931,
+        "val_sensitivity": 0.7188,
+        "val_specificity": 0.9936,
+        "overfitting_flag": false
+      }
+    },
+    {
+      "id": "disc:thr_SLOW_ENGINE_START_16",
+      "type": "THRESHOLD",
+      "diagnosis": "SLOW_ENGINE_START",
+      "threshold": 101.626,
+      "feature": "IGN__PC_CORE__at2p5",
+      "operator": "<",
+      "description": "IF IGN__PC_CORE__at2p5 < 101.6264 THEN SLOW_ENGINE_START",
+      "sensitivity": 0.8462,
+      "specificity": 0.9924,
+      "f1": 0.8582,
+      "evidence_grade": "A",
+      "source": "discovery",
+      "short_id": "R-14",
+      "sentence": "IF Chamber pressure at H0 + 2.5 s < 102 bar THEN Slow core engine start",
+      "feature_unit": "bar",
+      "feature_valid_from": 2.6,
+      "channels": [
+        "PC_CORE"
+      ],
+      "holdout": {
+        "validation_f1": 0.8519,
+        "val_sensitivity": 0.7931,
+        "val_specificity": 0.9958,
+        "overfitting_flag": false
+      }
+    },
+    {
+      "id": "disc:thr_SLOW_ENGINE_START_18",
+      "type": "THRESHOLD",
+      "diagnosis": "SLOW_ENGINE_START",
+      "threshold": 1.8831,
+      "feature": "IGN__PC_CORE__t50",
+      "operator": ">",
+      "description": "IF IGN__PC_CORE__t50 > 1.8831 THEN SLOW_ENGINE_START",
+      "sensitivity": 0.8182,
+      "specificity": 0.9941,
+      "f1": 0.854,
+      "evidence_grade": "A",
+      "source": "discovery",
+      "short_id": "R-15",
+      "sentence": "IF Time for chamber pressure to reach 50 % of nominal > 1.88 s THEN Slow core engine start",
+      "feature_unit": "s",
+      "feature_valid_from": 0.5,
+      "channels": [
+        "PC_CORE"
+      ],
+      "holdout": {
+        "validation_f1": 0.8846,
+        "val_sensitivity": 0.7931,
+        "val_specificity": 1.0,
+        "overfitting_flag": false
+      }
+    },
+    {
+      "id": "disc:thr_SLOW_ENGINE_START_17",
+      "type": "THRESHOLD",
+      "diagnosis": "SLOW_ENGINE_START",
+      "threshold": 2.58,
+      "feature": "IGN__PC_CORE__t90",
+      "operator": ">",
+      "description": "IF IGN__PC_CORE__t90 > 2.5800 THEN SLOW_ENGINE_START",
+      "sensitivity": 0.7762,
+      "specificity": 0.997,
+      "f1": 0.8506,
+      "evidence_grade": "B",
+      "source": "discovery",
+      "short_id": "R-16",
+      "sentence": "IF Time for chamber pressure to reach 90 % of nominal > 2.58 s THEN Slow core engine start",
+      "feature_unit": "s",
+      "feature_valid_from": 0.5,
+      "channels": [
+        "PC_CORE"
+      ],
+      "holdout": {
+        "validation_f1": 0.8627,
+        "val_sensitivity": 0.7586,
+        "val_specificity": 1.0,
+        "overfitting_flag": false
+      }
+    },
+    {
+      "id": "disc:thr_SLOW_ENGINE_START_19",
+      "type": "THRESHOLD",
+      "diagnosis": "SLOW_ENGINE_START",
+      "threshold": 72.1226,
+      "feature": "IGN__N_LOX_TP__mean",
+      "operator": "<",
+      "description": "IF IGN__N_LOX_TP__mean < 72.1226 THEN SLOW_ENGINE_START",
+      "sensitivity": 0.7483,
+      "specificity": 0.9992,
+      "f1": 0.8492,
+      "evidence_grade": "B",
+      "source": "discovery",
+      "short_id": "R-17",
+      "sentence": "IF LOX turbopump speed, mean over the engine start < 72.1 % THEN Slow core engine start",
+      "feature_unit": "%",
+      "feature_valid_from": 6.5,
+      "channels": [
+        "N_LOX_TP"
+      ],
+      "holdout": {
+        "validation_f1": 0.84,
+        "val_sensitivity": 0.7241,
+        "val_specificity": 1.0,
+        "overfitting_flag": false
+      }
+    },
+    {
+      "id": "disc:thr_SLOW_ENGINE_START_20",
+      "type": "THRESHOLD",
+      "diagnosis": "SLOW_ENGINE_START",
+      "threshold": 82.1897,
+      "feature": "IGN__PC_CORE__mean",
+      "operator": "<",
+      "description": "IF IGN__PC_CORE__mean < 82.1897 THEN SLOW_ENGINE_START",
+      "sensitivity": 0.7972,
+      "specificity": 0.9936,
+      "f1": 0.8382,
+      "evidence_grade": "B",
+      "source": "discovery",
+      "short_id": "R-18",
+      "sentence": "IF Core chamber pressure, mean over the engine start < 82.2 bar THEN Slow core engine start",
+      "feature_unit": "bar",
+      "feature_valid_from": 6.5,
+      "channels": [
+        "PC_CORE"
+      ],
+      "holdout": {
+        "validation_f1": 0.8679,
+        "val_sensitivity": 0.7931,
+        "val_specificity": 0.9979,
+        "overfitting_flag": false
+      }
+    },
+    {
+      "id": "disc:thr_COMBUSTION_INSTABILITY_27",
+      "type": "THRESHOLD",
+      "diagnosis": "COMBUSTION_INSTABILITY",
+      "threshold": 1.008,
+      "feature": "ASC__VIB_ENG__min",
+      "operator": ">",
+      "description": "IF ASC__VIB_ENG__min > 1.0080 THEN COMBUSTION_INSTABILITY",
+      "sensitivity": 0.8869,
+      "specificity": 1.0,
+      "f1": 0.9401,
+      "evidence_grade": "A",
+      "source": "discovery",
+      "short_id": "R-19",
+      "sentence": "IF Engine-bay vibration, minimum over the boosted ascent > 1.01 g rms THEN Combustion instability",
+      "feature_unit": "g rms",
+      "feature_valid_from": 136.0,
+      "channels": [
+        "VIB_ENG"
+      ],
+      "holdout": {
+        "validation_f1": 0.9,
+        "val_sensitivity": 0.8182,
+        "val_specificity": 1.0,
+        "overfitting_flag": false
+      }
+    },
+    {
+      "id": "disc:thr_COMBUSTION_INSTABILITY_26",
+      "type": "THRESHOLD",
+      "diagnosis": "COMBUSTION_INSTABILITY",
+      "threshold": 1.3204,
+      "feature": "ASC__VIB_ENG__excess_max",
+      "operator": ">",
+      "description": "IF ASC__VIB_ENG__excess_max > 1.3204 THEN COMBUSTION_INSTABILITY",
+      "sensitivity": 0.869,
+      "specificity": 0.9987,
+      "f1": 0.9211,
+      "evidence_grade": "A",
+      "source": "discovery",
+      "short_id": "R-20",
+      "sentence": "IF Engine-bay vibration vs the nominal profile, worst 1 s > 1.32 ratio THEN Combustion instability",
+      "feature_unit": "ratio",
+      "feature_valid_from": 8.5,
+      "channels": [
+        "VIB_ENG"
+      ],
+      "holdout": {
+        "validation_f1": 0.8852,
+        "val_sensitivity": 0.8182,
+        "val_specificity": 0.9979,
+        "overfitting_flag": false
+      }
+    },
+    {
+      "id": "disc:thr_COMBUSTION_INSTABILITY_29",
+      "type": "THRESHOLD",
+      "diagnosis": "COMBUSTION_INSTABILITY",
+      "threshold": 1.2266,
+      "feature": "ASC__VIB_ENG__excess_mean",
+      "operator": ">",
+      "description": "IF ASC__VIB_ENG__excess_mean > 1.2266 THEN COMBUSTION_INSTABILITY",
+      "sensitivity": 0.7262,
+      "specificity": 1.0,
+      "f1": 0.8414,
+      "evidence_grade": "B",
+      "source": "discovery",
+      "short_id": "R-21",
+      "sentence": "IF Engine-bay vibration vs the nominal profile, mean > 1.23 ratio THEN Combustion instability",
+      "feature_unit": "ratio",
+      "feature_valid_from": 136.0,
+      "channels": [
+        "VIB_ENG"
+      ],
+      "holdout": {
+        "validation_f1": 0.8,
+        "val_sensitivity": 0.6667,
+        "val_specificity": 1.0,
+        "overfitting_flag": false
+      }
+    },
+    {
+      "id": "disc:thr_COMBUSTION_INSTABILITY_30",
+      "type": "THRESHOLD",
+      "diagnosis": "COMBUSTION_INSTABILITY",
+      "threshold": 2.0163,
+      "feature": "ASC__VIB_ENG__mean",
+      "operator": ">",
+      "description": "IF ASC__VIB_ENG__mean > 2.0163 THEN COMBUSTION_INSTABILITY",
+      "sensitivity": 0.7083,
+      "specificity": 1.0,
+      "f1": 0.8293,
+      "evidence_grade": "B",
+      "source": "discovery",
+      "short_id": "R-22",
+      "sentence": "IF Engine-bay vibration, mean over the boosted ascent > 2.02 g rms THEN Combustion instability",
+      "feature_unit": "g rms",
+      "feature_valid_from": 136.0,
+      "channels": [
+        "VIB_ENG"
+      ],
+      "holdout": {
+        "validation_f1": 0.8,
+        "val_sensitivity": 0.6667,
+        "val_specificity": 1.0,
+        "overfitting_flag": false
+      }
+    },
+    {
+      "id": "disc:thr_COMBUSTION_INSTABILITY_28",
+      "type": "THRESHOLD",
+      "diagnosis": "COMBUSTION_INSTABILITY",
+      "threshold": 0.4602,
+      "feature": "ASC__PC_CORE__rough",
+      "operator": ">",
+      "description": "IF ASC__PC_CORE__rough > 0.4602 THEN COMBUSTION_INSTABILITY",
+      "sensitivity": 0.8274,
+      "specificity": 0.9837,
+      "f1": 0.8058,
+      "evidence_grade": "A",
+      "source": "discovery",
+      "short_id": "R-23",
+      "sentence": "IF Chamber pressure roughness (>1.5 Hz RMS) in ascent > 0.46 bar THEN Combustion instability",
+      "feature_unit": "bar",
+      "feature_valid_from": 136.0,
+      "channels": [
+        "PC_CORE"
+      ],
+      "holdout": {
+        "validation_f1": 0.7647,
+        "val_sensitivity": 0.7879,
+        "val_specificity": 0.9807,
+        "overfitting_flag": false
+      }
+    },
+    {
+      "id": "disc:thr_TURBINE_OVERTEMP_31",
+      "type": "THRESHOLD",
+      "diagnosis": "TURBINE_OVERTEMP",
+      "threshold": 26.9341,
+      "feature": "XC__T_corroborated_max",
+      "operator": ">",
+      "description": "IF XC__T_corroborated_max > 26.9341 THEN TURBINE_OVERTEMP",
+      "sensitivity": 0.7911,
+      "specificity": 0.9996,
+      "f1": 0.8803,
+      "evidence_grade": "B",
+      "source": "discovery",
+      "short_id": "R-24",
+      "sentence": "IF Temperature rise confirmed by a pump speed rise, max > 26.9 K THEN Turbine over-temperature",
+      "feature_unit": "K",
+      "feature_valid_from": 9.5,
+      "channels": [
+        "T_TURB_IN",
+        "N_LOX_TP"
+      ],
+      "holdout": {
+        "validation_f1": 0.9153,
+        "val_sensitivity": 0.8438,
+        "val_specificity": 1.0,
+        "overfitting_flag": false
+      }
+    },
+    {
+      "id": "disc:thr_TURBINE_OVERTEMP_33",
+      "type": "THRESHOLD",
+      "diagnosis": "TURBINE_OVERTEMP",
+      "threshold": 0.3232,
+      "feature": "ASC__N_LOX_TP__std",
+      "operator": ">",
+      "description": "IF ASC__N_LOX_TP__std > 0.3232 THEN TURBINE_OVERTEMP",
+      "sensitivity": 0.7911,
+      "specificity": 0.9974,
+      "f1": 0.8651,
+      "evidence_grade": "B",
+      "source": "discovery",
+      "short_id": "R-25",
+      "sentence": "IF LOX turbopump speed, standard deviation over the boosted ascent > 0.323 % THEN Turbine over-temperature",
+      "feature_unit": "%",
+      "feature_valid_from": 136.0,
+      "channels": [
+        "N_LOX_TP"
+      ],
+      "holdout": {
+        "validation_f1": 0.9,
+        "val_sensitivity": 0.8438,
+        "val_specificity": 0.9979,
+        "overfitting_flag": false
+      }
+    },
+    {
+      "id": "disc:thr_TURBINE_OVERTEMP_32",
+      "type": "THRESHOLD",
+      "diagnosis": "TURBINE_OVERTEMP",
+      "threshold": 0.6861,
+      "feature": "ASC__N_LOX_TP__rise_max",
+      "operator": ">",
+      "description": "IF ASC__N_LOX_TP__rise_max > 0.6861 THEN TURBINE_OVERTEMP",
+      "sensitivity": 0.7975,
+      "specificity": 0.9923,
+      "f1": 0.8344,
+      "evidence_grade": "B",
+      "source": "discovery",
+      "short_id": "R-26",
+      "sentence": "IF LOX pump speed rise above the pad plateau (max) > 0.686 % THEN Turbine over-temperature",
+      "feature_unit": "%",
+      "feature_valid_from": 9.5,
+      "channels": [
+        "N_LOX_TP"
+      ],
+      "holdout": {
+        "validation_f1": 0.8438,
+        "val_sensitivity": 0.8438,
+        "val_specificity": 0.9893,
+        "overfitting_flag": false
+      }
+    },
+    {
+      "id": "disc:thr_TURBINE_OVERTEMP_34",
+      "type": "THRESHOLD",
+      "diagnosis": "TURBINE_OVERTEMP",
+      "threshold": 0.8188,
+      "feature": "ASC__PC_CORE__rise_max",
+      "operator": ">",
+      "description": "IF ASC__PC_CORE__rise_max > 0.8188 THEN TURBINE_OVERTEMP",
+      "sensitivity": 0.8418,
+      "specificity": 0.9816,
+      "f1": 0.7964,
+      "evidence_grade": "A",
+      "source": "discovery",
+      "short_id": "R-27",
+      "sentence": "IF Chamber pressure rise above the pad plateau (max) > 0.819 bar THEN Turbine over-temperature",
+      "feature_unit": "bar",
+      "feature_valid_from": 9.5,
+      "channels": [
+        "PC_CORE"
+      ],
+      "holdout": {
+        "validation_f1": 0.7397,
+        "val_sensitivity": 0.8438,
+        "val_specificity": 0.9701,
+        "overfitting_flag": true
+      }
+    },
+    {
+      "id": "disc:thr_TEMP_SENSOR_FAULT_36",
+      "type": "THRESHOLD",
+      "diagnosis": "TEMP_SENSOR_FAULT",
+      "threshold": 18.8546,
+      "feature": "ASC__T_TURB_IN__step_max",
+      "operator": ">",
+      "description": "IF ASC__T_TURB_IN__step_max > 18.8546 THEN TEMP_SENSOR_FAULT",
+      "sensitivity": 0.9858,
+      "specificity": 1.0,
+      "f1": 0.9929,
+      "evidence_grade": "A",
+      "source": "discovery",
+      "short_id": "R-28",
+      "sentence": "IF Largest turbine temperature jump within 0.2 s > 18.9 K THEN Turbine temperature sensor fault",
+      "feature_unit": "K",
+      "feature_valid_from": 8.5,
+      "channels": [
+        "T_TURB_IN"
+      ],
+      "holdout": {
+        "validation_f1": 1.0,
+        "val_sensitivity": 1.0,
+        "val_specificity": 1.0,
+        "overfitting_flag": false
+      }
+    },
+    {
+      "id": "disc:thr_TEMP_SENSOR_FAULT_37",
+      "type": "THRESHOLD",
+      "diagnosis": "TEMP_SENSOR_FAULT",
+      "threshold": 39.9294,
+      "feature": "XC__T_unexplained_max",
+      "operator": ">",
+      "description": "IF XC__T_unexplained_max > 39.9294 THEN TEMP_SENSOR_FAULT",
+      "sensitivity": 0.7801,
+      "specificity": 0.9966,
+      "f1": 0.8494,
+      "evidence_grade": "B",
+      "source": "discovery",
+      "short_id": "R-29",
+      "sentence": "IF Temperature rise not explained by pump speed (40 K per %), max > 39.9 K THEN Turbine temperature sensor fault",
+      "feature_unit": "K",
+      "feature_valid_from": 9.5,
+      "channels": [
+        "T_TURB_IN",
+        "N_LOX_TP"
+      ],
+      "holdout": {
+        "validation_f1": 0.88,
+        "val_sensitivity": 0.7857,
+        "val_specificity": 1.0,
+        "overfitting_flag": false
+      }
+    },
+    {
+      "id": "disc:thr_TEMP_SENSOR_FAULT_38",
+      "type": "THRESHOLD",
+      "diagnosis": "TEMP_SENSOR_FAULT",
+      "threshold": 1031.83,
+      "feature": "ASC__T_TURB_IN__max",
+      "operator": ">",
+      "description": "IF ASC__T_TURB_IN__max > 1031.8312 THEN TEMP_SENSOR_FAULT",
+      "sensitivity": 0.617,
+      "specificity": 0.997,
+      "f1": 0.7404,
+      "evidence_grade": "B",
+      "source": "discovery",
+      "short_id": "R-30",
+      "sentence": "IF Turbine inlet temperature, maximum over the boosted ascent > 1032 K THEN Turbine temperature sensor fault",
+      "feature_unit": "K",
+      "feature_valid_from": 136.0,
+      "channels": [
+        "T_TURB_IN"
+      ],
+      "holdout": {
+        "validation_f1": 0.6939,
+        "val_sensitivity": 0.6071,
+        "val_specificity": 0.9915,
+        "overfitting_flag": false
+      }
+    },
+    {
+      "id": "disc:thr_TEMP_SENSOR_FAULT_40",
+      "type": "THRESHOLD",
+      "diagnosis": "TEMP_SENSOR_FAULT",
+      "threshold": 13.5758,
+      "feature": "ASC__T_TURB_IN__std",
+      "operator": ">",
+      "description": "IF ASC__T_TURB_IN__std > 13.5758 THEN TEMP_SENSOR_FAULT",
+      "sensitivity": 0.8652,
+      "specificity": 0.9496,
+      "f1": 0.6387,
+      "evidence_grade": "A",
+      "source": "discovery",
+      "short_id": "R-31",
+      "sentence": "IF Turbine inlet temperature, standard deviation over the boosted ascent > 13.6 K THEN Turbine temperature sensor fault",
+      "feature_unit": "K",
+      "feature_valid_from": 136.0,
+      "channels": [
+        "T_TURB_IN"
+      ],
+      "holdout": {
+        "validation_f1": 0.65,
+        "val_sensitivity": 0.9286,
+        "val_specificity": 0.9449,
+        "overfitting_flag": false
+      }
+    },
+    {
+      "id": "disc:thr_SRB_THRUST_ASYMMETRY_41",
+      "type": "THRESHOLD",
+      "diagnosis": "SRB_THRUST_ASYMMETRY",
+      "threshold": 0.3888,
+      "feature": "XC__yaw_imbalance_corr",
+      "operator": ">",
+      "description": "IF XC__yaw_imbalance_corr > 0.3888 THEN SRB_THRUST_ASYMMETRY",
+      "sensitivity": 0.9315,
+      "specificity": 0.9975,
+      "f1": 0.9444,
+      "evidence_grade": "A",
+      "source": "discovery",
+      "short_id": "R-32",
+      "sentence": "IF Correlation of TVC yaw offset with booster imbalance > 0.389 r THEN Booster thrust imbalance",
+      "feature_unit": "r",
+      "feature_valid_from": 122.0,
+      "channels": [
+        "TVC_YAW",
+        "PC_SRB_L",
+        "PC_SRB_R"
+      ],
+      "holdout": {
+        "validation_f1": 0.8966,
+        "val_sensitivity": 0.8966,
+        "val_specificity": 0.9936,
+        "overfitting_flag": false
+      }
+    },
+    {
+      "id": "disc:thr_SRB_THRUST_ASYMMETRY_42",
+      "type": "THRESHOLD",
+      "diagnosis": "SRB_THRUST_ASYMMETRY",
+      "threshold": 2.6371,
+      "feature": "ASC__SRB__imbalance_max",
+      "operator": ">",
+      "description": "IF ASC__SRB__imbalance_max > 2.6371 THEN SRB_THRUST_ASYMMETRY",
+      "sensitivity": 0.7192,
+      "specificity": 0.986,
+      "f1": 0.7394,
+      "evidence_grade": "B",
+      "source": "discovery",
+      "short_id": "R-33",
+      "sentence": "IF Booster chamber pressure imbalance, worst 2 s > 2.64 % THEN Booster thrust imbalance",
+      "feature_unit": "%",
+      "feature_valid_from": 9.0,
+      "channels": [
+        "PC_SRB_L",
+        "PC_SRB_R"
+      ],
+      "holdout": {
+        "validation_f1": 0.6897,
+        "val_sensitivity": 0.6897,
+        "val_specificity": 0.9809,
+        "overfitting_flag": false
+      }
+    },
+    {
+      "id": "disc:thr_POGO_ONSET_51",
+      "type": "THRESHOLD",
+      "diagnosis": "POGO_ONSET",
+      "threshold": 0.0172,
+      "feature": "ASC__ACC_AX__pogo_rms_max5",
+      "operator": ">",
+      "description": "IF ASC__ACC_AX__pogo_rms_max5 > 0.0172 THEN POGO_ONSET",
+      "sensitivity": 0.8693,
+      "specificity": 1.0,
+      "f1": 0.9301,
+      "evidence_grade": "A",
+      "source": "discovery",
+      "short_id": "R-34",
+      "sentence": "IF Axial acceleration oscillation 10-20 Hz, worst 5 s > 0.0172 g THEN POGO onset",
+      "feature_unit": "g",
+      "feature_valid_from": 10.5,
+      "channels": [
+        "ACC_AX"
+      ],
+      "holdout": {
+        "validation_f1": 0.9667,
+        "val_sensitivity": 0.9355,
+        "val_specificity": 1.0,
+        "overfitting_flag": false
+      }
+    },
+    {
+      "id": "disc:thr_POGO_ONSET_52",
+      "type": "THRESHOLD",
+      "diagnosis": "POGO_ONSET",
+      "threshold": 0.0135,
+      "feature": "LATE__ACC_AX__pogo_rms",
+      "operator": ">",
+      "description": "IF LATE__ACC_AX__pogo_rms > 0.0135 THEN POGO_ONSET",
+      "sensitivity": 0.8497,
+      "specificity": 1.0,
+      "f1": 0.9187,
+      "evidence_grade": "A",
+      "source": "discovery",
+      "short_id": "R-35",
+      "sentence": "IF Axial acceleration oscillation 10-20 Hz, late ascent > 0.0135 g THEN POGO onset",
+      "feature_unit": "g",
+      "feature_valid_from": 136.0,
+      "channels": [
+        "ACC_AX"
+      ],
+      "holdout": {
+        "validation_f1": 0.9667,
+        "val_sensitivity": 0.9355,
+        "val_specificity": 1.0,
+        "overfitting_flag": false
+      }
+    },
+    {
+      "id": "disc:thr_POGO_ONSET_53",
+      "type": "THRESHOLD",
+      "diagnosis": "POGO_ONSET",
+      "threshold": 0.2452,
+      "feature": "ASC__PC_CORE__pogo_rms_max5",
+      "operator": ">",
+      "description": "IF ASC__PC_CORE__pogo_rms_max5 > 0.2452 THEN POGO_ONSET",
+      "sensitivity": 0.915,
+      "specificity": 0.9305,
+      "f1": 0.614,
+      "evidence_grade": "A",
+      "source": "discovery",
+      "short_id": "R-36",
+      "sentence": "IF Chamber pressure oscillation 10-20 Hz, worst 5 s > 0.245 bar THEN POGO onset",
+      "feature_unit": "bar",
+      "feature_valid_from": 10.5,
+      "channels": [
+        "PC_CORE"
+      ],
+      "holdout": {
+        "validation_f1": 0.6517,
+        "val_sensitivity": 0.9355,
+        "val_specificity": 0.9382,
+        "overfitting_flag": false
+      }
+    },
+    {
+      "id": "disc:thr_POGO_ONSET_55",
+      "type": "THRESHOLD",
+      "diagnosis": "POGO_ONSET",
+      "threshold": 0.3592,
+      "feature": "ASC__PC_CORE__rough_max5",
+      "operator": ">",
+      "description": "IF ASC__PC_CORE__rough_max5 > 0.3592 THEN POGO_ONSET",
+      "sensitivity": 0.8497,
+      "specificity": 0.9046,
+      "f1": 0.5128,
+      "evidence_grade": "A",
+      "source": "discovery",
+      "short_id": "R-37",
+      "sentence": "IF Chamber pressure roughness, worst 5 s of ascent > 0.359 bar THEN POGO onset",
+      "feature_unit": "bar",
+      "feature_valid_from": 9.5,
+      "channels": [
+        "PC_CORE"
+      ],
+      "holdout": {
+        "validation_f1": 0.5421,
+        "val_sensitivity": 0.9355,
+        "val_specificity": 0.8998,
+        "overfitting_flag": false
+      }
+    },
+    {
+      "id": "disc:thr_TRAJECTORY_DEVIATION_57",
+      "type": "THRESHOLD",
+      "diagnosis": "TRAJECTORY_DEVIATION",
+      "threshold": 0.0465,
+      "feature": "FLT__TRAJ_DEV__band_rise_now",
+      "operator": ">",
+      "description": "IF FLT__TRAJ_DEV__band_rise_now > 0.0465 THEN TRAJECTORY_DEVIATION",
+      "sensitivity": 1.0,
+      "specificity": 1.0,
+      "f1": 1.0,
+      "evidence_grade": "A",
+      "source": "discovery",
+      "short_id": "R-38",
+      "sentence": "IF Rise of the trajectory deviation against the normal spread over the last 20 s > 0.0465 ratio THEN Trajectory deviation",
+      "feature_unit": "ratio",
+      "feature_valid_from": 50.0,
+      "channels": [
+        "TRAJ_DEV"
+      ],
+      "holdout": {
+        "validation_f1": 1.0,
+        "val_sensitivity": 1.0,
+        "val_specificity": 1.0,
+        "overfitting_flag": false
+      }
+    },
+    {
+      "id": "disc:thr_TRAJECTORY_DEVIATION_58",
+      "type": "THRESHOLD",
+      "diagnosis": "TRAJECTORY_DEVIATION",
+      "threshold": 0.0578,
+      "feature": "FLT__TRAJ_DEV__rate_now",
+      "operator": ">",
+      "description": "IF FLT__TRAJ_DEV__rate_now > 0.0578 THEN TRAJECTORY_DEVIATION",
+      "sensitivity": 0.9745,
+      "specificity": 1.0,
+      "f1": 0.9871,
+      "evidence_grade": "A",
+      "source": "discovery",
+      "short_id": "R-39",
+      "sentence": "IF Trajectory deviation growth over the last 5 s > 0.0578 km/s THEN Trajectory deviation",
+      "feature_unit": "km/s",
+      "feature_valid_from": 12.0,
+      "channels": [
+        "TRAJ_DEV"
+      ],
+      "holdout": {
+        "validation_f1": 1.0,
+        "val_sensitivity": 1.0,
+        "val_specificity": 1.0,
+        "overfitting_flag": false
+      }
+    },
+    {
+      "id": "disc:thr_TRAJECTORY_DEVIATION_59",
+      "type": "THRESHOLD",
+      "diagnosis": "TRAJECTORY_DEVIATION",
+      "threshold": 0.0596,
+      "feature": "FLT__TRAJ_DEV__rate_max",
+      "operator": ">",
+      "description": "IF FLT__TRAJ_DEV__rate_max > 0.0596 THEN TRAJECTORY_DEVIATION",
+      "sensitivity": 0.9745,
+      "specificity": 1.0,
+      "f1": 0.9871,
+      "evidence_grade": "A",
+      "source": "discovery",
+      "short_id": "R-40",
+      "sentence": "IF Trajectory deviation growth, fastest 5 s so far > 0.0596 km/s THEN Trajectory deviation",
+      "feature_unit": "km/s",
+      "feature_valid_from": 12.0,
+      "channels": [
+        "TRAJ_DEV"
+      ],
+      "holdout": {
+        "validation_f1": 1.0,
+        "val_sensitivity": 1.0,
+        "val_specificity": 1.0,
+        "overfitting_flag": false
+      }
+    },
+    {
+      "id": "disc:thr_TRAJECTORY_DEVIATION_56",
+      "type": "THRESHOLD",
+      "diagnosis": "TRAJECTORY_DEVIATION",
+      "threshold": 0.3403,
+      "feature": "FLT__TRAJ_DEV__band_rise_max",
+      "operator": ">",
+      "description": "IF FLT__TRAJ_DEV__band_rise_max > 0.3403 THEN TRAJECTORY_DEVIATION",
+      "sensitivity": 0.9363,
+      "specificity": 1.0,
+      "f1": 0.9671,
+      "evidence_grade": "A",
+      "source": "discovery",
+      "short_id": "R-41",
+      "sentence": "IF Rise of the trajectory deviation against the normal spread over 20 s, largest so far > 0.34 ratio THEN Trajectory deviation",
+      "feature_unit": "ratio",
+      "feature_valid_from": 50.5,
+      "channels": [
+        "TRAJ_DEV"
+      ],
+      "holdout": {
+        "validation_f1": 1.0,
+        "val_sensitivity": 1.0,
+        "val_specificity": 1.0,
+        "overfitting_flag": false
+      }
+    },
+    {
+      "id": "disc:thr_TRAJECTORY_DEVIATION_60",
+      "type": "THRESHOLD",
+      "diagnosis": "TRAJECTORY_DEVIATION",
+      "threshold": 3.3158,
+      "feature": "FLT__TRAJ_DEV__now",
+      "operator": ">",
+      "description": "IF FLT__TRAJ_DEV__now > 3.3158 THEN TRAJECTORY_DEVIATION",
+      "sensitivity": 0.9299,
+      "specificity": 1.0,
+      "f1": 0.9637,
+      "evidence_grade": "A",
+      "source": "discovery",
+      "short_id": "R-42",
+      "sentence": "IF Trajectory deviation, last 1 s > 3.32 km THEN Trajectory deviation",
+      "feature_unit": "km",
+      "feature_valid_from": 8.0,
+      "channels": [
+        "TRAJ_DEV"
+      ],
+      "holdout": {
+        "validation_f1": 0.9677,
+        "val_sensitivity": 0.9677,
+        "val_specificity": 0.9979,
+        "overfitting_flag": false
+      }
+    }
+  ],
+  "mutex_rules": [
+    {
+      "id": "rule:mutex_mutex_discovered_0",
+      "type": "MUTEX",
+      "group": "mutex_discovered_0",
+      "members": [
+        "TEMP_SENSOR_FAULT",
+        "TURBINE_OVERTEMP"
+      ],
+      "violation_rate": 0.0,
+      "description": "Discovered mutex group: TEMP_SENSOR_FAULT, TURBINE_OVERTEMP",
+      "evidence_grade": "A",
+      "source": "discovery",
+      "sentence": "Turbine temperature sensor fault and Turbine over-temperature were never seen together"
+    }
+  ],
+  "equivalence_rules": []
+}

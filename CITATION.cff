@@ -1,0 +1,37 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "Rocket Launch: an Ammonix control-room agent for a launch vehicle"
+type: software
+abstract: "A control-room agent for a notional launch vehicle, built from 3,000 simulated launches with the Ammonix platform code. It calls HOLD, ABORT or a flight warning from streaming telemetry and explains every call with a clear-text rule and a measured value; an optional local LLM analyst narrates the calls. All telemetry is synthetic."
+authors:
+  - family-names: Ruppersberg
+    given-names: Peter
+    affiliation: Ammonix
+  - family-names: Canedi
+    given-names: Fred
+  - family-names: Grieder
+    given-names: Lea
+    affiliation: Ammonix
+  - family-names: Todorov
+    given-names: Matthew
+    affiliation: Ammonix
+  - family-names: Glauser
+    given-names: Adele
+    affiliation: Ammonix
+  - family-names: Glauser
+    given-names: Duangjai
+    affiliation: Ammonix
+  - family-names: Stingele
+    given-names: Francesca
+    affiliation: Ammonix
+version: "v1.0"
+date-released: "2026-09-30"
+url: "https://github.com/ammonix-ai/ammonix-rocket-launch"
+repository-code: "https://github.com/ammonix-ai/ammonix-rocket-launch"
+license-url: "https://github.com/ammonix-ai/ammonix-rocket-launch/blob/main/LICENSE.md"
+keywords:
+  - anomaly detection
+  - launch vehicle
+  - control room
+  - explainable AI
+  - synthetic data
