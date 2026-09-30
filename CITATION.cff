@@ -24,7 +24,7 @@ authors:
   - family-names: Stingele
     given-names: Francesca
     affiliation: Ammonix
-version: "v1.0"
+version: "v1.1"
 date-released: "2026-09-30"
 url: "https://github.com/ammonix-ai/ammonix-rocket-launch"
 repository-code: "https://github.com/ammonix-ai/ammonix-rocket-launch"
